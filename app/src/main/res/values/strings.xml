@@ -7,5 +7,11 @@
     <string name="flagWaveDescription">Image of person waving flag</string>
     <string name="landmarkDescription">Landmark Image View Description</string>
     <string name="Landmarks">Landmarks</string>
-    <string name="lets_quiz">Let\'s Quiz!</string>
+    <string name="lets_quiz_flags">Let\'s Quiz!</string>
+    <string name="lets_quiz_capitals">Let\'s Quiz!</string>
+    <string name="lets_quiz_landmarks">Let\'s Quiz!</string>
+    <string name="startCompletion">0%</string>
+    <string name="getName">What\'s your name?</string>
+    <string name="nameHint">Enter Your Name</string>
+    <string name="start">Start</string>
 </resources>

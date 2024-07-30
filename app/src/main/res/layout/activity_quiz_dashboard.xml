@@ -16,10 +16,10 @@
         app:cardBackgroundColor="@color/primaryDark"
         app:cardCornerRadius="80dp"
         app:cardElevation="8dp"
+        app:layout_constraintBottom_toTopOf="@id/capitalCV"
         app:layout_constraintEnd_toStartOf="@id/flagBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/capitalCV">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/ivFlag"
@@ -57,13 +57,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
-        android:text="@string/lets_quiz"
+        android:text="@string/lets_quiz_flags"
         android:textColor="@color/secondaryColourText"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/flagCV"
+        app:layout_constraintBottom_toTopOf="@+id/tvFlagCompletion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/flagCV"
-        app:layout_constraintTop_toTopOf="@+id/flagCV" />
+        app:layout_constraintTop_toTopOf="@+id/flagCV"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <TextView
+        android:id="@+id/tvFlagCompletion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        android:text="@string/startCompletion"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/dividerFlag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/flagCV"
+        app:layout_constraintTop_toBottomOf="@id/flagBtn" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/capitalCV"
@@ -73,10 +87,10 @@
         app:cardBackgroundColor="@color/primaryDark"
         app:cardCornerRadius="80dp"
         app:cardElevation="8dp"
+        app:layout_constraintBottom_toTopOf="@id/landmarkCV"
         app:layout_constraintEnd_toStartOf="@id/capitalBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flagCV"
-        app:layout_constraintBottom_toTopOf="@id/landmarkCV">
+        app:layout_constraintTop_toBottomOf="@+id/flagCV">
 
         <ImageView
             android:id="@+id/ivCapital"
@@ -97,6 +111,7 @@
             android:textColor="@color/primaryColourText"
             android:textSize="16sp"
             android:textStyle="bold" />
+
     </androidx.cardview.widget.CardView>
 
     <View
@@ -114,15 +129,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
-        android:text="@string/lets_quiz"
+        android:text="@string/lets_quiz_capitals"
         android:textColor="@color/secondaryColourText"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/capitalCV"
+        app:layout_constraintBottom_toTopOf="@id/tvCapitalCompletion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/capitalCV"
         app:layout_constraintTop_toTopOf="@+id/capitalCV" />
 
+    <TextView
+        android:id="@+id/tvCapitalCompletion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        android:text="@string/startCompletion"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/dividerCapital"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/capitalCV"
+        app:layout_constraintTop_toBottomOf="@id/capitalBtn" />
+
     <androidx.cardview.widget.CardView
+
         android:id="@+id/landmarkCV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -130,10 +159,10 @@
         app:cardBackgroundColor="@color/primaryDark"
         app:cardCornerRadius="80dp"
         app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/landmarkBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/capitalCV"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/capitalCV">
 
         <ImageView
             android:id="@+id/ivLandmark"
@@ -154,6 +183,7 @@
             android:textColor="@color/primaryColourText"
             android:textSize="16sp"
             android:textStyle="bold" />
+
     </androidx.cardview.widget.CardView>
 
     <Button
@@ -161,13 +191,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
-        android:text="@string/lets_quiz"
-        android:textStyle="bold"
+        android:text="@string/lets_quiz_landmarks"
         android:textColor="@color/secondaryColourText"
-        app:layout_constraintBottom_toBottomOf="@+id/landmarkCV"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvLandmarkCompletion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/landmarkCV"
         app:layout_constraintTop_toTopOf="@+id/landmarkCV" />
+
+    <TextView
+        android:id="@+id/tvLandmarkCompletion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        android:text="@string/startCompletion"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/landmarkCV"
+        app:layout_constraintTop_toBottomOf="@id/landmarkBtn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
