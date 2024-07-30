@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryColor"
+    tools:context=".MainActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/flagCV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:cardBackgroundColor="@color/primaryDark"
+        app:cardCornerRadius="80dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toStartOf="@id/flagBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/capitalCV">
+
+        <ImageView
+            android:id="@+id/ivFlag"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/flagWaveDescription"
+            android:focusable="true"
+            android:src="@drawable/flagwave" />
+
+        <TextView
+            android:id="@+id/tvFlag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/flag"
+            android:textAlignment="center"
+            android:textColor="@color/primaryColourText"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/dividerFlag"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/primaryColourText"
+        app:layout_constraintBottom_toTopOf="@+id/capitalCV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flagCV" />
+
+    <Button
+        android:id="@+id/flagBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:text="@string/lets_quiz"
+        android:textColor="@color/secondaryColourText"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/flagCV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/flagCV"
+        app:layout_constraintTop_toTopOf="@+id/flagCV" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/capitalCV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:cardBackgroundColor="@color/primaryDark"
+        app:cardCornerRadius="80dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toStartOf="@id/capitalBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flagCV"
+        app:layout_constraintBottom_toTopOf="@id/landmarkCV">
+
+        <ImageView
+            android:id="@+id/ivCapital"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/capitalImgViewDescription"
+            android:focusable="true"
+            android:src="@drawable/capitol"
+            tools:ignore="ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/tvCapital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/capitals"
+            android:textAlignment="center"
+            android:textColor="@color/primaryColourText"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/dividerCapital"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/primaryColourText"
+        app:layout_constraintBottom_toTopOf="@+id/landmarkCV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/capitalCV" />
+
+    <Button
+        android:id="@+id/capitalBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:text="@string/lets_quiz"
+        android:textColor="@color/secondaryColourText"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/capitalCV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/capitalCV"
+        app:layout_constraintTop_toTopOf="@+id/capitalCV" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/landmarkCV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:cardBackgroundColor="@color/primaryDark"
+        app:cardCornerRadius="80dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toStartOf="@id/landmarkBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/capitalCV"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/ivLandmark"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/landmarkDescription"
+            android:focusable="true"
+            android:src="@drawable/mt_fuji"
+            tools:ignore="ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/tvLandmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/Landmarks"
+            android:textAlignment="center"
+            android:textColor="@color/primaryColourText"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/landmarkBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:text="@string/lets_quiz"
+        android:textStyle="bold"
+        android:textColor="@color/secondaryColourText"
+        app:layout_constraintBottom_toBottomOf="@+id/landmarkCV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/landmarkCV"
+        app:layout_constraintTop_toTopOf="@+id/landmarkCV" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
