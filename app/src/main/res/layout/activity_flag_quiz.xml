@@ -14,14 +14,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/flagimage_for_question"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:srcCompat="@drawable/englandflag" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFlagQuestion"
+        app:srcCompat="@drawable/england_flag" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvFlagQuestion"
         android:fontFamily="@font/roboto"
         android:textSize="23sp"
         android:textStyle="bold"
@@ -34,50 +36,59 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioButton
-        android:id="@+id/rb1"
+        android:id="@+id/rb1Flag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:minHeight="48dp"
         android:text="@string/country_placeholder"
+        app:layout_constraintEnd_toEndOf="@+id/submitBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivFlagQuestion"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <RadioButton
-        android:id="@+id/rb2"
+        android:id="@+id/rb2Flag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:minHeight="48dp"
         android:text="@string/country_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rb1Flag"
         app:layout_constraintTop_toBottomOf="@+id/ivFlagQuestion" />
 
     <RadioButton
-        android:id="@+id/rb3"
+        android:id="@+id/rb3Flag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:minHeight="48dp"
         android:text="@string/country_placeholder"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/submitBtn"
+        app:layout_constraintEnd_toEndOf="@+id/submitBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rb1" />
+        app:layout_constraintTop_toBottomOf="@+id/rb1Flag" />
 
     <RadioButton
-        android:id="@+id/rb4"
+        android:id="@+id/rb4Flag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:minHeight="48dp"
         android:text="@string/country_placeholder"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/submitBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rb2" />
+        app:layout_constraintStart_toEndOf="@+id/rb3Flag"
+        app:layout_constraintTop_toBottomOf="@+id/rb2Flag" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/submitBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/submit"
+        android:layout_marginTop="50dp"
         android:background="@drawable/button_background"
+        android:text="@string/submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

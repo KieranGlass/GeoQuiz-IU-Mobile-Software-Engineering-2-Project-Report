@@ -16,7 +16,7 @@
     <string name="start">Start</string>
     <string name="title_button_description">For navigating to Dashboard</string>
     <string name="Logo">Logo</string>
-    <string name="flag_question">The Flag Belongs to which country?</string>
+    <string name="flag_question">This Flag Belongs to which country?</string>
     <string name="flagimage_for_question">The flag image used for the question</string>
     <string name="country_placeholder">Country Name</string>
     <string name="submit">Submit</string>
