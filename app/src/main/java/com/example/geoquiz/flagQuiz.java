@@ -243,13 +243,13 @@ public class flagQuiz extends AppCompatActivity {
         countryFlagMap.put("Yemen", R.drawable.yemen_flag);
         countryFlagMap.put("Zambia", R.drawable.zambia_flag);
         countryFlagMap.put("Zimbabwe", R.drawable.zimbabwe_flag);
-        
+
         this.countryFlagMap = countryFlagMap;
     }
 
     private int getFlagResource(String countryName) {
-        String resourceName = countryName.replace(" ", "_");
-        Integer resourceId = countryFlagMap.get(resourceName);
+
+        Integer resourceId = countryFlagMap.get(countryName);
         return resourceId == null ? 0 : resourceId; // Return default value if not found
     }
 }

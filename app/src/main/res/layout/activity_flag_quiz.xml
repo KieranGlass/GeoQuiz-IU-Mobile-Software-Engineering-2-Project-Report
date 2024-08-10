@@ -8,26 +8,13 @@
     android:background="@color/primaryColor"
     tools:context=".flagQuiz">
 
-
-    <ImageView
-        android:id="@+id/ivFlagQuestion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/flagimage_for_question"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFlagQuestion"
-        app:srcCompat="@drawable/england_flag" />
-
     <TextView
         android:id="@+id/tvFlagQuestion"
         android:fontFamily="@font/roboto"
         android:textSize="23sp"
         android:textStyle="bold"
         android:textColor="@color/primaryColourText"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/flag_question"
@@ -35,64 +22,117 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioButton
-        android:id="@+id/rb1Flag"
+    <ImageView
+        android:id="@+id/ivFlagQuestion"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:minHeight="48dp"
-        android:text="@string/country_placeholder"
-        app:layout_constraintEnd_toEndOf="@+id/submitBtn"
+        android:layout_height="300dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/image_border"
+        android:contentDescription="@string/flagimage_for_question"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:elevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFlagQuestion"
+        app:srcCompat="@drawable/england_flag" />
+
+
+    <LinearLayout
+        android:id="@+id/radioGroupContainer1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="40dp"
         app:layout_constraintTop_toBottomOf="@+id/ivFlagQuestion"
-        tools:ignore="DuplicateSpeakableTextCheck" />
+        android:weightSum="2">
 
-    <RadioButton
-        android:id="@+id/rb2Flag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:minHeight="48dp"
-        android:text="@string/country_placeholder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rb1Flag"
-        app:layout_constraintTop_toBottomOf="@+id/ivFlagQuestion" />
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb1Flag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:minHeight="48dp"
+            android:text="@string/country_placeholder"
+            android:textColor="@color/primaryColourText"
+            android:textStyle="bold"
+            android:textSize="18sp" />
 
-    <RadioButton
-        android:id="@+id/rb3Flag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:minHeight="48dp"
-        android:text="@string/country_placeholder"
-        app:layout_constraintBottom_toTopOf="@+id/submitBtn"
-        app:layout_constraintEnd_toEndOf="@+id/submitBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rb1Flag" />
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb2Flag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:minHeight="48dp"
+            android:textColor="@color/primaryColourText"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/country_placeholder" />
 
-    <RadioButton
-        android:id="@+id/rb4Flag"
-        android:layout_width="wrap_content"
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/radioGroupContainer2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:minHeight="48dp"
-        android:text="@string/country_placeholder"
-        app:layout_constraintBottom_toTopOf="@+id/submitBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rb3Flag"
-        app:layout_constraintTop_toBottomOf="@+id/rb2Flag" />
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupContainer1"
+        android:weightSum="2">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb3Flag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:minHeight="48dp"
+            android:textColor="@color/primaryColourText"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/country_placeholder" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb4Flag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:minHeight="48dp"
+            android:textColor="@color/primaryColourText"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/country_placeholder" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/submitBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:background="@drawable/button_background"
         android:text="@string/submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvCounter"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupContainer2" />
+
+    <TextView
+        android:id="@+id/tvCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/qNumberStart"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/submitBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivFlagQuestion" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupContainer2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,4 +20,9 @@
     <string name="flagimage_for_question">The flag image used for the question</string>
     <string name="country_placeholder">Country Name</string>
     <string name="submit">Submit</string>
+    <string name="qNumberStart">1</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="choose_difficulty">Choose Difficulty</string>
 </resources>
