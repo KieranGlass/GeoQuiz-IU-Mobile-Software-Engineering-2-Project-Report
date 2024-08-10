@@ -14,7 +14,8 @@ import androidx.core.view.WindowInsetsCompat;
 public class QuizDashboard extends AppCompatActivity {
 
 
-    Button flagBtn;
+    Button flagBtn, capitalBtn, landmarkBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +29,29 @@ public class QuizDashboard extends AppCompatActivity {
         });
 
         flagBtn = findViewById(R.id.flagBtn);
+        capitalBtn = findViewById(R.id.capitalBtn);
+        landmarkBtn = findViewById(R.id.landmarkBtn);
+
         flagBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (QuizDashboard.this, flagDifficulty.class);
+                Intent intent = new Intent (QuizDashboard.this, difficulty.class);
+                startActivity(intent);
+            }
+        });
+
+        capitalBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (QuizDashboard.this, difficulty.class);
+                startActivity(intent);
+            }
+        });
+
+        landmarkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (QuizDashboard.this, difficulty.class);
                 startActivity(intent);
             }
         });
