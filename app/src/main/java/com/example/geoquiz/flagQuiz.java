@@ -24,6 +24,9 @@ public class flagQuiz extends AppCompatActivity {
     private Button submitBtn;
 
     private String[] countriesArray;
+    private String[] easyCountriesArray;
+    private String[] mediumCountriesArray;
+    private String[] hardCountriesArray;
     private HashMap<String, Integer> countryFlagMap;
 
     @Override
@@ -40,6 +43,9 @@ public class flagQuiz extends AppCompatActivity {
         initCountryFlagMap();
 
         countriesArray = getResources().getStringArray(R.array.countries);
+        easyCountriesArray = getResources().getStringArray(R.array.easyCountries);
+        mediumCountriesArray = getResources().getStringArray(R.array.mediumCountries);
+        hardCountriesArray = getResources().getStringArray(R.array.hardCountries);
 
         ivFlagQuestion = findViewById(R.id.ivFlagQuestion);
         radioButtons = new ArrayList<>();
@@ -51,21 +57,69 @@ public class flagQuiz extends AppCompatActivity {
 
         submitBtn = findViewById(R.id.submitBtn);
 
-        generateQuiz();
+        generateEasyQuiz();
 
     }
 
-    private void generateQuiz() {
+    private void generateEasyQuiz() {
         Random random = new Random();
-        int correctCountryIndex = random.nextInt(countriesArray.length); //
-        String correctCountry = countriesArray[correctCountryIndex];
+        int correctCountryIndex = random.nextInt(easyCountriesArray.length); //
+        String correctCountry = easyCountriesArray[correctCountryIndex];
         ivFlagQuestion.setImageResource(getFlagResource(correctCountry));
 
         List<String> wrongAnswers = new ArrayList<>();
         while (wrongAnswers.size() < 3) {
-            int wrongCountryIndex = random.nextInt(countriesArray.length);
-            if (wrongCountryIndex != correctCountryIndex && !wrongAnswers.contains(countriesArray[wrongCountryIndex])) {
-                wrongAnswers.add(countriesArray[wrongCountryIndex]);
+            int wrongCountryIndex = random.nextInt(easyCountriesArray.length);
+            if (wrongCountryIndex != correctCountryIndex && !wrongAnswers.contains(easyCountriesArray[wrongCountryIndex])) {
+                wrongAnswers.add(easyCountriesArray[wrongCountryIndex]);
+            }
+        }
+
+        List<String> allAnswers = new ArrayList<>();
+        allAnswers.add(correctCountry);
+        allAnswers.addAll(wrongAnswers);
+        Collections.shuffle(allAnswers, random);
+
+        for (int i = 0; i < radioButtons.size(); i++) {
+            radioButtons.get(i).setText(allAnswers.get(i));
+        }
+    }
+
+    private void generateMediumQuiz() {
+        Random random = new Random();
+        int correctCountryIndex = random.nextInt(mediumCountriesArray.length); //
+        String correctCountry = mediumCountriesArray[correctCountryIndex];
+        ivFlagQuestion.setImageResource(getFlagResource(correctCountry));
+
+        List<String> wrongAnswers = new ArrayList<>();
+        while (wrongAnswers.size() < 3) {
+            int wrongCountryIndex = random.nextInt(mediumCountriesArray.length);
+            if (wrongCountryIndex != correctCountryIndex && !wrongAnswers.contains(mediumCountriesArray[wrongCountryIndex])) {
+                wrongAnswers.add(mediumCountriesArray[wrongCountryIndex]);
+            }
+        }
+
+        List<String> allAnswers = new ArrayList<>();
+        allAnswers.add(correctCountry);
+        allAnswers.addAll(wrongAnswers);
+        Collections.shuffle(allAnswers, random);
+
+        for (int i = 0; i < radioButtons.size(); i++) {
+            radioButtons.get(i).setText(allAnswers.get(i));
+        }
+    }
+
+    private void generateHardQuiz() {
+        Random random = new Random();
+        int correctCountryIndex = random.nextInt(hardCountriesArray.length); //
+        String correctCountry = hardCountriesArray[correctCountryIndex];
+        ivFlagQuestion.setImageResource(getFlagResource(correctCountry));
+
+        List<String> wrongAnswers = new ArrayList<>();
+        while (wrongAnswers.size() < 3) {
+            int wrongCountryIndex = random.nextInt(hardCountriesArray.length);
+            if (wrongCountryIndex != correctCountryIndex && !wrongAnswers.contains(hardCountriesArray[wrongCountryIndex])) {
+                wrongAnswers.add(hardCountriesArray[wrongCountryIndex]);
             }
         }
 
@@ -81,6 +135,7 @@ public class flagQuiz extends AppCompatActivity {
 
     private void initCountryFlagMap() {
         HashMap<String, Integer> countryFlagMap = new HashMap<>();
+
         countryFlagMap.put("Afghanistan", R.drawable.afghanistan_flag);
         countryFlagMap.put("Albania", R.drawable.albania_flag);
         countryFlagMap.put("Algeria", R.drawable.algeria_flag);
