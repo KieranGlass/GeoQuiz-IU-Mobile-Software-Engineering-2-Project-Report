@@ -13,16 +13,16 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".difficulty"
+            android:name=".Difficulty"
             android:exported="false" />
         <activity
-            android:name=".landmarkQuiz"
+            android:name=".LandmarkQuiz"
             android:exported="false" />
         <activity
-            android:name=".capitalQuiz"
+            android:name=".CapitalQuiz"
             android:exported="false" />
         <activity
-            android:name=".flagQuiz"
+            android:name=".FlagQuiz"
             android:exported="false" />
         <activity
             android:name=".QuizDashboard"

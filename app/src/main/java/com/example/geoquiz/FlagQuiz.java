@@ -1,5 +1,6 @@
 package com.example.geoquiz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,13 +18,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class flagQuiz extends AppCompatActivity {
+public class FlagQuiz extends AppCompatActivity {
 
     private ImageView ivFlagQuestion;
     private List<RadioButton> radioButtons;
     private Button submitBtn;
 
-    private String[] countriesArray;
     private String[] easyCountriesArray;
     private String[] mediumCountriesArray;
     private String[] hardCountriesArray;
@@ -42,7 +42,6 @@ public class flagQuiz extends AppCompatActivity {
 
         initCountryFlagMap();
 
-        countriesArray = getResources().getStringArray(R.array.countries);
         easyCountriesArray = getResources().getStringArray(R.array.easyCountries);
         mediumCountriesArray = getResources().getStringArray(R.array.mediumCountries);
         hardCountriesArray = getResources().getStringArray(R.array.hardCountries);
@@ -57,7 +56,23 @@ public class flagQuiz extends AppCompatActivity {
 
         submitBtn = findViewById(R.id.submitBtn);
 
-        generateEasyQuiz();
+        Intent intent = getIntent();
+        String difficulty = intent.getStringExtra("Difficulty");
+
+        if (difficulty.equals("Easy"))
+        {
+            generateEasyQuiz();
+        }
+        else if (difficulty.equals("Medium"))
+        {
+            generateMediumQuiz();
+        }
+        else
+        {
+            generateHardQuiz();
+        }
+
+
 
     }
 

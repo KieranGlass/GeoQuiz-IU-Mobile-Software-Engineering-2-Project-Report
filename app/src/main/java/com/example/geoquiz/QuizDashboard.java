@@ -35,7 +35,8 @@ public class QuizDashboard extends AppCompatActivity {
         flagBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (QuizDashboard.this, difficulty.class);
+                Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
+                intent.putExtra("Category", "Flag");
                 startActivity(intent);
             }
         });
@@ -43,7 +44,8 @@ public class QuizDashboard extends AppCompatActivity {
         capitalBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (QuizDashboard.this, difficulty.class);
+                Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
+                intent.putExtra("Category", "Capital");
                 startActivity(intent);
             }
         });
@@ -51,7 +53,8 @@ public class QuizDashboard extends AppCompatActivity {
         landmarkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (QuizDashboard.this, difficulty.class);
+                Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
+                intent.putExtra("Category", "Landmark");
                 startActivity(intent);
             }
         });

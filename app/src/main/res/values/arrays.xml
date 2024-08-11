@@ -54,7 +54,7 @@
                 <item>Mongolia</item><item>Montenegro</item><item>Morocco</item><item>Myanmar</item><item>North Macedonia</item>
                 <item>Pakistan</item><item>Panama</item><item>Paraguay</item><item>Peru</item><item>Philippines</item><item>Poland</item>
                 <item>Qatar</item><item>Romania</item><item>Russia</item><item>San Marino</item><item>Serbia</item><item>Slovenia</item>
-                <item>Sri Lanka</item><item>Thailand</item><item>Tunisia</item><item>USA</item><item>Uruguay</item><item>Venezuela</item>
+                <item>Sri Lanka</item><item>Thailand</item><item>Tunisia</item><item>Venezuela</item>
         </string-array>
 
         <string-array name="hardCountries">
