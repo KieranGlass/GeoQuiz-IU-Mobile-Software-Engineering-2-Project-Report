@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryColor"
-    tools:context=".flagQuiz">
+    tools:context=".FlagQuiz">
 
     <TextView
         android:id="@+id/tvFlagQuestion"
@@ -29,9 +29,9 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/image_border"
         android:contentDescription="@string/flagimage_for_question"
+        android:elevation="8dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:elevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,13 +53,14 @@
             android:id="@+id/rb1Flag"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="20dp"
+            android:layout_weight="1"
             android:minHeight="48dp"
             android:text="@string/country_placeholder"
             android:textColor="@color/primaryColourText"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            tools:ignore="DuplicateSpeakableTextCheck,VisualLintButtonSize" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/rb2Flag"
@@ -71,7 +72,8 @@
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:text="@string/country_placeholder" />
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
 
     </LinearLayout>
 
@@ -95,7 +97,8 @@
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:text="@string/country_placeholder" />
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/rb4Flag"
@@ -107,7 +110,8 @@
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:text="@string/country_placeholder" />
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
 
     </LinearLayout>
 

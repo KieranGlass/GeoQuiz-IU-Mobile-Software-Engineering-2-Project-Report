@@ -5,6 +5,179 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".capitalQuiz">
+    android:background="@drawable/capital_quiz_background"
+    tools:context=".CapitalQuiz">
 
+    <TextView
+        android:id="@+id/tvCapitalName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/capital_name_placeholder"
+        android:textColor="@color/secondaryColourText"
+        android:textStyle="bold"
+        android:textSize="35sp"
+        android:fontFamily="@font/roboto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvCapitalQuestion"/>
+
+    <TextView
+        android:id="@+id/tvCapitalQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/capital_question_text"
+        android:textColor="@color/primaryColourText"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:fontFamily="@font/roboto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCapitalName"
+        app:layout_constraintBottom_toTopOf="@id/radioGroupCapital1"/>
+
+    <LinearLayout
+        android:id="@+id/radioGroupCapital1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/tvCapitalQuestion"
+        app:layout_constraintBottom_toTopOf="@id/radioGroupCapital2"
+        android:weightSum="2">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb1Capital"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:minHeight="48dp"
+            android:textColor="@color/primaryColourText"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/country_placeholder"
+            tools:ignore="DuplicateSpeakableTextCheck" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb2Capital"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:minHeight="48dp"
+            android:textColor="@color/primaryColourText"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/country_placeholder" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/radioGroupCapital2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupCapital1"
+        app:layout_constraintBottom_toTopOf="@id/radioGroupCapital3"
+        android:weightSum="2">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb3Capital"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:minHeight="48dp"
+            android:textColor="@color/primaryColourText"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/country_placeholder" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb4Capital"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:minHeight="48dp"
+            android:textColor="@color/primaryColourText"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/country_placeholder" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/radioGroupCapital3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupCapital2"
+        app:layout_constraintBottom_toTopOf="@id/radioGroupCapital4"
+        android:weightSum="2">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb5Capital"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:minHeight="48dp"
+            android:textColor="@color/primaryColourText"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/country_placeholder" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb6Capital"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:minHeight="48dp"
+            android:textColor="@color/primaryColourText"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/country_placeholder" />
+
+    </LinearLayout>
+
+    <LinearLayout
+    android:id="@+id/radioGroupCapital4"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_horizontal"
+    app:layout_constraintTop_toBottomOf="@+id/radioGroupCapital3"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:weightSum="2">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb7Capital"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:minHeight="48dp"
+            android:textColor="@color/primaryColourText"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/country_placeholder" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb8Capital"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:minHeight="48dp"
+            android:textColor="@color/primaryColourText"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="@string/country_placeholder" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

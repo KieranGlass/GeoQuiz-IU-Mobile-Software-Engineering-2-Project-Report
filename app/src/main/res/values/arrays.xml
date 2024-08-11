@@ -1,37 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="countries">
-            <item>Afghanistan</item><item>Albania</item><item>Algeria</item><item>Angola</item><item>Argentina</item>
-            <item>Australia</item><item>Austria</item><item>Azerbaijan</item><item>Bahrain</item><item>Bangladesh</item>
-            <item>Barbados</item><item>Belarus</item><item>Belgium</item><item>Belize</item><item>Bhutan</item><item>Bolivia</item>
-            <item>Botswana</item><item>Brazil</item><item>Bulgaria</item><item>Burkina Faso</item><item>Burundi</item>
-            <item>Cape Verde</item><item>Cambodia</item><item>Cameroon</item><item>Canada</item><item>Chile</item><item>China</item>
-            <item>Colombia</item><item>Comoros</item><item>DR Congo</item><item>Congo</item><item>Costa Rica</item>
-            <item>Ivory Coast</item><item>Croatia</item><item>Cuba</item><item>Cyprus</item><item>Czechia</item><item>Denmark</item>
-            <item>Djibouti</item><item>Dominica</item><item>Dominican Republic</item><item>Ecuador</item><item>Egypt</item>
-            <item>England</item><item>Eritrea</item><item>Estonia</item><item>Ethiopia</item><item>Fiji</item><item>Finland</item>
-            <item>France</item><item>Gambia</item><item>Georgia</item><item>Germany</item><item>Ghana</item><item>Greece</item>
-            <item>Guatemala</item><item>Guinea</item><item>Guinea-Bissau</item><item>Guyana</item><item>Haiti</item><item>Honduras</item>
-            <item>Hungary</item><item>Iceland</item><item>India</item><item>Indonesia</item><item>Iran</item><item>Iraq</item>
-            <item>Ireland</item><item>Israel</item><item>Italy</item><item>Jamaica</item><item>Japan</item><item>Jordan</item>
-            <item>Kazakhstan</item><item>Kenya</item><item>North Korea</item><item>South Korea</item><item>Kosovo</item>
-            <item>Kyrgyzstan</item><item>Laos</item><item>Latvia</item><item>Lebanon</item><item>Lesotho</item><item>Liberia</item>
-            <item>Liechtenstein</item><item>Lithuania</item><item>Luxembourg</item><item>Madagascar</item>
-            <item>Malaysia</item><item>Maldives</item><item>Mali</item><item>Malta</item><item>Mauritius</item><item>Mexico</item>
-            <item>Moldova</item><item>Mongolia</item><item>Montenegro</item><item>Morocco</item><item>Mozambique</item>
-            <item>Myanmar</item><item>Namibia</item><item>Netherlands</item><item>New Zealand</item><item>Nicaragua</item>
-            <item>Niger</item><item>Nigeria</item><item>North Macedonia</item><item>Northern Ireland</item><item>Norway</item>
-            <item>Oman</item><item>Pakistan</item><item>Panama</item><item>Papua New Guinea</item><item>Paraguay</item><item>Peru</item>
-            <item>Philippines</item><item>Poland</item><item>Portugal</item><item>Qatar</item><item>Romania</item><item>Russia</item>
-            <item>Rwanda</item><item>Samoa</item><item>San Marino</item><item>Saudi Arabia</item><item>Scotland</item>
-            <item>Senegal</item><item>Serbia</item><item>Seychelles</item><item>Singapore</item><item>Slovakia</item>
-            <item>Slovenia</item><item>Somalia</item><item>South Africa</item><item>Spain</item>
-            <item>Sri Lanka</item><item>Sudan</item><item>Suriname</item><item>Sweden</item><item>Syria</item>
-            <item>Taiwan</item><item>Tajikistan</item><item>Tanzania</item><item>Thailand</item><item>Togo</item><item>Tonga</item>
-            <item>Tunisia</item><item>Turkey</item><item>Turkmenistan</item><item>Uganda</item><item>Ukraine</item>
-            <item>UAE</item><item>USA</item><item>Uruguay</item><item>Uzbekistan</item><item>Vanuatu</item><item>Venezuela</item>
-            <item>Vietnam</item><item>Wales</item><item>Yemen</item><item>Zambia</item><item>Zimbabwe</item>
-    </string-array>
+                <item>Afghanistan</item><item>Albania</item><item>Algeria</item><item>Angola</item><item>Argentina</item><item>Australia</item>
+                <item>Austria</item><item>Azerbaijan</item><item>Bahrain</item><item>Bangladesh</item><item>Barbados</item><item>Belarus</item>
+                <item>Belgium</item><item>Belize</item><item>Bhutan</item><item>Bolivia</item><item>Botswana</item><item>Brazil</item><item>Bulgaria</item>
+                <item>Burkina Faso</item><item>Burundi</item><item>Cape Verde</item><item>Cambodia</item><item>Cameroon</item><item>Canada</item>
+                <item>Chile</item><item>China</item><item>Colombia</item><item>Comoros</item><item>DR Congo</item><item>Congo</item><item>Costa Rica</item>
+                <item>Ivory Coast</item><item>Croatia</item><item>Cuba</item><item>Cyprus</item><item>Czechia</item><item>Denmark</item>
+                <item>Djibouti</item><item>Dominica</item><item>Dominican Republic</item><item>Ecuador</item><item>Egypt</item><item>England</item>
+                <item>Eritrea</item><item>Estonia</item><item>Ethiopia</item><item>Fiji</item><item>Finland</item><item>France</item><item>Gambia</item>
+                <item>Georgia</item><item>Germany</item><item>Ghana</item><item>Greece</item><item>Guatemala</item><item>Guinea</item><item>Guinea-Bissau</item>
+                <item>Guyana</item><item>Haiti</item><item>Honduras</item><item>Hungary</item><item>Iceland</item><item>India</item><item>Indonesia</item>
+                <item>Iran</item><item>Iraq</item><item>Ireland</item><item>Israel</item><item>Italy</item><item>Jamaica</item><item>Japan</item>
+                <item>Jordan</item><item>Kazakhstan</item><item>Kenya</item><item>North Korea</item><item>South Korea</item><item>Kosovo</item>
+                <item>Kyrgyzstan</item><item>Laos</item><item>Latvia</item><item>Lebanon</item><item>Lesotho</item><item>Liberia</item>
+                <item>Liechtenstein</item><item>Lithuania</item><item>Luxembourg</item><item>Madagascar</item><item>Malaysia</item><item>Maldives</item>
+                <item>Mali</item><item>Malta</item><item>Mauritius</item><item>Mexico</item><item>Moldova</item><item>Mongolia</item><item>Montenegro</item>
+                <item>Morocco</item><item>Mozambique</item><item>Myanmar</item><item>Namibia</item><item>Netherlands</item><item>New Zealand</item>
+                <item>Nicaragua</item><item>Niger</item><item>Nigeria</item><item>North Macedonia</item><item>Northern Ireland</item><item>Norway</item>
+                <item>Oman</item><item>Pakistan</item><item>Panama</item><item>Papua New Guinea</item><item>Paraguay</item><item>Peru</item>
+                <item>Philippines</item><item>Poland</item><item>Portugal</item><item>Qatar</item><item>Romania</item><item>Russia</item><item>Rwanda</item>
+                <item>Samoa</item><item>San Marino</item><item>Saudi Arabia</item><item>Scotland</item><item>Senegal</item><item>Serbia</item>
+                <item>Seychelles</item><item>Singapore</item><item>Slovakia</item><item>Slovenia</item><item>Somalia</item><item>South Africa</item>
+                <item>Spain</item><item>Sri Lanka</item><item>Sudan</item><item>Suriname</item><item>Sweden</item><item>Syria</item><item>Taiwan</item>
+                <item>Tajikistan</item><item>Tanzania</item><item>Thailand</item><item>Togo</item><item>Tonga</item><item>Tunisia</item><item>Turkey</item>
+                <item>Turkmenistan</item><item>Uganda</item><item>Ukraine</item><item>UAE</item><item>USA</item><item>Uruguay</item><item>Uzbekistan</item>
+                <item>Vanuatu</item><item>Venezuela</item><item>Vietnam</item><item>Wales</item><item>Yemen</item><item>Zambia</item><item>Zimbabwe</item>
+        </string-array>
+
+        <string-array name="capitals">
+                <item>Kabul</item><item>Tirana</item><item>Algiers</item><item>Luanda</item><item>Buenos Aires</item><item>Canberra</item><item>Vienna</item>
+                <item>Baku</item><item>Manama</item><item>Dhaka</item><item>Bridgetown</item><item>Minsk</item><item>Brussels</item><item>Belmopan</item>
+                <item>Thimphu</item><item>La Paz</item><item>Gaborone</item><item>Brasília</item><item>Sofia</item><item>Ouagadougou</item><item>Gitega</item>
+                <item>Praia</item><item>Phnom Penh</item><item>Yaoundé</item><item>Ottawa</item><item>Santiago</item><item>Beijing</item><item>Bogota</item>
+                <item>Moroni</item><item>Kinshasa</item><item>Brazzaville</item><item>San José</item><item>Yamoussoukro</item><item>Zagreb</item>
+                <item>Havana</item><item>Nicosia</item><item>Prague</item><item>Copenhagen</item><item>Roseau</item><item>Santa Domingo</item>
+                <item>Quito</item><item>Cairo</item><item>London</item><item>Asmara</item><item>Tallinn</item><item>Addis Ababa</item><item>Suva</item>
+                <item>Helsinki</item><item>Paris</item><item>Banjul</item><item>Tbilisi</item><item>Berlin</item><item>Accra</item><item>Athens</item>
+                <item>Guatemala City</item><item>Conakry</item><item>Georgetown</item><item>Port-au-Prince</item><item>Tegucigalpa</item>
+                <item>Budapest</item><item>Reykjavik</item><item>New Dehli</item><item>Jakarta</item><item>Tehran</item><item>Baghdad</item>
+                <item>Dublin</item><item>Tel-Aviv</item><item>Rome</item><item>Kingston</item><item>Tokyo</item><item>Amman</item><item>Astana</item>
+                <item>Nairobi</item><item>Pyongyang</item><item>Seoul</item><item>Pristina</item><item>Bishkek</item><item>Vientiane</item><item>Riga</item>
+                <item>Beirut</item><item>Maseru</item><item>Monrovia</item><item>Vaduz</item><item>Vilnius</item><item>Luxembourg City</item><item>Antananarivo</item>
+                <item>Kuala Lumpur</item><item>Malé</item><item>Bamako</item><item>Valletta</item><item>Port Louis</item><item>Mexico City</item>
+                <item>Chișinău</item><item>Ulaanbaatar</item><item>Podgorica</item><item>Rabat</item><item>Maputo</item><item>Naypyidaw</item>
+                <item>Windhoek</item><item>Amsterdam</item><item>Wellington</item><item>Managua</item><item>Niamey</item><item>Abuja</item><item>Skopje</item>
+                <item>Belfast</item><item>Oslo</item><item>Muscat</item><item>Islamabad</item><item>Panama City</item><item>Port Moresby</item>
+                <item>Asunción</item><item>Lima</item><item>Manila</item><item>Warsaw</item><item>Lisbon</item><item>Doha</item><item>Bucharest</item>
+                <item>Moscow</item><item>Kigali</item><item>Apia</item><item>San Marino</item><item>Riyadh</item><item>Edinburgh</item><item>Dakar</item>
+                <item>Belgrade</item><item>Victoria</item><item>Singapore</item><item>Bratislava</item><item>ljubljana</item><item>Mogadishu</item>
+                <item>Madrid</item><item>Colombo</item><item>Khartoum</item><item>Paramaribo</item><item>Stockholm</item><item>Damascus</item>
+                <item>Taipei City</item><item>Dushanbe</item><item>Dodoma</item><item>Bangkok</item><item>Lomé</item><item>Nukualofa</item>
+                <item>Tunis</item><item>Ankara</item><item>Ashgabat</item><item>Kampala</item><item>Kiev</item><item>Abu Dhabi</item>
+                <item>Washington D.C.</item><item>Montevideo</item><item>Tashkent</item><item>Port Villa</item><item>Caracas</item><item>Hanoi</item>
+                <item>Cardiff</item><item>Sana\'a</item><item>Lusaka</item><item>Harare</item>
+        </string-array>
 
         <string-array name="easyCountries">
                 <item>Argentina</item><item>Belgium</item><item>Brazil</item><item>Canada</item><item>Chile</item><item>China</item>

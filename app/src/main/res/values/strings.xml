@@ -25,4 +25,6 @@
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
     <string name="choose_difficulty">Choose Difficulty</string>
+    <string name="capital_name_placeholder">London</string>
+    <string name="capital_question_text">is the capital of which country?</string>
 </resources>
