@@ -21,7 +21,7 @@ import java.util.Random;
 public class CapitalQuiz extends AppCompatActivity {
 
     private TextView tvCapital;
-    private String[] capitalsArray, countriesArray;
+    private String[] easyCapitalsArray, mediumCapitalsArray, hardCapitalsArray;
     private HashMap<String, String> countryCapitalMap;
     private RadioButton[] radioButtons;
 
@@ -39,8 +39,9 @@ public class CapitalQuiz extends AppCompatActivity {
         initCountryCapitalMap();
 
         tvCapital = findViewById(R.id.tvCapitalName);
-        capitalsArray = getResources().getStringArray(R.array.capitals);
-        countriesArray = getResources().getStringArray(R.array.countries);
+        easyCapitalsArray = getResources().getStringArray(R.array.easyCapitals);
+        mediumCapitalsArray = getResources().getStringArray(R.array.mediumCapitals);
+        hardCapitalsArray = getResources().getStringArray(R.array.hardCapitals);
         radioButtons = new RadioButton[]
                 {
                         findViewById(R.id.rb1Capital),
@@ -101,15 +102,15 @@ public class CapitalQuiz extends AppCompatActivity {
 
 
         Random random = new Random();
-        int correctCapitalIndex = random.nextInt(capitalsArray.length); //
-        String correctCapital = capitalsArray[correctCapitalIndex];
+        int correctCapitalIndex = random.nextInt(easyCapitalsArray.length); //
+        String correctCapital = easyCapitalsArray[correctCapitalIndex];
         tvCapital.setText(correctCapital);
 
         List<String> wrongAnswers = new ArrayList<>();
         while (wrongAnswers.size() < 3) {
-            int wrongCountryIndex = random.nextInt(countriesArray.length);
-            if (wrongCountryIndex != correctCapitalIndex && !wrongAnswers.contains(countriesArray[wrongCountryIndex])) {
-                wrongAnswers.add(countriesArray[wrongCountryIndex]);
+            int wrongCountryIndex = random.nextInt(easyCapitalsArray.length);
+            if (wrongCountryIndex != correctCapitalIndex && !wrongAnswers.contains(easyCapitalsArray[wrongCountryIndex])) {
+                wrongAnswers.add(getCountry(easyCapitalsArray[wrongCountryIndex]));
             }
         }
 
@@ -128,15 +129,15 @@ public class CapitalQuiz extends AppCompatActivity {
     private void generateMediumQuiz()
     {
         Random random = new Random();
-        int correctCapitalIndex = random.nextInt(capitalsArray.length); //
-        String correctCapital = capitalsArray[correctCapitalIndex];
+        int correctCapitalIndex = random.nextInt(mediumCapitalsArray.length); //
+        String correctCapital = mediumCapitalsArray[correctCapitalIndex];
         tvCapital.setText(correctCapital);
 
         List<String> wrongAnswers = new ArrayList<>();
         while (wrongAnswers.size() < 5) {
-            int wrongCountryIndex = random.nextInt(countriesArray.length);
-            if (wrongCountryIndex != correctCapitalIndex && !wrongAnswers.contains(countriesArray[wrongCountryIndex])) {
-                wrongAnswers.add(countriesArray[wrongCountryIndex]);
+            int wrongCountryIndex = random.nextInt(mediumCapitalsArray.length);
+            if (wrongCountryIndex != correctCapitalIndex && !wrongAnswers.contains(mediumCapitalsArray[wrongCountryIndex])) {
+                wrongAnswers.add(getCountry(mediumCapitalsArray[wrongCountryIndex]));
             }
         }
 
@@ -153,15 +154,15 @@ public class CapitalQuiz extends AppCompatActivity {
     private void generateHardQuiz()
     {
         Random random = new Random();
-        int correctCapitalIndex = random.nextInt(capitalsArray.length); //
-        String correctCapital = capitalsArray[correctCapitalIndex];
+        int correctCapitalIndex = random.nextInt(hardCapitalsArray.length); //
+        String correctCapital = hardCapitalsArray[correctCapitalIndex];
         tvCapital.setText(correctCapital);
 
         List<String> wrongAnswers = new ArrayList<>();
         while (wrongAnswers.size() < 7) {
-            int wrongCountryIndex = random.nextInt(countriesArray.length);
-            if (wrongCountryIndex != correctCapitalIndex && !wrongAnswers.contains(countriesArray[wrongCountryIndex])) {
-                wrongAnswers.add(countriesArray[wrongCountryIndex]);
+            int wrongCountryIndex = random.nextInt(hardCapitalsArray.length);
+            if (wrongCountryIndex != correctCapitalIndex && !wrongAnswers.contains(hardCapitalsArray[wrongCountryIndex])) {
+                wrongAnswers.add(getCountry(hardCapitalsArray[wrongCountryIndex]));
             }
         }
 
@@ -199,7 +200,7 @@ public class CapitalQuiz extends AppCompatActivity {
         countryCapitalMap.put("Thimphu", "Bhutan");
         countryCapitalMap.put("La Paz", "Bolivia");
         countryCapitalMap.put("Gaborone", "Botswana");
-        countryCapitalMap.put("Brasília", "Brazil");
+        countryCapitalMap.put("Brasilia", "Brazil");
         countryCapitalMap.put("Sofia", "Bulgaria");
         countryCapitalMap.put("Ouagadougou", "Burkina Faso");
         countryCapitalMap.put("Gitega", "Burundi");
@@ -221,7 +222,7 @@ public class CapitalQuiz extends AppCompatActivity {
         countryCapitalMap.put("Prague", "Czechia");
         countryCapitalMap.put("Copenhagen", "Denmark");
         countryCapitalMap.put("Roseau", "Dominica");
-        countryCapitalMap.put("Santo Domingo", "Dominican Republic");
+        countryCapitalMap.put("Santa Domingo", "Dominican Republic");//
         countryCapitalMap.put("Quito", "Ecuador");
         countryCapitalMap.put("Cairo", "Egypt");
         countryCapitalMap.put("London", "England");
@@ -339,7 +340,7 @@ public class CapitalQuiz extends AppCompatActivity {
         countryCapitalMap.put("Caracas", "Venezuela");
         countryCapitalMap.put("Hanoi", "Vietnam");
         countryCapitalMap.put("Cardiff", "Wales");
-        countryCapitalMap.put("Sana'a", "Yemen");
+        countryCapitalMap.put("Sanaa", "Yemen");
         countryCapitalMap.put("Lusaka", "Zambia");
         countryCapitalMap.put("Harare", "Zimbabwe");
 
@@ -350,6 +351,6 @@ public class CapitalQuiz extends AppCompatActivity {
     private String getCountry(String correctCapital) {
 
         String countryName = countryCapitalMap.get(correctCapital);
-        return countryName == null ? "-" : countryName; // Return default value if not found
+        return countryName == null ? correctCapital.toUpperCase() : countryName; // Return default value if not found TODO-DEFAULT VALUE
     }
 }
