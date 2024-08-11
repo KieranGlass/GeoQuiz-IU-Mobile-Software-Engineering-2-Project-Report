@@ -35,98 +35,107 @@ public class Difficulty extends AppCompatActivity {
         category = intent.getStringExtra("Category");
 
 
-        if (category.equals("Flag")) {
-            easyBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        if (category != null) {
+            switch (category) {
+                case "Flag":
+                    easyBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
-                    Intent intent = new Intent(Difficulty.this, FlagQuiz.class);
-                    intent.putExtra("Difficulty", "Easy");
-                    startActivity(intent);
-                }
-            });
+                            Intent intent = new Intent(Difficulty.this, FlagQuiz.class);
+                            intent.putExtra("Difficulty", "Easy");
+                            startActivity(intent);
+                        }
+                    });
 
-            mediumBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                    mediumBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
-                    Intent intent = new Intent(Difficulty.this, FlagQuiz.class);
-                    intent.putExtra("Difficulty", "Medium");
-                    startActivity(intent);
-                }
-            });
+                            Intent intent = new Intent(Difficulty.this, FlagQuiz.class);
+                            intent.putExtra("Difficulty", "Medium");
+                            startActivity(intent);
+                        }
+                    });
 
-            hardBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                    hardBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
-                    Intent intent = new Intent(Difficulty.this, FlagQuiz.class);
-                    intent.putExtra("Difficulty", "Hard");
-                    startActivity(intent);
-                }
-            });
+                            Intent intent = new Intent(Difficulty.this, FlagQuiz.class);
+                            intent.putExtra("Difficulty", "Hard");
+                            startActivity(intent);
+                        }
+                    });
+                    break;
+                case "Capital":
+                    easyBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, CapitalQuiz.class);
+                            intent.putExtra("Difficulty", "Easy");
+                            startActivity(intent);
+                        }
+                    });
+
+                    mediumBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, CapitalQuiz.class);
+                            intent.putExtra("Difficulty", "Medium");
+                            startActivity(intent);
+                        }
+                    });
+
+                    hardBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, CapitalQuiz.class);
+                            intent.putExtra("Difficulty", "Hard");
+                            startActivity(intent);
+                        }
+                    });
+                    break;
+                case "Landmark":
+                    easyBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, LandmarkQuiz.class);
+                            intent.putExtra("Difficulty", "Easy");
+                            startActivity(intent);
+                        }
+                    });
+
+                    mediumBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, LandmarkQuiz.class);
+                            intent.putExtra("Difficulty", "Medium");
+                            startActivity(intent);
+                        }
+                    });
+
+                    hardBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, LandmarkQuiz.class);
+                            intent.putExtra("Difficulty", "Hard");
+                            startActivity(intent);
+                        }
+                    });
+                    break;
+            }
         }
-        else if (category.equals("Capital")) {
-            easyBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Intent intent = new Intent(Difficulty.this, CapitalQuiz.class);
-                    intent.putExtra("Difficulty", "Easy");
-                    startActivity(intent);
-                }
-            });
-
-            mediumBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Intent intent = new Intent(Difficulty.this, CapitalQuiz.class);
-                    intent.putExtra("Difficulty", "Medium");
-                    startActivity(intent);
-                }
-            });
-
-            hardBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Intent intent = new Intent(Difficulty.this, CapitalQuiz.class);
-                    intent.putExtra("Difficulty", "Hard");
-                    startActivity(intent);
-                }
-            });
-        }
-        else if (category.equals("Landmark")) {
-            easyBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Intent intent = new Intent(Difficulty.this, LandmarkQuiz.class);
-                    intent.putExtra("Difficulty", "Easy");
-                    startActivity(intent);
-                }
-            });
-
-            mediumBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Intent intent = new Intent(Difficulty.this, LandmarkQuiz.class);
-                    intent.putExtra("Difficulty", "Medium");
-                    startActivity(intent);
-                }
-            });
-
-            hardBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Intent intent = new Intent(Difficulty.this, LandmarkQuiz.class);
-                    intent.putExtra("Difficulty", "Hard");
-                    startActivity(intent);
-                }
-            });
+        else
+        {
+            Intent startAgainIntent = new Intent(Difficulty.this, MainActivity.class);
+            startActivity(startAgainIntent);
         }
     }
 }
