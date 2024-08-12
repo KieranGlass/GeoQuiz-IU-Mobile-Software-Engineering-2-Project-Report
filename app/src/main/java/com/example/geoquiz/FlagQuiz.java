@@ -2,16 +2,17 @@ package com.example.geoquiz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,6 +24,9 @@ public class FlagQuiz extends AppCompatActivity {
     private ImageView ivFlagQuestion;
     private List<RadioButton> radioButtons;
     private Button submitBtn;
+    private final List<QuizQuestion> quizQuestions = new ArrayList<>();
+    private int currentQuestionIndex = 0;
+    private TextView tvCounter;
 
     private String[] easyCountriesArray;
     private String[] mediumCountriesArray;
@@ -46,6 +50,8 @@ public class FlagQuiz extends AppCompatActivity {
         mediumCountriesArray = getResources().getStringArray(R.array.mediumCountries);
         hardCountriesArray = getResources().getStringArray(R.array.hardCountries);
 
+
+        tvCounter = findViewById(R.id.tvCounter);
         ivFlagQuestion = findViewById(R.id.ivFlagQuestion);
         radioButtons = new ArrayList<>();
         Collections.addAll(radioButtons,
@@ -59,92 +65,150 @@ public class FlagQuiz extends AppCompatActivity {
         Intent intent = getIntent();
         String difficulty = intent.getStringExtra("Difficulty");
 
+        assert difficulty != null;
+
         if (difficulty.equals("Easy"))
         {
             generateEasyQuiz();
+            displayCurrentQuestion();
         }
         else if (difficulty.equals("Medium"))
         {
             generateMediumQuiz();
+            displayCurrentQuestion();
         }
         else
         {
             generateHardQuiz();
+            displayCurrentQuestion();
         }
-
-
 
     }
 
+
     private void generateEasyQuiz() {
+
+        List<String> usedCountries = new ArrayList<>();
+
         Random random = new Random();
-        int correctCountryIndex = random.nextInt(easyCountriesArray.length); //
-        String correctCountry = easyCountriesArray[correctCountryIndex];
-        ivFlagQuestion.setImageResource(getFlagResource(correctCountry));
 
-        List<String> wrongAnswers = new ArrayList<>();
-        while (wrongAnswers.size() < 3) {
-            int wrongCountryIndex = random.nextInt(easyCountriesArray.length);
-            if (wrongCountryIndex != correctCountryIndex && !wrongAnswers.contains(easyCountriesArray[wrongCountryIndex])) {
-                wrongAnswers.add(easyCountriesArray[wrongCountryIndex]);
+        for (int i = 0; i < 20; i++) {
+
+            QuizQuestion quizQuestion = new QuizQuestion();
+
+            String correctCountry;
+
+            // do while loop ensuring that user doesn't receive the same correct answer more than once
+            // in one quiz
+            do {
+                correctCountry = easyCountriesArray[random.nextInt(easyCountriesArray.length)];
+            } while (usedCountries.contains(correctCountry));
+
+            usedCountries.add(correctCountry);
+
+            quizQuestion.correctCountry = correctCountry;
+
+
+            List<String> wrongAnswers = new ArrayList<>();
+            while (wrongAnswers.size() < 3) {
+
+                String wrongCountry = easyCountriesArray[random.nextInt(easyCountriesArray.length)];
+                if (!wrongCountry.equals(quizQuestion.correctCountry) && !wrongAnswers.contains(wrongCountry)) {
+                    wrongAnswers.add(wrongCountry);
+                }
             }
+
+            List<String> allAnswers = new ArrayList<>();
+            allAnswers.add(quizQuestion.correctCountry);
+            allAnswers.addAll(wrongAnswers);
+            Collections.shuffle(allAnswers, random);
+
+            quizQuestion.allAnswers = allAnswers;
+            quizQuestions.add(quizQuestion);
         }
 
-        List<String> allAnswers = new ArrayList<>();
-        allAnswers.add(correctCountry);
-        allAnswers.addAll(wrongAnswers);
-        Collections.shuffle(allAnswers, random);
-
-        for (int i = 0; i < radioButtons.size(); i++) {
-            radioButtons.get(i).setText(allAnswers.get(i));
-        }
     }
 
     private void generateMediumQuiz() {
+
+        List<String> usedCountries = new ArrayList<>();
+
         Random random = new Random();
-        int correctCountryIndex = random.nextInt(mediumCountriesArray.length); //
-        String correctCountry = mediumCountriesArray[correctCountryIndex];
-        ivFlagQuestion.setImageResource(getFlagResource(correctCountry));
 
-        List<String> wrongAnswers = new ArrayList<>();
-        while (wrongAnswers.size() < 3) {
-            int wrongCountryIndex = random.nextInt(mediumCountriesArray.length);
-            if (wrongCountryIndex != correctCountryIndex && !wrongAnswers.contains(mediumCountriesArray[wrongCountryIndex])) {
-                wrongAnswers.add(mediumCountriesArray[wrongCountryIndex]);
+        for (int i = 0; i < 20; i++) {
+
+            QuizQuestion quizQuestion = new QuizQuestion();
+
+            String correctCountry;
+
+            // do while loop ensuring that user doesn't receive the same correct answer more than once
+            // in one quiz
+            do {
+                correctCountry = mediumCountriesArray[random.nextInt(mediumCountriesArray.length)];
+            } while (usedCountries.contains(correctCountry));
+
+            usedCountries.add(correctCountry);
+
+            quizQuestion.correctCountry = correctCountry;
+
+
+            List<String> wrongAnswers = new ArrayList<>();
+            while (wrongAnswers.size() < 3) {
+
+                String wrongCountry = mediumCountriesArray[random.nextInt(mediumCountriesArray.length)];
+                if (!wrongCountry.equals(quizQuestion.correctCountry) && !wrongAnswers.contains(wrongCountry)) {
+                    wrongAnswers.add(wrongCountry);
+                }
             }
-        }
 
-        List<String> allAnswers = new ArrayList<>();
-        allAnswers.add(correctCountry);
-        allAnswers.addAll(wrongAnswers);
-        Collections.shuffle(allAnswers, random);
+            List<String> allAnswers = new ArrayList<>();
+            allAnswers.add(quizQuestion.correctCountry);
+            allAnswers.addAll(wrongAnswers);
+            Collections.shuffle(allAnswers, random);
 
-        for (int i = 0; i < radioButtons.size(); i++) {
-            radioButtons.get(i).setText(allAnswers.get(i));
+            quizQuestion.allAnswers = allAnswers;
+            quizQuestions.add(quizQuestion);
         }
     }
 
     private void generateHardQuiz() {
+        List<String> usedCountries = new ArrayList<>();
+
         Random random = new Random();
-        int correctCountryIndex = random.nextInt(hardCountriesArray.length); //
-        String correctCountry = hardCountriesArray[correctCountryIndex];
-        ivFlagQuestion.setImageResource(getFlagResource(correctCountry));
 
-        List<String> wrongAnswers = new ArrayList<>();
-        while (wrongAnswers.size() < 3) {
-            int wrongCountryIndex = random.nextInt(hardCountriesArray.length);
-            if (wrongCountryIndex != correctCountryIndex && !wrongAnswers.contains(hardCountriesArray[wrongCountryIndex])) {
-                wrongAnswers.add(hardCountriesArray[wrongCountryIndex]);
+        for (int i = 0; i < 20; i++) {
+
+            QuizQuestion quizQuestion = new QuizQuestion();
+
+            String correctCountry;
+
+            // do while loop ensuring that user doesn't receive the same correct answer more than once
+            // in one quiz
+            do {
+                correctCountry = hardCountriesArray[random.nextInt(hardCountriesArray.length)];
+            } while (usedCountries.contains(correctCountry));
+
+            usedCountries.add(correctCountry);
+
+            quizQuestion.correctCountry = correctCountry;
+
+
+            List<String> wrongAnswers = new ArrayList<>();
+            while (wrongAnswers.size() < 3) {
+
+                String wrongCountry = hardCountriesArray[random.nextInt(hardCountriesArray.length)];
+                if (!wrongCountry.equals(quizQuestion.correctCountry) && !wrongAnswers.contains(wrongCountry)) {
+                    wrongAnswers.add(wrongCountry);
+                }
             }
-        }
 
-        List<String> allAnswers = new ArrayList<>();
-        allAnswers.add(correctCountry);
-        allAnswers.addAll(wrongAnswers);
-        Collections.shuffle(allAnswers, random);
+            List<String> allAnswers = new ArrayList<>();
+            allAnswers.add(quizQuestion.correctCountry);
+            allAnswers.addAll(wrongAnswers);
+            Collections.shuffle(allAnswers, random);
 
-        for (int i = 0; i < radioButtons.size(); i++) {
-            radioButtons.get(i).setText(allAnswers.get(i));
+            quizQuestion.allAnswers = allAnswers;
+            quizQuestions.add(quizQuestion);
         }
     }
 
@@ -315,6 +379,35 @@ public class FlagQuiz extends AppCompatActivity {
         countryFlagMap.put("Zimbabwe", R.drawable.zimbabwe_flag);
 
         this.countryFlagMap = countryFlagMap;
+    }
+
+    private void displayCurrentQuestion() {
+
+        //Uses the currentQuestionIndex to retrieve the question to be displayed
+        QuizQuestion currentQuestion = quizQuestions.get(currentQuestionIndex);
+
+        //sets flag image in the image view element (ivFlagQuestion)
+        ivFlagQuestion.setImageResource(getFlagResource(currentQuestion.correctCountry));
+
+        //Sets the question counter on display screen (tvCounter) to number of current question
+        tvCounter.setText(String.valueOf(currentQuestionIndex + 1));
+
+        //Sets the answers to the radio buttons
+        for (int i = 0; i < radioButtons.size(); i++) {
+            radioButtons.get(i).setText(currentQuestion.allAnswers.get(i));
+        }
+    }
+
+    public void onSubmitClicked(View view) {
+
+//TODO - handle correct + incorrect answers
+        // Move to the next question
+        currentQuestionIndex++;
+        if (currentQuestionIndex >= quizQuestions.size()) {
+            // show results , new activity?
+        } else {
+            displayCurrentQuestion();
+        }
     }
 
     private int getFlagResource(String countryName) {
