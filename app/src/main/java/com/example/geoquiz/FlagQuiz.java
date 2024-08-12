@@ -62,6 +62,7 @@ public class FlagQuiz extends AppCompatActivity {
 
         submitBtn = findViewById(R.id.submitBtn);
 
+
         Intent intent = getIntent();
         String difficulty = intent.getStringExtra("Difficulty");
 
@@ -110,6 +111,7 @@ public class FlagQuiz extends AppCompatActivity {
 
 
             List<String> wrongAnswers = new ArrayList<>();
+
             while (wrongAnswers.size() < 3) {
 
                 String wrongCountry = easyCountriesArray[random.nextInt(easyCountriesArray.length)];

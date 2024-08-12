@@ -20,10 +20,14 @@ import java.util.Random;
 
 public class CapitalQuiz extends AppCompatActivity {
 
-    private TextView tvCapital;
+    private TextView tvCapital, tvCounter;
     private String[] easyCapitalsArray, mediumCapitalsArray, hardCapitalsArray;
     private HashMap<String, String> countryCapitalMap;
-    private RadioButton[] radioButtons;
+    private List<RadioButton> radioButtons;
+    private final List<QuizQuestion> quizQuestions = new ArrayList<>();
+    private int currentQuestionIndex = 0;
+    private String displayDifficulty;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,144 +43,177 @@ public class CapitalQuiz extends AppCompatActivity {
         initCountryCapitalMap();
 
         tvCapital = findViewById(R.id.tvCapitalName);
+        tvCounter = findViewById(R.id.tvCounterCapital);
+
         easyCapitalsArray = getResources().getStringArray(R.array.easyCapitals);
         mediumCapitalsArray = getResources().getStringArray(R.array.mediumCapitals);
         hardCapitalsArray = getResources().getStringArray(R.array.hardCapitals);
-        radioButtons = new RadioButton[]
+        radioButtons = new ArrayList<>();
                 {
-                        findViewById(R.id.rb1Capital),
-                        findViewById(R.id.rb2Capital),
-                        findViewById(R.id.rb3Capital),
-                        findViewById(R.id.rb4Capital),
-                        findViewById(R.id.rb5Capital),
-                        findViewById(R.id.rb6Capital),
-                        findViewById(R.id.rb7Capital),
-                        findViewById(R.id.rb8Capital)
-                };
+                    radioButtons.add(findViewById(R.id.rb1Capital));
+                    radioButtons.add(findViewById(R.id.rb2Capital));
+                    radioButtons.add(findViewById(R.id.rb3Capital));
+                    radioButtons.add(findViewById(R.id.rb4Capital));
+                    radioButtons.add(findViewById(R.id.rb5Capital));
+                    radioButtons.add(findViewById(R.id.rb6Capital));
+                    radioButtons.add(findViewById(R.id.rb7Capital));
+                    radioButtons.add(findViewById(R.id.rb8Capital));
 
-        radioButtons[4].setVisibility(View.GONE);
-        radioButtons[5].setVisibility(View.GONE);
-        radioButtons[6].setVisibility(View.GONE);
-        radioButtons[7].setVisibility(View.GONE);
+                }
 
         Intent intent = getIntent();
         String difficulty = intent.getStringExtra("Difficulty");
+        displayDifficulty = difficulty;
 
-        setUpRadioButtons(difficulty);
 
+        assert difficulty != null;
         if (difficulty.equals("Easy"))
         {
             generateEasyQuiz();
+            displayCurrentQuestion();
         }
         else if (difficulty.equals("Medium"))
         {
             generateMediumQuiz();
+            displayCurrentQuestion();
         }
         else
         {
             generateHardQuiz();
+            displayCurrentQuestion();
         }
     }
 
 
-
-    private void setUpRadioButtons (String difficulty)
-    {
-
-        if (difficulty.equals("Medium"))
-        {
-            radioButtons[4].setVisibility(View.VISIBLE);
-            radioButtons[5].setVisibility(View.VISIBLE);
-        }
-        else if (difficulty.equals("Hard"))
-        {
-            radioButtons[4].setVisibility(View.VISIBLE);
-            radioButtons[5].setVisibility(View.VISIBLE);
-            radioButtons[6].setVisibility(View.VISIBLE);
-            radioButtons[7].setVisibility(View.VISIBLE);
-        }
-
-
-    }
     private void generateEasyQuiz() {
 
+        List<String> usedCapitals = new ArrayList<>();
 
         Random random = new Random();
-        int correctCapitalIndex = random.nextInt(easyCapitalsArray.length); //
-        String correctCapital = easyCapitalsArray[correctCapitalIndex];
-        tvCapital.setText(correctCapital);
 
-        List<String> wrongAnswers = new ArrayList<>();
-        while (wrongAnswers.size() < 3) {
-            int wrongCountryIndex = random.nextInt(easyCapitalsArray.length);
-            if (wrongCountryIndex != correctCapitalIndex && !wrongAnswers.contains(easyCapitalsArray[wrongCountryIndex])) {
-                wrongAnswers.add(getCountry(easyCapitalsArray[wrongCountryIndex]));
+        for (int i = 0; i < 20; i++) {
+
+            QuizQuestion quizQuestion = new QuizQuestion();
+
+            String correctCapital;
+            do {
+                correctCapital = easyCapitalsArray[random.nextInt(easyCapitalsArray.length)];
+            } while (usedCapitals.contains(correctCapital));
+
+            usedCapitals.add(correctCapital);
+
+            quizQuestion.correctCapital = correctCapital;
+
+            tvCapital.setText(correctCapital);
+
+            List<String> wrongAnswers = new ArrayList<>();
+
+            while (wrongAnswers.size() < 3) {
+
+                String wrongCapital = easyCapitalsArray[random.nextInt(easyCapitalsArray.length)];
+                if (!wrongCapital.equals(quizQuestion.correctCapital)
+                        && !usedCapitals.contains(wrongCapital) && !wrongAnswers.contains(wrongCapital))
+                {
+                    wrongAnswers.add(getCountry(wrongCapital));
+                }
             }
-        }
 
         List<String> allAnswers = new ArrayList<>();
-        allAnswers.add(getCountry(correctCapital));
+        allAnswers.add(getCountry(quizQuestion.correctCapital));
         allAnswers.addAll(wrongAnswers);
         Collections.shuffle(allAnswers, random);
 
-        for (int i = 0; i < 4; i++) {
-            radioButtons[i].setText(allAnswers.get(i));
+        quizQuestion.allAnswers = allAnswers;
+        quizQuestions.add(quizQuestion);
         }
-
     }
 
 
     private void generateMediumQuiz()
     {
+        List<String> usedCapitals = new ArrayList<>();
+
         Random random = new Random();
-        int correctCapitalIndex = random.nextInt(mediumCapitalsArray.length); //
-        String correctCapital = mediumCapitalsArray[correctCapitalIndex];
-        tvCapital.setText(correctCapital);
 
-        List<String> wrongAnswers = new ArrayList<>();
-        while (wrongAnswers.size() < 5) {
-            int wrongCountryIndex = random.nextInt(mediumCapitalsArray.length);
-            if (wrongCountryIndex != correctCapitalIndex && !wrongAnswers.contains(mediumCapitalsArray[wrongCountryIndex])) {
-                wrongAnswers.add(getCountry(mediumCapitalsArray[wrongCountryIndex]));
+        for (int i = 0; i < 20; i++) {
+
+            QuizQuestion quizQuestion = new QuizQuestion();
+
+            String correctCapital;
+            do {
+                correctCapital = mediumCapitalsArray[random.nextInt(mediumCapitalsArray.length)];
+            } while (usedCapitals.contains(correctCapital));
+
+            usedCapitals.add(correctCapital);
+
+            quizQuestion.correctCapital = correctCapital;
+
+            tvCapital.setText(correctCapital);
+
+            List<String> wrongAnswers = new ArrayList<>();
+            while (wrongAnswers.size() < 5) {
+
+                String wrongCapital = mediumCapitalsArray[random.nextInt(mediumCapitalsArray.length)];
+                if (!wrongCapital.equals(quizQuestion.correctCapital) &&
+                        !usedCapitals.contains(wrongCapital) &&
+                        !wrongAnswers.contains(wrongCapital))
+                {
+                    wrongAnswers.add(getCountry(wrongCapital));
+                }
             }
-        }
 
-        List<String> allAnswers = new ArrayList<>();
-        allAnswers.add(getCountry(correctCapital));
-        allAnswers.addAll(wrongAnswers);
-        Collections.shuffle(allAnswers, random);
+            List<String> allAnswers = new ArrayList<>();
+            allAnswers.add(getCountry(quizQuestion.correctCapital));
+            allAnswers.addAll(wrongAnswers);
+            Collections.shuffle(allAnswers, random);
 
-        for (int i = 0; i < 6; i++) {
-            radioButtons[i].setText(allAnswers.get(i));
+            quizQuestion.allAnswers = allAnswers;
+            quizQuestions.add(quizQuestion);
         }
     }
-
     private void generateHardQuiz()
     {
+
+        List<String> usedCapitals = new ArrayList<>();
+
         Random random = new Random();
-        int correctCapitalIndex = random.nextInt(hardCapitalsArray.length); //
-        String correctCapital = hardCapitalsArray[correctCapitalIndex];
-        tvCapital.setText(correctCapital);
 
-        List<String> wrongAnswers = new ArrayList<>();
-        while (wrongAnswers.size() < 7) {
-            int wrongCountryIndex = random.nextInt(hardCapitalsArray.length);
-            if (wrongCountryIndex != correctCapitalIndex && !wrongAnswers.contains(hardCapitalsArray[wrongCountryIndex])) {
-                wrongAnswers.add(getCountry(hardCapitalsArray[wrongCountryIndex]));
+        for (int i = 0; i < 20; i++) {
+
+            QuizQuestion quizQuestion = new QuizQuestion();
+
+            String correctCapital;
+            do {
+                correctCapital = hardCapitalsArray[random.nextInt(hardCapitalsArray.length)];
+            } while (usedCapitals.contains(correctCapital));
+
+            usedCapitals.add(correctCapital);
+
+            quizQuestion.correctCapital = correctCapital;
+
+            tvCapital.setText(correctCapital);
+
+            List<String> wrongAnswers = new ArrayList<>();
+            while (wrongAnswers.size() < 7) {
+
+                String wrongCapital = hardCapitalsArray[random.nextInt(hardCapitalsArray.length)];
+                if (!wrongCapital.equals(quizQuestion.correctCapital) &&
+                        !usedCapitals.contains(wrongCapital) &&
+                        !wrongAnswers.contains(wrongCapital))
+                {
+                    wrongAnswers.add(getCountry(wrongCapital));
+                }
             }
-        }
 
-        List<String> allAnswers = new ArrayList<>();
-        allAnswers.add(getCountry(correctCapital));
-        allAnswers.addAll(wrongAnswers);
-        Collections.shuffle(allAnswers, random);
+            List<String> allAnswers = new ArrayList<>();
+            allAnswers.add(getCountry(quizQuestion.correctCapital));
+            allAnswers.addAll(wrongAnswers);
+            Collections.shuffle(allAnswers, random);
 
-        for (int i = 0; i < 8; i++) {
-            radioButtons[i].setText(allAnswers.get(i));
+            quizQuestion.allAnswers = allAnswers;
+            quizQuestions.add(quizQuestion);
         }
     }
-
-
 
 
     private void initCountryCapitalMap() {
@@ -346,6 +383,67 @@ public class CapitalQuiz extends AppCompatActivity {
 
         this.countryCapitalMap = countryCapitalMap;
 
+    }
+
+    private void displayCurrentQuestion() {
+
+        //Uses the currentQuestionIndex to retrieve the question to be displayed
+        QuizQuestion currentQuestion = quizQuestions.get(currentQuestionIndex);
+
+        //sets flag image in the image view element (ivFlagQuestion)
+        tvCapital.setText(currentQuestion.correctCapital);
+
+        //Sets the question counter on display screen (tvCounter) to number of current question
+        tvCounter.setText(String.valueOf(currentQuestionIndex + 1));
+
+        //Sets the answers to the radio buttons
+
+        // Enable or disable radio buttons based on quiz level
+        if (displayDifficulty.equals("Easy")) {
+            for (int i = 0; i < 4; i++) { // Only enable the first 4 radio buttons for Easy quiz
+                radioButtons.get(i).setVisibility(View.VISIBLE);
+                radioButtons.get(i).setEnabled(true);
+            }
+            for (int i = 4; i < 8; i++) { // Disable the last 4 radio buttons for Easy quiz
+                radioButtons.get(i).setVisibility(View.GONE);
+                radioButtons.get(i).setEnabled(false);
+            }
+        } else if (displayDifficulty.equals("Medium")) {
+            for (int i = 0; i < 6; i++) { // Only enable the first 6 radio buttons for Medium quiz
+                radioButtons.get(i).setVisibility(View.VISIBLE);
+                radioButtons.get(i).setEnabled(true);
+
+            }
+            for (int i = 6; i < 8; i++) { // Disable the last 2 radio buttons for Medium quiz
+                radioButtons.get(i).setVisibility(View.GONE);
+                radioButtons.get(i).setEnabled(false);
+            }
+        } else { // Hard quiz uses all 8 radio buttons
+            for (RadioButton radioButton : radioButtons) {
+                radioButton.setVisibility(View.VISIBLE);
+                radioButton.setEnabled(true);
+            }
+        }
+
+        // Set the answers to the enabled radio buttons
+        for (int i = 0; i < radioButtons.size(); i++) {
+            if (radioButtons.get(i).isEnabled()) {
+                radioButtons.get(i).setText(currentQuestion.allAnswers.get(i));
+            }
+        }
+    }
+
+    public void onSubmitClicked(View view) {
+
+//TODO - handle correct + incorrect answers
+        // Move to the next question
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex >= quizQuestions.size()) {
+            // show results , new activity?
+        } else {
+            displayCurrentQuestion();
+        }
     }
 
     private String getCountry(String correctCapital) {

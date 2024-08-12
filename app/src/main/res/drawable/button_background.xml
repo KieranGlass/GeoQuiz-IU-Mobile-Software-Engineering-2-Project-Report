@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <corners android:radius="150dp"/>
-    <solid android:color="@color/secondaryColour"/>
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Hovered state -->
+    <item android:state_hovered="true">
+        <shape>
+            <corners android:radius="150dp"/>
+            <solid android:color="@color/secondaryColourText"/> <!-- Color on hover -->
+        </shape>
+    </item>
+
+    <item android:state_pressed="true">
+        <shape>
+            <corners android:radius="150dp"/>
+            <solid android:color="@color/secondaryColourText"/> <!-- Color on hover -->
+        </shape>
+    </item>
+
+    <!-- Default state -->
+    <item>
+        <shape>
+            <corners android:radius="150dp"/>
+            <solid android:color="@color/secondaryColour"/> <!-- Default color -->
+        </shape>
+    </item>
+</selector>
+
+
 
