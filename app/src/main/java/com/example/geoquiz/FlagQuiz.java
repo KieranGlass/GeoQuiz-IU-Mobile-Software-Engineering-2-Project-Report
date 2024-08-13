@@ -257,7 +257,6 @@ public class FlagQuiz extends AppCompatActivity {
         countryFlagMap.put("Denmark", R.drawable.denmark_flag);
         countryFlagMap.put("Djibouti", R.drawable.djibouti_flag);
         countryFlagMap.put("Dominica", R.drawable.dominica_flag);
-        countryFlagMap.put("Dominican Republic", R.drawable.dominican_republic_flag);
         countryFlagMap.put("Ecuador", R.drawable.ecuador_flag);
         countryFlagMap.put("Egypt", R.drawable.egypt_flag);
         countryFlagMap.put("England", R.drawable.england_flag);
@@ -329,7 +328,6 @@ public class FlagQuiz extends AppCompatActivity {
         countryFlagMap.put("Oman", R.drawable.oman_flag);
         countryFlagMap.put("Pakistan", R.drawable.pakistan_flag);
         countryFlagMap.put("Panama", R.drawable.panama_flag);
-        countryFlagMap.put("Papua New Guinea", R.drawable.papua_new_guinea_flag);
         countryFlagMap.put("Paraguay", R.drawable.paraguay_flag);
         countryFlagMap.put("Peru", R.drawable.peru_flag);
         countryFlagMap.put("Philippines", R.drawable.philippines_flag);
@@ -407,6 +405,10 @@ public class FlagQuiz extends AppCompatActivity {
         currentQuestionIndex++;
         if (currentQuestionIndex >= quizQuestions.size()) {
             // show results , new activity?
+
+            Intent intent = new Intent(FlagQuiz.this, Results.class);
+            startActivity(intent);
+
         } else {
             displayCurrentQuestion();
         }

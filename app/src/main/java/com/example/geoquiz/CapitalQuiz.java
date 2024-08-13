@@ -3,6 +3,7 @@ package com.example.geoquiz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ public class CapitalQuiz extends AppCompatActivity {
     private final List<QuizQuestion> quizQuestions = new ArrayList<>();
     private int currentQuestionIndex = 0;
     private String displayDifficulty;
+    private RadioButton lastCheckedRadioButton = null;
 
 
     @Override
@@ -49,17 +51,37 @@ public class CapitalQuiz extends AppCompatActivity {
         mediumCapitalsArray = getResources().getStringArray(R.array.mediumCapitals);
         hardCapitalsArray = getResources().getStringArray(R.array.hardCapitals);
         radioButtons = new ArrayList<>();
-                {
-                    radioButtons.add(findViewById(R.id.rb1Capital));
-                    radioButtons.add(findViewById(R.id.rb2Capital));
-                    radioButtons.add(findViewById(R.id.rb3Capital));
-                    radioButtons.add(findViewById(R.id.rb4Capital));
-                    radioButtons.add(findViewById(R.id.rb5Capital));
-                    radioButtons.add(findViewById(R.id.rb6Capital));
-                    radioButtons.add(findViewById(R.id.rb7Capital));
-                    radioButtons.add(findViewById(R.id.rb8Capital));
 
-                }
+                {
+                    // Initializing all Radio Buttons into the radioButtons Array List
+                    RadioButton rb1Capital = findViewById(R.id.rb1Capital); RadioButton rb2Capital = findViewById(R.id.rb2Capital);
+                    RadioButton rb3Capital = findViewById(R.id.rb3Capital); RadioButton rb4Capital = findViewById(R.id.rb4Capital);
+                    RadioButton rb5Capital = findViewById(R.id.rb5Capital); RadioButton rb6Capital = findViewById(R.id.rb6Capital);
+                    RadioButton rb7Capital = findViewById(R.id.rb7Capital); RadioButton rb8Capital = findViewById(R.id.rb8Capital);
+
+                    // Add RadioButtons to the list
+                    radioButtons.add(rb1Capital); radioButtons.add(rb2Capital); radioButtons.add(rb3Capital); radioButtons.add(rb4Capital);
+                    radioButtons.add(rb5Capital); radioButtons.add(rb6Capital); radioButtons.add(rb7Capital); radioButtons.add(rb8Capital);
+
+                    // Set OnCheckedChangeListener for each RadioButton
+                    CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if (isChecked && lastCheckedRadioButton != null && lastCheckedRadioButton.getId() != buttonView.getId())
+                            {   // Uncheck the previously checked RadioButton
+                                lastCheckedRadioButton.setChecked(false);
+                            }   // Update the lastCheckedRadioButton variable
+                            lastCheckedRadioButton = isChecked ? (RadioButton) buttonView : null;
+                        }
+                    };
+
+                    rb1Capital.setOnCheckedChangeListener(listener); rb2Capital.setOnCheckedChangeListener(listener);
+                    rb3Capital.setOnCheckedChangeListener(listener); rb4Capital.setOnCheckedChangeListener(listener);
+                    rb5Capital.setOnCheckedChangeListener(listener); rb6Capital.setOnCheckedChangeListener(listener);
+                    rb7Capital.setOnCheckedChangeListener(listener); rb8Capital.setOnCheckedChangeListener(listener);
+
+                }  // Everything to do with the Radio Buttons
+
 
         Intent intent = getIntent();
         String difficulty = intent.getStringExtra("Difficulty");
@@ -82,8 +104,9 @@ public class CapitalQuiz extends AppCompatActivity {
             generateHardQuiz();
             displayCurrentQuestion();
         }
-    }
 
+
+    }
 
     private void generateEasyQuiz() {
 
@@ -128,9 +151,8 @@ public class CapitalQuiz extends AppCompatActivity {
         }
     }
 
+    private void generateMediumQuiz() {
 
-    private void generateMediumQuiz()
-    {
         List<String> usedCapitals = new ArrayList<>();
 
         Random random = new Random();
@@ -171,8 +193,8 @@ public class CapitalQuiz extends AppCompatActivity {
             quizQuestions.add(quizQuestion);
         }
     }
-    private void generateHardQuiz()
-    {
+
+    private void generateHardQuiz()  {
 
         List<String> usedCapitals = new ArrayList<>();
 
@@ -214,7 +236,6 @@ public class CapitalQuiz extends AppCompatActivity {
             quizQuestions.add(quizQuestion);
         }
     }
-
 
     private void initCountryCapitalMap() {
 
@@ -385,24 +406,25 @@ public class CapitalQuiz extends AppCompatActivity {
 
     }
 
+
     private void displayCurrentQuestion() {
 
         //Uses the currentQuestionIndex to retrieve the question to be displayed
         QuizQuestion currentQuestion = quizQuestions.get(currentQuestionIndex);
 
-        //sets flag image in the image view element (ivFlagQuestion)
+        //sets capital textView in the activity to the capital that is the focus of the question (tvCapital)
         tvCapital.setText(currentQuestion.correctCapital);
 
         //Sets the question counter on display screen (tvCounter) to number of current question
         tvCounter.setText(String.valueOf(currentQuestionIndex + 1));
 
         //Sets the answers to the radio buttons
-
         // Enable or disable radio buttons based on quiz level
         if (displayDifficulty.equals("Easy")) {
             for (int i = 0; i < 4; i++) { // Only enable the first 4 radio buttons for Easy quiz
                 radioButtons.get(i).setVisibility(View.VISIBLE);
                 radioButtons.get(i).setEnabled(true);
+                radioButtons.get(i).setChecked(false);
             }
             for (int i = 4; i < 8; i++) { // Disable the last 4 radio buttons for Easy quiz
                 radioButtons.get(i).setVisibility(View.GONE);
@@ -412,6 +434,7 @@ public class CapitalQuiz extends AppCompatActivity {
             for (int i = 0; i < 6; i++) { // Only enable the first 6 radio buttons for Medium quiz
                 radioButtons.get(i).setVisibility(View.VISIBLE);
                 radioButtons.get(i).setEnabled(true);
+                radioButtons.get(i).setChecked(false);
 
             }
             for (int i = 6; i < 8; i++) { // Disable the last 2 radio buttons for Medium quiz
@@ -422,6 +445,7 @@ public class CapitalQuiz extends AppCompatActivity {
             for (RadioButton radioButton : radioButtons) {
                 radioButton.setVisibility(View.VISIBLE);
                 radioButton.setEnabled(true);
+                radioButton.setChecked(false);
             }
         }
 
@@ -441,6 +465,10 @@ public class CapitalQuiz extends AppCompatActivity {
 
         if (currentQuestionIndex >= quizQuestions.size()) {
             // show results , new activity?
+
+            Intent intent = new Intent(CapitalQuiz.this, Results.class);
+            startActivity(intent);
+
         } else {
             displayCurrentQuestion();
         }

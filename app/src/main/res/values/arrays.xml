@@ -138,13 +138,12 @@
         <string-array name="hardCountries">
                 <item>Afghanistan</item><item>Angola</item><item>Azerbaijan</item><item>Bahrain</item><item>Barbados</item>
                 <item>Belarus</item><item>Belize</item><item>Bhutan</item><item>Burkina Faso</item><item>Burundi</item>
-                <item>Comoros</item><item>Congo</item><item>Djibouti</item><item>Dominica</item><item>Dominican Republic</item>
-                <item>Eritrea</item><item>Gambia</item><item>Guatemala</item><item>Guinea</item>
-                <item>Guinea-Bissau</item><item>Guyana</item><item>Honduras</item><item>Indonesia</item>
-                <item>Iraq</item><item>Jordan</item><item>Kosovo</item><item>Kyrgyzstan</item><item>Latvia</item><item>Lebanon</item>
-                <item>Lesotho</item><item>Liberia</item><item>Liechtenstein</item><item>Luxembourg</item><item>Maldives</item>
-                <item>Mali</item><item>Mauritius</item><item>Moldova</item><item>Mozambique</item><item>Namibia</item>
-                <item>Nicaragua</item><item>Niger</item><item>Oman</item><item>Papua New Guinea</item><item>Rwanda</item>
+                <item>Comoros</item><item>Congo</item><item>Djibouti</item><item>Dominica</item><item>Eritrea</item>
+                <item>Gambia</item><item>Guatemala</item><item>Guinea</item><item>Guinea-Bissau</item><item>Guyana</item>
+                <item>Honduras</item><item>Indonesia</item><item>Iraq</item><item>Jordan</item><item>Kosovo</item><item>Kyrgyzstan</item>
+                <item>Latvia</item><item>Lebanon</item><item>Lesotho</item><item>Liberia</item><item>Liechtenstein</item>
+                <item>Luxembourg</item><item>Maldives</item><item>Mali</item><item>Mauritius</item><item>Moldova</item>
+                <item>Mozambique</item><item>Namibia</item><item>Nicaragua</item><item>Niger</item><item>Oman</item><item>Rwanda</item>
                 <item>Samoa</item><item>Senegal</item><item>Seychelles</item><item>Singapore</item>
                 <item>Slovakia</item><item>Somalia</item><item>Sudan</item><item>Suriname</item><item>Syria</item><item>Taiwan</item>
                 <item>Tajikistan</item><item>Tanzania</item><item>Togo</item><item>Tonga</item><item>Turkmenistan</item>

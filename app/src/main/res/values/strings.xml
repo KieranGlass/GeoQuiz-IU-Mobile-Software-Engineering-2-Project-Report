@@ -27,4 +27,12 @@
     <string name="choose_difficulty">Choose Difficulty</string>
     <string name="capital_name_placeholder">London</string>
     <string name="capital_question_text">is the capital of which country?</string>
+    <string name="try_again">Try Again</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="home">Home</string>
+    <string name="result_text">Your score was .....</string>
+    <string name="result_word">Congratulations</string>
+    <string name="result_image_description">An image depicting the success or failure of result</string>
+    <string name="iv_quiz_type_placeholder">Capital</string>
+    <string name="iv_diff_chosen_placeholder">Medium</string>
 </resources>
