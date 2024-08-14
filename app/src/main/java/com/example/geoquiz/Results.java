@@ -15,8 +15,8 @@ import androidx.core.view.WindowInsetsCompat;
 public class Results extends AppCompatActivity {
 
     Button tryAgainBtn, homeBtn, dashboardBtn;
-    TextView difficultyChosen, categoryChosen;
-    String difficultyReceived, categoryReceived;
+    TextView difficultyChosen, categoryChosen, scoreObtained;
+    String difficultyReceived, categoryReceived, scoreReceived;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +36,16 @@ public class Results extends AppCompatActivity {
 
         difficultyChosen = findViewById(R.id.tvDifficultyChosen);
         categoryChosen = findViewById(R.id.tvQuizType);
+        scoreObtained = findViewById(R.id.tvResultPercentage);
 
         Intent intent = getIntent();
         difficultyReceived = intent.getStringExtra("Difficulty");
         categoryReceived = intent.getStringExtra("Category");
+        scoreReceived = String.valueOf(intent.getIntExtra("Score", 0));
 
         difficultyChosen.setText(difficultyReceived);
         categoryChosen.setText(categoryReceived);
+        scoreObtained.setText(scoreReceived);
 
     }
 

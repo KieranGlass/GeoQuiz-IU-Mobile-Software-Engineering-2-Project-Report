@@ -31,6 +31,7 @@ public class FlagQuiz extends AppCompatActivity {
     private int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
+    int score = 0;
     private Button submitBtn;
 
     @Override
@@ -419,15 +420,34 @@ public class FlagQuiz extends AppCompatActivity {
 
     public void onSubmitClicked(View view) {
 
-//TODO - handle correct + incorrect answers
-        // Move to the next question
+        QuizQuestion currentQuestion = quizQuestions.get(currentQuestionIndex);
+
+        String answer = "";
+
+        for (RadioButton radioButton : radioButtons)
+        {
+            if (radioButton.isChecked())
+            {
+                answer = (String) radioButton.getText();
+            }
+        }
+
+        if(currentQuestion.correctCountry.equals(answer))
+        {
+            score++;
+        }
+
         currentQuestionIndex++;
+
+
+
         if (currentQuestionIndex >= quizQuestions.size()) {
             // show results , new activity?
 
             Intent intent = new Intent(FlagQuiz.this, Results.class);
             intent.putExtra("Difficulty", intentDifficulty);
             intent.putExtra("Category", intentCategory);
+            intent.putExtra("Score", score);
             startActivity(intent);
 
         } else {
