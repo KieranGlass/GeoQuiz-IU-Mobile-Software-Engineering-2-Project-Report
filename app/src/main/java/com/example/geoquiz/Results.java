@@ -1,9 +1,11 @@
 package com.example.geoquiz;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -15,8 +17,11 @@ import androidx.core.view.WindowInsetsCompat;
 public class Results extends AppCompatActivity {
 
     Button tryAgainBtn, homeBtn, dashboardBtn;
-    TextView difficultyChosen, categoryChosen, scoreObtained;
+    TextView difficultyChosen, categoryChosen, scoreObtained, resultWord;
+    ImageView ivResults;
     String difficultyReceived, categoryReceived, scoreReceived;
+    double score, scorePercentage;
+    long finishedScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +42,39 @@ public class Results extends AppCompatActivity {
         difficultyChosen = findViewById(R.id.tvDifficultyChosen);
         categoryChosen = findViewById(R.id.tvQuizType);
         scoreObtained = findViewById(R.id.tvResultPercentage);
+        resultWord = findViewById(R.id.tvResultWord);
+
+        ivResults = findViewById(R.id.ivResults);
 
         Intent intent = getIntent();
         difficultyReceived = intent.getStringExtra("Difficulty");
         categoryReceived = intent.getStringExtra("Category");
-        scoreReceived = String.valueOf(intent.getIntExtra("Score", 0));
+        score = (intent.getIntExtra("Score", 0));
+
+        scorePercentage = ((score /20) * 100);
+        finishedScore = Math.round(scorePercentage);
+
 
         difficultyChosen.setText(difficultyReceived);
         categoryChosen.setText(categoryReceived);
-        scoreObtained.setText(scoreReceived);
+
+        scoreObtained.setText(((finishedScore)) + " %");
+
+        if (finishedScore == 100) {
+            ivResults.setImageResource(R.drawable.outstanding);
+        }
+        else if (finishedScore > 70) {
+            ivResults.setImageResource(R.drawable.happy);
+        }
+        else if (finishedScore > 50) {
+            ivResults.setImageResource(R.drawable.winking);
+        }
+        else if (finishedScore > 20) {
+            ivResults.setImageResource(R.drawable.sad);
+        }
+        else {
+            ivResults.setImageResource(R.drawable.crying);
+        }
 
     }
 

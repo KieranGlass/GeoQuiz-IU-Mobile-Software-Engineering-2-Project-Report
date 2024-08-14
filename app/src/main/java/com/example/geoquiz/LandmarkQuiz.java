@@ -30,6 +30,7 @@ public class LandmarkQuiz extends AppCompatActivity {
     private int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
+    int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,14 +133,14 @@ public class LandmarkQuiz extends AppCompatActivity {
             usedLandmarks.add(correctLandmark);
 
             quizQuestion.correctLandmark = correctLandmark;
-            String correctLandmarkCountry = getLandmarkCountry(correctLandmark);
+            quizQuestion.correctLandmarkCountry = getLandmarkCountry(correctLandmark);
 
             List<String> wrongAnswers = new ArrayList<>();
 
             while (wrongAnswers.size() < 5) {
 
                 String wrongLandmark = countriesArray[random.nextInt(countriesArray.length)];
-                if (!wrongAnswers.contains(wrongLandmark) && !correctLandmarkCountry.equals(wrongLandmark))
+                if (!wrongAnswers.contains(wrongLandmark) && !quizQuestion.correctLandmarkCountry.equals(wrongLandmark))
                 {
                     wrongAnswers.add(wrongLandmark);
                 }
@@ -261,8 +262,23 @@ public class LandmarkQuiz extends AppCompatActivity {
 
     public void onSubmitClicked(View view) {
 
-//TODO - handle correct + incorrect answers
-        // Move to the next question
+        QuizQuestion currentQuestion = quizQuestions.get(currentQuestionIndex);
+
+        String answer = "";
+
+        for (RadioButton radioButton : radioButtons)
+        {
+            if (radioButton.isChecked())
+            {
+                answer = (String) radioButton.getText();
+            }
+        }
+
+        if(currentQuestion.correctLandmarkCountry.equals(answer))
+        {
+            score++;
+        }
+
         currentQuestionIndex++;
 
         if (currentQuestionIndex >= quizQuestions.size()) {
@@ -272,6 +288,7 @@ public class LandmarkQuiz extends AppCompatActivity {
             Intent intent = new Intent(LandmarkQuiz.this, Results.class);
             intent.putExtra("Difficulty", intentDifficulty);
             intent.putExtra("Category", intentCategory);
+            intent.putExtra("Score", score);
             startActivity(intent);
 
         } else {

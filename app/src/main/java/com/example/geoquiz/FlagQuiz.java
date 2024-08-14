@@ -32,7 +32,6 @@ public class FlagQuiz extends AppCompatActivity {
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
     int score = 0;
-    private Button submitBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +78,6 @@ public class FlagQuiz extends AppCompatActivity {
             rbFlag3.setOnCheckedChangeListener(listener); rbFlag4.setOnCheckedChangeListener(listener);
 
         }
-
-        submitBtn = findViewById(R.id.submitBtn);
 
         //Receive difficulty info from previous activity
         Intent receivedIntent = getIntent();
@@ -438,8 +435,6 @@ public class FlagQuiz extends AppCompatActivity {
         }
 
         currentQuestionIndex++;
-
-
 
         if (currentQuestionIndex >= quizQuestions.size()) {
             // show results , new activity?

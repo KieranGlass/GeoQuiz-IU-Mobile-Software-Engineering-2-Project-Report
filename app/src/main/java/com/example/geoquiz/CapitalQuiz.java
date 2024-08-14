@@ -30,6 +30,8 @@ public class CapitalQuiz extends AppCompatActivity {
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
 
+    int score = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,13 +211,13 @@ public class CapitalQuiz extends AppCompatActivity {
             usedCapitals.add(correctCapital);
 
             quizQuestion.correctCapital = correctCapital;
-            String correctCapitalCountry = getCountry(correctCapital);
+            quizQuestion.correctCapitalCountry = getCountry(correctCapital);
 
             List<String> wrongAnswers = new ArrayList<>();
             while (wrongAnswers.size() < 7) {
 
                 String wrongCapital = countriesArray[random.nextInt(countriesArray.length)];
-                if (!wrongCapital.equals(correctCapitalCountry) && !wrongAnswers.contains(wrongCapital))
+                if (!wrongCapital.equals(quizQuestion.correctCapitalCountry) && !wrongAnswers.contains(wrongCapital))
                 {
                     wrongAnswers.add(wrongCapital);
                 }
@@ -451,8 +453,23 @@ public class CapitalQuiz extends AppCompatActivity {
 
     public void onSubmitClicked(View view) {
 
-//TODO - handle correct + incorrect answers
-        // Move to the next question
+        QuizQuestion currentQuestion = quizQuestions.get(currentQuestionIndex);
+
+        String answer = "";
+
+        for (RadioButton radioButton : radioButtons)
+        {
+            if (radioButton.isChecked())
+            {
+                answer = (String) radioButton.getText();
+            }
+        }
+
+        if(currentQuestion.correctCapitalCountry.equals(answer))
+        {
+            score++;
+        }
+
         currentQuestionIndex++;
 
         if (currentQuestionIndex >= quizQuestions.size()) {
@@ -461,6 +478,7 @@ public class CapitalQuiz extends AppCompatActivity {
             Intent intent = new Intent(CapitalQuiz.this, Results.class);
             intent.putExtra("Difficulty", intentDifficulty);
             intent.putExtra("Category", intentCategory);
+            intent.putExtra("Score", score);
             startActivity(intent);
 
         } else {

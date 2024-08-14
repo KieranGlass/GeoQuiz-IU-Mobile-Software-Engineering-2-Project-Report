@@ -9,6 +9,8 @@ public class QuizQuestion {
         String correctCountry;
         String correctCapital;
         String correctLandmark;
+        String correctCapitalCountry;
+        String correctLandmarkCountry;
         List<String> allAnswers;
 
 
