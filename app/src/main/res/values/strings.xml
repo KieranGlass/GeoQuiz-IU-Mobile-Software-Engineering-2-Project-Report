@@ -35,4 +35,7 @@
     <string name="result_image_description">An image depicting the success or failure of result</string>
     <string name="iv_quiz_type_placeholder">Capital</string>
     <string name="iv_diff_chosen_placeholder">Medium</string>
+    <string name="landmark_name_placeholder">The Eiffel Tower</string>
+    <string name="landmark_question_text">In which country is the following landmark found?</string>
+    <string name="image_landmark_description">The landmark image associated with the question</string>
 </resources>

@@ -5,6 +5,140 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".landmarkQuiz">
+    android:background="@color/primaryColor"
+    tools:context=".LandmarkQuiz">
+
+    <TextView
+        android:id="@+id/tvLandmarkQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/landmark_question_text"
+        android:textStyle="bold"
+        android:textColor="@color/secondaryColourText"
+        android:textSize="24sp"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/ivLandmark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivLandmark"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:contentDescription="@string/image_landmark_description"
+        app:srcCompat="@drawable/eiffel_tower"
+        app:layout_constraintBottom_toTopOf="@id/tvLandmarkName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLandmarkQuestion" />
+
+    <TextView
+        android:id="@+id/tvLandmarkName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/landmark_name_placeholder"
+        android:textStyle="bold"
+        android:textColor="@color/secondaryColourText"
+        android:textSize="30sp"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/groupLandmark1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivLandmark" />
+
+    <LinearLayout
+        android:id="@+id/groupLandmark1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:weightSum="2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLandmarkName"
+        app:layout_constraintBottom_toTopOf="@id/groupLandmark2"
+        >
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rbLandmark1"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:text="@string/country_placeholder"
+            tools:ignore="DuplicateSpeakableTextCheck,VisualLintButtonSize" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rbLandmark2"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/groupLandmark2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:weightSum="2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/groupLandmark1"
+        app:layout_constraintBottom_toTopOf="@id/submitBtnLandmark">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rbLandmark3"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rbLandmark4"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submitBtnLandmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        android:onClick="onSubmitClicked"
+        android:background="@drawable/button_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/groupLandmark2"
+        app:layout_constraintStart_toEndOf="@id/tvCounterLandmark"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCounterLandmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/qNumberStart"
+        android:textSize="26sp"
+        android:textColor="@color/primaryColourText"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/submitBtnLandmark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/groupLandmark2" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

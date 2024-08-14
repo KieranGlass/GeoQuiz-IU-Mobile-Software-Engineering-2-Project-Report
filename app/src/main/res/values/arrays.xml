@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="countries">
+        <string-array name="countries">
                 <item>Afghanistan</item><item>Albania</item><item>Algeria</item><item>Angola</item><item>Argentina</item><item>Australia</item>
                 <item>Austria</item><item>Azerbaijan</item><item>Bahrain</item><item>Bangladesh</item><item>Barbados</item><item>Belarus</item>
                 <item>Belgium</item><item>Belize</item><item>Bhutan</item><item>Bolivia</item><item>Botswana</item><item>Brazil</item><item>Bulgaria</item>
@@ -149,4 +149,29 @@
                 <item>Tajikistan</item><item>Tanzania</item><item>Togo</item><item>Tonga</item><item>Turkmenistan</item>
                 <item>Uganda</item><item>Uzbekistan</item><item>Vanuatu</item><item>Yemen</item><item>Zambia</item><item>Zimbabwe</item>
         </string-array>
+
+
+        <string-array name="easyLandmarks">
+            <item>The Eiffel Tower</item><item>Pyramids</item><item>The Great Wall</item><item>Colosseum</item>
+            <item>Statue of Liberty</item><item>Stonehenge</item><item>Mt Fuji</item><item>Great Barrier Reef</item>
+            <item>Cristo Redentor</item><item>Burj Khalifa</item><item>Taj Mahal</item><item>Machu Picchu</item>
+            <item>Leaning Tower of Pisa</item><item>Grand Canyon</item><item>Buckingham Palace</item><item>Petra</item>
+            <item>Loch Ness</item><item>Uluru</item><item>Ha Long Bay</item><item>Mont Saint-Michel</item>
+        </string-array>
+
+        <string-array name="mediumLandmarks">
+            <item>Mount Kilimanjaro</item><item>Galapagos Islands</item><item>Milford Sound</item><item>Hagia Sophia</item><item>Angel Falls</item>
+            <item>St Basils Cathedral</item><item>Angkor Wat</item><item>Chichén Itza</item><item>Sagrada Familia</item><item>Forbidden City</item>
+            <item>Krakatoa</item><item>CN Radio Tower</item><item>Brandenburg Gate</item><item>The Red Fort</item><item>Petronas Twin Towers</item>
+            <item>Yosemite National Park</item><item>Table Mountain</item><item>Neuschwanstein Castle</item><item>Casino de Monte Carlo</item>
+            <item>Parthenon</item>
+        </string-array>
+
+        <string-array name="hardLandmarks">
+            <item>Okavango Delta</item><item>Uyuni Salt Flat</item><item>Cliffs of Moher</item><item>Moraine Lake</item><item>Tikal</item>
+            <item>Lake Baikal</item><item>Borobudur</item><item>Sigiriya</item><item>Mount Kosciuszko</item><item>Torre Egger</item>
+            <item>Jungfraujoch</item><item>The Rijksmuseum</item><item>Wieliczka Salt Mine</item><item>Danakil Depression</item><item>Zuma Rock</item>
+            <item>Mt Nyiragongo</item><item>Fox Glacier</item><item>St Stephens Cathedral</item><item>Belém Tower</item><item>Chocolate Hills</item>
+        </string-array>
+
 </resources>
