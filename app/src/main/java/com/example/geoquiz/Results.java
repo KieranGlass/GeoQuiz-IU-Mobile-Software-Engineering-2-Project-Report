@@ -1,6 +1,10 @@
 package com.example.geoquiz;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +13,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class Results extends AppCompatActivity {
+
+    Button tryAgainBtn, homeBtn, dashboardBtn;
+    TextView difficultyChosen, categoryChosen;
+    String difficultyReceived, categoryReceived;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +28,62 @@ public class Results extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
+        tryAgainBtn = findViewById(R.id.btnTryAgain);
+        homeBtn = findViewById(R.id.btnHome);
+        dashboardBtn = findViewById(R.id.btnDashboard);
+
+        difficultyChosen = findViewById(R.id.tvDifficultyChosen);
+        categoryChosen = findViewById(R.id.tvQuizType);
+
+        Intent intent = getIntent();
+        difficultyReceived = intent.getStringExtra("Difficulty");
+        categoryReceived = intent.getStringExtra("Category");
+
+        difficultyChosen.setText(difficultyReceived);
+        categoryChosen.setText(categoryReceived);
+
     }
+
+    public void onClickTryAgain(View view){
+
+        switch (categoryReceived) {
+            case "Flag": {
+                Intent intent = new Intent(Results.this, FlagQuiz.class);
+                intent.putExtra("Category", "Flag");
+                intent.putExtra("Difficulty", difficultyReceived);
+                startActivity(intent);
+                break;
+            }
+            case "Capital": {
+                Intent intent = new Intent(Results.this, CapitalQuiz.class);
+                intent.putExtra("Category", "Capital");
+                intent.putExtra("Difficulty", difficultyReceived);
+                startActivity(intent);
+                break;
+            }
+            case "Landmark": {
+                Intent intent = new Intent(Results.this, LandmarkQuiz.class);
+                intent.putExtra("Category", "Landmark");
+                intent.putExtra("Difficulty", difficultyReceived);
+                startActivity(intent);
+                break;
+            }
+        }
+
+    }
+
+    public void onClickHome(View view){
+
+        Intent intent = new Intent(Results.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickDashboard(View view){
+
+        Intent intent = new Intent(Results.this, QuizDashboard.class);
+        startActivity(intent);
+    }
+
 }

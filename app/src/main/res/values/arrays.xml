@@ -7,7 +7,7 @@
                 <item>Burkina Faso</item><item>Burundi</item><item>Cape Verde</item><item>Cambodia</item><item>Cameroon</item><item>Canada</item>
                 <item>Chile</item><item>China</item><item>Colombia</item><item>Comoros</item><item>DR Congo</item><item>Congo</item><item>Costa Rica</item>
                 <item>Ivory Coast</item><item>Croatia</item><item>Cuba</item><item>Cyprus</item><item>Czechia</item><item>Denmark</item>
-                <item>Djibouti</item><item>Dominica</item><item>Dominican Republic</item><item>Ecuador</item><item>Egypt</item><item>England</item>
+                <item>Djibouti</item><item>Dominica</item><item>Ecuador</item><item>Egypt</item><item>England</item>
                 <item>Eritrea</item><item>Estonia</item><item>Ethiopia</item><item>Fiji</item><item>Finland</item><item>France</item><item>Gambia</item>
                 <item>Georgia</item><item>Germany</item><item>Ghana</item><item>Greece</item><item>Guatemala</item><item>Guinea</item><item>Guinea-Bissau</item>
                 <item>Guyana</item><item>Haiti</item><item>Honduras</item><item>Hungary</item><item>Iceland</item><item>India</item><item>Indonesia</item>
@@ -18,7 +18,7 @@
                 <item>Mali</item><item>Malta</item><item>Mauritius</item><item>Mexico</item><item>Moldova</item><item>Mongolia</item><item>Montenegro</item>
                 <item>Morocco</item><item>Mozambique</item><item>Myanmar</item><item>Namibia</item><item>Netherlands</item><item>New Zealand</item>
                 <item>Nicaragua</item><item>Niger</item><item>Nigeria</item><item>North Macedonia</item><item>Northern Ireland</item><item>Norway</item>
-                <item>Oman</item><item>Pakistan</item><item>Panama</item><item>Papua New Guinea</item><item>Paraguay</item><item>Peru</item>
+                <item>Oman</item><item>Pakistan</item><item>Panama</item><item>Paraguay</item><item>Peru</item>
                 <item>Philippines</item><item>Poland</item><item>Portugal</item><item>Qatar</item><item>Romania</item><item>Russia</item><item>Rwanda</item>
                 <item>Samoa</item><item>San Marino</item><item>Saudi Arabia</item><item>Scotland</item><item>Senegal</item><item>Serbia</item>
                 <item>Seychelles</item><item>Singapore</item><item>Slovakia</item><item>Slovenia</item><item>Somalia</item><item>South Africa</item>
@@ -91,7 +91,7 @@
                 <item>Thimphu</item><item>La Paz</item><item>Gaborone</item><item>Sofia</item><item>Ouagadougou</item><item>Gitega</item>
                 <item>Praia</item><item>Phnom Penh</item><item>Yaoundé</item><item>Ottawa</item><item>Santiago</item><item>Beijing</item>
                 <item>Bogota</item><item>Moroni</item><item>Kinshasa</item><item>Brazzaville</item><item>San José</item><item>Yamoussoukro</item>
-                <item>Zagreb</item><item>Havana</item><item>Nicosia</item><item>Roseau</item><item>Santa Domingo</item><item>Quito</item>
+                <item>Zagreb</item><item>Havana</item><item>Nicosia</item><item>Roseau</item><item>Quito</item>
                 <item>Asmara</item><item>Tallinn</item><item>Addis Ababa</item><item>Suva</item><item>Banjul</item><item>Tbilisi</item>
                 <item>Accra</item><item>Conakry</item><item>Georgetown</item><item>Port-au-Prince</item><item>Tegucigalpa</item>
                 <item>Budapest</item><item>Jakarta</item><item>Tehran</item><item>Baghdad</item><item>Kingston</item><item>Amman</item>
@@ -100,7 +100,7 @@
                 <item>Antananarivo</item><item>Kuala Lumpur</item><item>Malé</item><item>Bamako</item><item>Valletta</item><item>Port Louis</item>
                 <item>Chișinău</item><item>Ulaanbaatar</item><item>Podgorica</item><item>Rabat</item><item>Maputo</item><item>Naypyidaw</item>
                 <item>Windhoek</item><item>Wellington</item><item>Managua</item><item>Niamey</item><item>Abuja</item><item>Skopje</item>
-                <item>Belfast</item><item>Oslo</item><item>Muscat</item><item>Islamabad</item><item>Port Moresby</item>
+                <item>Belfast</item><item>Oslo</item><item>Muscat</item><item>Islamabad</item>
                 <item>Asunción</item><item>Lima</item><item>Manila</item><item>Warsaw</item><item>Doha</item><item>Bucharest</item>
                 <item>Kigali</item><item>Apia</item><item>Riyadh</item><item>Dakar</item>
                 <item>Belgrade</item><item>Victoria</item><item>Bratislava</item><item>Ljubljana</item><item>Mogadishu</item>
@@ -149,7 +149,6 @@
                 <item>Tajikistan</item><item>Tanzania</item><item>Togo</item><item>Tonga</item><item>Turkmenistan</item>
                 <item>Uganda</item><item>Uzbekistan</item><item>Vanuatu</item><item>Yemen</item><item>Zambia</item><item>Zimbabwe</item>
         </string-array>
-
 
         <string-array name="easyLandmarks">
             <item>The Eiffel Tower</item><item>Pyramids</item><item>The Great Wall</item><item>Colosseum</item>

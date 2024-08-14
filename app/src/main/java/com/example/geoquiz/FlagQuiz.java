@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -21,17 +22,16 @@ import java.util.Random;
 
 public class FlagQuiz extends AppCompatActivity {
 
+    private String[] easyCountriesArray, mediumCountriesArray, hardCountriesArray;
     private ImageView ivFlagQuestion;
-    private List<RadioButton> radioButtons;
-    private Button submitBtn;
-    private final List<QuizQuestion> quizQuestions = new ArrayList<>();
-    private int currentQuestionIndex = 0;
     private TextView tvCounter;
-
-    private String[] easyCountriesArray;
-    private String[] mediumCountriesArray;
-    private String[] hardCountriesArray;
+    private List<RadioButton> radioButtons;
+    private final List<QuizQuestion> quizQuestions = new ArrayList<>();
     private HashMap<String, Integer> countryFlagMap;
+    private int currentQuestionIndex = 0;
+    private RadioButton lastCheckedRadioButton = null;
+    private String intentDifficulty, intentCategory;
+    private Button submitBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,28 +46,52 @@ public class FlagQuiz extends AppCompatActivity {
 
         initCountryFlagMap();
 
+        //initializations
         easyCountriesArray = getResources().getStringArray(R.array.easyCountries);
         mediumCountriesArray = getResources().getStringArray(R.array.mediumCountries);
         hardCountriesArray = getResources().getStringArray(R.array.hardCountries);
 
-
         tvCounter = findViewById(R.id.tvCounter);
         ivFlagQuestion = findViewById(R.id.ivFlagQuestion);
+
         radioButtons = new ArrayList<>();
-        Collections.addAll(radioButtons,
-                findViewById(R.id.rb1Flag),
-                findViewById(R.id.rb2Flag),
-                findViewById(R.id.rb3Flag),
-                findViewById(R.id.rb4Flag));
+        // Everything to do with the Radio Buttons
+        {
+            // Initializing all Radio Buttons into the radioButtons Array List
+            RadioButton rbFlag1 = findViewById(R.id.rb1Flag); RadioButton rbFlag2 = findViewById(R.id.rb2Flag);
+            RadioButton rbFlag3 = findViewById(R.id.rb3Flag); RadioButton rbFlag4 = findViewById(R.id.rb4Flag);
+
+            // Add RadioButtons to the list
+            radioButtons.add(rbFlag1); radioButtons.add(rbFlag2);
+            radioButtons.add(rbFlag3); radioButtons.add(rbFlag4);
+
+            // Set OnCheckedChangeListener for each RadioButton
+            CompoundButton.OnCheckedChangeListener listener = (buttonView, isChecked) -> {
+                if (isChecked && lastCheckedRadioButton != null && lastCheckedRadioButton.getId() != buttonView.getId())
+                {   // Uncheck the previously checked RadioButton
+                    lastCheckedRadioButton.setChecked(false);
+                }   // Update the lastCheckedRadioButton variable
+                lastCheckedRadioButton = isChecked ? (RadioButton) buttonView : null;
+            };
+
+            rbFlag1.setOnCheckedChangeListener(listener); rbFlag2.setOnCheckedChangeListener(listener);
+            rbFlag3.setOnCheckedChangeListener(listener); rbFlag4.setOnCheckedChangeListener(listener);
+
+        }
 
         submitBtn = findViewById(R.id.submitBtn);
 
+        //Receive difficulty info from previous activity
+        Intent receivedIntent = getIntent();
 
-        Intent intent = getIntent();
-        String difficulty = intent.getStringExtra("Difficulty");
+        String difficulty = receivedIntent.getStringExtra("Difficulty");
+        String category = receivedIntent.getStringExtra("Category");
 
+        intentDifficulty = difficulty;
+        intentCategory = category;
+
+        //pushes user into appropriate quiz based on difficulty choice
         assert difficulty != null;
-
         if (difficulty.equals("Easy"))
         {
             generateEasyQuiz();
@@ -86,7 +110,6 @@ public class FlagQuiz extends AppCompatActivity {
 
     }
 
-
     private void generateEasyQuiz() {
 
         List<String> usedCountries = new ArrayList<>();
@@ -99,8 +122,7 @@ public class FlagQuiz extends AppCompatActivity {
 
             String correctCountry;
 
-            // do while loop ensuring that user doesn't receive the same correct answer more than once
-            // in one quiz
+            // Ensures user does not receive the same correct answer more than once in one quiz
             do {
                 correctCountry = easyCountriesArray[random.nextInt(easyCountriesArray.length)];
             } while (usedCountries.contains(correctCountry));
@@ -108,7 +130,6 @@ public class FlagQuiz extends AppCompatActivity {
             usedCountries.add(correctCountry);
 
             quizQuestion.correctCountry = correctCountry;
-
 
             List<String> wrongAnswers = new ArrayList<>();
 
@@ -143,8 +164,7 @@ public class FlagQuiz extends AppCompatActivity {
 
             String correctCountry;
 
-            // do while loop ensuring that user doesn't receive the same correct answer more than once
-            // in one quiz
+            // Ensures user does not receive the same correct answer more than once in one quiz
             do {
                 correctCountry = mediumCountriesArray[random.nextInt(mediumCountriesArray.length)];
             } while (usedCountries.contains(correctCountry));
@@ -184,8 +204,7 @@ public class FlagQuiz extends AppCompatActivity {
 
             String correctCountry;
 
-            // do while loop ensuring that user doesn't receive the same correct answer more than once
-            // in one quiz
+            // Ensures user does not receive the same correct answer more than once in one quiz
             do {
                 correctCountry = hardCountriesArray[random.nextInt(hardCountriesArray.length)];
             } while (usedCountries.contains(correctCountry));
@@ -407,9 +426,16 @@ public class FlagQuiz extends AppCompatActivity {
             // show results , new activity?
 
             Intent intent = new Intent(FlagQuiz.this, Results.class);
+            intent.putExtra("Difficulty", intentDifficulty);
+            intent.putExtra("Category", intentCategory);
             startActivity(intent);
 
         } else {
+            // unchecks all buttons for next question
+            for (RadioButton radiobutton : radioButtons)
+            {
+                radiobutton.setChecked(false);
+            }
             displayCurrentQuestion();
         }
     }

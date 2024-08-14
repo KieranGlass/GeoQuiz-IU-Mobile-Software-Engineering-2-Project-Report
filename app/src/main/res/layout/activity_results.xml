@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/result_image_description"
-            tools:srcCompat="@drawable/outstanding" />
+            app:srcCompat="@drawable/outstanding" />
 
     </LinearLayout>
 
@@ -107,6 +107,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:text="@string/try_again"
+        android:onClick="onClickTryAgain"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnDashboard"
@@ -118,6 +119,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:text="@string/dashboard"
+        android:onClick="onClickDashboard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvResultPercentage"
         app:layout_constraintStart_toEndOf="@id/btnTryAgain"
@@ -130,6 +132,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:text="@string/home"
+        android:onClick="onClickHome"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnDashboard"

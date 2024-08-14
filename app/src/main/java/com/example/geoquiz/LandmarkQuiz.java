@@ -7,13 +7,11 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,6 +29,7 @@ public class LandmarkQuiz extends AppCompatActivity {
     private final List<QuizQuestion> quizQuestions = new ArrayList<>();
     private int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
+    private String intentDifficulty, intentCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +42,7 @@ public class LandmarkQuiz extends AppCompatActivity {
             return insets;
         });
 
+        //All initializations
         initCountryLandmarkMap();
         initCountryLandmarkImageMap();
 
@@ -56,41 +56,44 @@ public class LandmarkQuiz extends AppCompatActivity {
         countriesArray = getResources().getStringArray(R.array.countries);
 
         radioButtons = new ArrayList<>();
-
+        // Everything to do with the Radio Buttons
         {
             // Initializing all Radio Buttons into the radioButtons Array List
             RadioButton rbLandmark1 = findViewById(R.id.rbLandmark1); RadioButton rbLandmark2 = findViewById(R.id.rbLandmark2);
             RadioButton rbLandmark3 = findViewById(R.id.rbLandmark3); RadioButton rbLandmark4 = findViewById(R.id.rbLandmark4);
-
+            RadioButton rbLandmark5 = findViewById(R.id.rbLandmark5); RadioButton rbLandmark6 = findViewById(R.id.rbLandmark6);
 
             // Add RadioButtons to the list
             radioButtons.add(rbLandmark1); radioButtons.add(rbLandmark2);
             radioButtons.add(rbLandmark3); radioButtons.add(rbLandmark4);
+            radioButtons.add(rbLandmark5); radioButtons.add(rbLandmark6);
 
             // Set OnCheckedChangeListener for each RadioButton
-            CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked && lastCheckedRadioButton != null && lastCheckedRadioButton.getId() != buttonView.getId())
-                    {   // Uncheck the previously checked RadioButton
-                        lastCheckedRadioButton.setChecked(false);
-                    }   // Update the lastCheckedRadioButton variable
-                    lastCheckedRadioButton = isChecked ? (RadioButton) buttonView : null;
-                }
+            CompoundButton.OnCheckedChangeListener listener = (buttonView, isChecked) -> {
+                if (isChecked && lastCheckedRadioButton != null && lastCheckedRadioButton.getId() != buttonView.getId())
+                {   // Uncheck the previously checked RadioButton
+                    lastCheckedRadioButton.setChecked(false);
+                }   // Update the lastCheckedRadioButton variable
+                lastCheckedRadioButton = isChecked ? (RadioButton) buttonView : null;
             };
 
             rbLandmark1.setOnCheckedChangeListener(listener); rbLandmark2.setOnCheckedChangeListener(listener);
             rbLandmark3.setOnCheckedChangeListener(listener); rbLandmark4.setOnCheckedChangeListener(listener);
+            rbLandmark5.setOnCheckedChangeListener(listener); rbLandmark6.setOnCheckedChangeListener(listener);
+
+        }
+
+        //Receive difficulty info from previous activity
+        Intent receivedIntent = getIntent();
+
+        String difficulty = receivedIntent.getStringExtra("Difficulty");
+        String category = receivedIntent.getStringExtra("Category");
+
+        intentDifficulty = difficulty;
+        intentCategory = category;
 
 
-        }  // Everything to do with the Radio Buttons
-
-
-        Intent intent = getIntent();
-        String difficulty = intent.getStringExtra("Difficulty");
-
-
-
+        //pushes user into appropriate quiz based on difficulty choice
         assert difficulty != null;
         if (difficulty.equals("Easy"))
         {
@@ -107,8 +110,6 @@ public class LandmarkQuiz extends AppCompatActivity {
             generateHardQuiz();
             displayCurrentQuestion();
         }
-
-
 
     }
 
@@ -135,13 +136,12 @@ public class LandmarkQuiz extends AppCompatActivity {
 
             List<String> wrongAnswers = new ArrayList<>();
 
-            while (wrongAnswers.size() < 3) {
+            while (wrongAnswers.size() < 5) {
 
-                String wrongLandmark = easyLandmarksArray[random.nextInt(easyLandmarksArray.length)];
-                if (!wrongLandmark.equals(quizQuestion.correctLandmark) && !wrongAnswers.contains(getLandmarkCountry(wrongLandmark))
-                && !correctLandmarkCountry.equals(getLandmarkCountry(wrongLandmark)))
+                String wrongLandmark = countriesArray[random.nextInt(countriesArray.length)];
+                if (!wrongAnswers.contains(wrongLandmark) && !correctLandmarkCountry.equals(wrongLandmark))
                 {
-                    wrongAnswers.add(getLandmarkCountry(wrongLandmark)); // fix this
+                    wrongAnswers.add(wrongLandmark);
                 }
             }
 
@@ -178,13 +178,12 @@ public class LandmarkQuiz extends AppCompatActivity {
 
             List<String> wrongAnswers = new ArrayList<>();
 
-            while (wrongAnswers.size() < 3) {
+            while (wrongAnswers.size() < 5) {
 
-                String wrongLandmark = mediumLandmarksArray[random.nextInt(mediumLandmarksArray.length)];
-                if (!wrongLandmark.equals(quizQuestion.correctLandmark) && !wrongAnswers.contains(getLandmarkCountry(wrongLandmark))
-                        && !correctLandmarkCountry.equals(getLandmarkCountry(wrongLandmark)))
+                String wrongLandmark = countriesArray[random.nextInt(countriesArray.length)];
+                if (!wrongAnswers.contains(wrongLandmark) && !correctLandmarkCountry.equals(wrongLandmark))
                 {
-                    wrongAnswers.add(getLandmarkCountry(wrongLandmark)); // fix this
+                    wrongAnswers.add(wrongLandmark);
                 }
             }
 
@@ -221,12 +220,12 @@ public class LandmarkQuiz extends AppCompatActivity {
 
             List<String> wrongAnswers = new ArrayList<>();
 
-            while (wrongAnswers.size() < 3) {
+            while (wrongAnswers.size() < 5) {
 
                 String wrongLandmark = countriesArray[random.nextInt(countriesArray.length)];
                 if (!wrongAnswers.contains(wrongLandmark) && !correctLandmarkCountry.equals(wrongLandmark))
                 {
-                    wrongAnswers.add(wrongLandmark); // fix this
+                    wrongAnswers.add(wrongLandmark);
                 }
             }
 
@@ -239,7 +238,6 @@ public class LandmarkQuiz extends AppCompatActivity {
             quizQuestions.add(quizQuestion);
         }
     }
-
 
     private void displayCurrentQuestion() {
 
@@ -270,10 +268,18 @@ public class LandmarkQuiz extends AppCompatActivity {
         if (currentQuestionIndex >= quizQuestions.size()) {
             // show results , new activity?
 
+
             Intent intent = new Intent(LandmarkQuiz.this, Results.class);
+            intent.putExtra("Difficulty", intentDifficulty);
+            intent.putExtra("Category", intentCategory);
             startActivity(intent);
 
         } else {
+            // unchecks all buttons for next question
+            for (RadioButton radiobutton : radioButtons)
+            {
+                radiobutton.setChecked(false);
+            }
             displayCurrentQuestion();
         }
     }

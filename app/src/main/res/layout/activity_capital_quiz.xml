@@ -52,12 +52,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="20dp"
-            android:minHeight="48dp"
+            android:minHeight="54dp"
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
             android:text="@string/country_placeholder"
-            tools:ignore="DuplicateSpeakableTextCheck" />
+            tools:ignore="DuplicateSpeakableTextCheck,VisualLintButtonSize" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/rb2Capital"
@@ -65,11 +65,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="20dp"
-            android:minHeight="48dp"
+            android:minHeight="54dp"
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:text="@string/country_placeholder" />
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
 
     </LinearLayout>
 
@@ -89,11 +90,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="20dp"
-            android:minHeight="52dp"
+            android:minHeight="54dp"
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:text="@string/country_placeholder" />
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/rb4Capital"
@@ -101,11 +103,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="20dp"
-            android:minHeight="52dp"
+            android:minHeight="54dp"
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:text="@string/country_placeholder" />
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
 
     </LinearLayout>
 
@@ -125,11 +128,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="20dp"
-            android:minHeight="52dp"
+            android:minHeight="54dp"
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:text="@string/country_placeholder" />
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/rb6Capital"
@@ -137,11 +141,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="20dp"
-            android:minHeight="52dp"
+            android:minHeight="54dp"
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:text="@string/country_placeholder" />
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
 
     </LinearLayout>
 
@@ -161,11 +166,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="20dp"
-            android:minHeight="52dp"
+            android:minHeight="54dp"
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:text="@string/country_placeholder" />
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/rb8Capital"
@@ -173,11 +179,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="20dp"
-            android:minHeight="52dp"
+            android:minHeight="54dp"
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:text="@string/country_placeholder" />
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
 
     </LinearLayout>
 

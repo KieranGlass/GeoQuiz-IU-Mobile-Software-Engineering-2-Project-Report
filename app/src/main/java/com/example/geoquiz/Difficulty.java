@@ -44,6 +44,7 @@ public class Difficulty extends AppCompatActivity {
 
                             Intent intent = new Intent(Difficulty.this, FlagQuiz.class);
                             intent.putExtra("Difficulty", "Easy");
+                            intent.putExtra("Category", category);
                             startActivity(intent);
                         }
                     });
@@ -54,6 +55,7 @@ public class Difficulty extends AppCompatActivity {
 
                             Intent intent = new Intent(Difficulty.this, FlagQuiz.class);
                             intent.putExtra("Difficulty", "Medium");
+                            intent.putExtra("Category", category);
                             startActivity(intent);
                         }
                     });
@@ -64,6 +66,7 @@ public class Difficulty extends AppCompatActivity {
 
                             Intent intent = new Intent(Difficulty.this, FlagQuiz.class);
                             intent.putExtra("Difficulty", "Hard");
+                            intent.putExtra("Category", category);
                             startActivity(intent);
                         }
                     });
@@ -75,6 +78,7 @@ public class Difficulty extends AppCompatActivity {
 
                             Intent intent = new Intent(Difficulty.this, CapitalQuiz.class);
                             intent.putExtra("Difficulty", "Easy");
+                            intent.putExtra("Category", category);
                             startActivity(intent);
                         }
                     });
@@ -85,6 +89,7 @@ public class Difficulty extends AppCompatActivity {
 
                             Intent intent = new Intent(Difficulty.this, CapitalQuiz.class);
                             intent.putExtra("Difficulty", "Medium");
+                            intent.putExtra("Category", category);
                             startActivity(intent);
                         }
                     });
@@ -95,6 +100,7 @@ public class Difficulty extends AppCompatActivity {
 
                             Intent intent = new Intent(Difficulty.this, CapitalQuiz.class);
                             intent.putExtra("Difficulty", "Hard");
+                            intent.putExtra("Category", category);
                             startActivity(intent);
                         }
                     });
@@ -106,6 +112,7 @@ public class Difficulty extends AppCompatActivity {
 
                             Intent intent = new Intent(Difficulty.this, LandmarkQuiz.class);
                             intent.putExtra("Difficulty", "Easy");
+                            intent.putExtra("Category", category);
                             startActivity(intent);
                         }
                     });
@@ -116,6 +123,7 @@ public class Difficulty extends AppCompatActivity {
 
                             Intent intent = new Intent(Difficulty.this, LandmarkQuiz.class);
                             intent.putExtra("Difficulty", "Medium");
+                            intent.putExtra("Category", category);
                             startActivity(intent);
                         }
                     });
@@ -126,6 +134,7 @@ public class Difficulty extends AppCompatActivity {
 
                             Intent intent = new Intent(Difficulty.this, LandmarkQuiz.class);
                             intent.putExtra("Difficulty", "Hard");
+                            intent.putExtra("Category", category);
                             startActivity(intent);
                         }
                     });

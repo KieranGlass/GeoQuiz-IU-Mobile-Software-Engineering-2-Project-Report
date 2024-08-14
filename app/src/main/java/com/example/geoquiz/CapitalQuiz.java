@@ -22,13 +22,13 @@ import java.util.Random;
 public class CapitalQuiz extends AppCompatActivity {
 
     private TextView tvCapital, tvCounter;
-    private String[] easyCapitalsArray, mediumCapitalsArray, hardCapitalsArray;
+    private String[] easyCapitalsArray, mediumCapitalsArray, hardCapitalsArray, countriesArray;
     private HashMap<String, String> countryCapitalMap;
     private List<RadioButton> radioButtons;
     private final List<QuizQuestion> quizQuestions = new ArrayList<>();
     private int currentQuestionIndex = 0;
-    private String displayDifficulty;
     private RadioButton lastCheckedRadioButton = null;
+    private String intentDifficulty, intentCategory;
 
 
     @Override
@@ -50,8 +50,10 @@ public class CapitalQuiz extends AppCompatActivity {
         easyCapitalsArray = getResources().getStringArray(R.array.easyCapitals);
         mediumCapitalsArray = getResources().getStringArray(R.array.mediumCapitals);
         hardCapitalsArray = getResources().getStringArray(R.array.hardCapitals);
-        radioButtons = new ArrayList<>();
+        countriesArray = getResources().getStringArray(R.array.countries);
 
+        radioButtons = new ArrayList<>();
+        // Everything to do with the Radio Buttons
                 {
                     // Initializing all Radio Buttons into the radioButtons Array List
                     RadioButton rb1Capital = findViewById(R.id.rb1Capital); RadioButton rb2Capital = findViewById(R.id.rb2Capital);
@@ -64,15 +66,12 @@ public class CapitalQuiz extends AppCompatActivity {
                     radioButtons.add(rb5Capital); radioButtons.add(rb6Capital); radioButtons.add(rb7Capital); radioButtons.add(rb8Capital);
 
                     // Set OnCheckedChangeListener for each RadioButton
-                    CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            if (isChecked && lastCheckedRadioButton != null && lastCheckedRadioButton.getId() != buttonView.getId())
-                            {   // Uncheck the previously checked RadioButton
-                                lastCheckedRadioButton.setChecked(false);
-                            }   // Update the lastCheckedRadioButton variable
-                            lastCheckedRadioButton = isChecked ? (RadioButton) buttonView : null;
-                        }
+                    CompoundButton.OnCheckedChangeListener listener = (buttonView, isChecked) -> {
+                        if (isChecked && lastCheckedRadioButton != null && lastCheckedRadioButton.getId() != buttonView.getId())
+                        {   // Uncheck the previously checked RadioButton
+                            lastCheckedRadioButton.setChecked(false);
+                        }   // Update the lastCheckedRadioButton variable
+                        lastCheckedRadioButton = isChecked ? (RadioButton) buttonView : null;
                     };
 
                     rb1Capital.setOnCheckedChangeListener(listener); rb2Capital.setOnCheckedChangeListener(listener);
@@ -80,12 +79,16 @@ public class CapitalQuiz extends AppCompatActivity {
                     rb5Capital.setOnCheckedChangeListener(listener); rb6Capital.setOnCheckedChangeListener(listener);
                     rb7Capital.setOnCheckedChangeListener(listener); rb8Capital.setOnCheckedChangeListener(listener);
 
-                }  // Everything to do with the Radio Buttons
+                }
 
 
-        Intent intent = getIntent();
-        String difficulty = intent.getStringExtra("Difficulty");
-        displayDifficulty = difficulty;
+        Intent receivedIntent = getIntent();
+
+        String difficulty = receivedIntent.getStringExtra("Difficulty");
+        String category = receivedIntent.getStringExtra("Category");
+
+        intentDifficulty = difficulty;
+        intentCategory = category;
 
 
         assert difficulty != null;
@@ -104,8 +107,6 @@ public class CapitalQuiz extends AppCompatActivity {
             generateHardQuiz();
             displayCurrentQuestion();
         }
-
-
     }
 
     private void generateEasyQuiz() {
@@ -126,18 +127,17 @@ public class CapitalQuiz extends AppCompatActivity {
             usedCapitals.add(correctCapital);
 
             quizQuestion.correctCapital = correctCapital;
+            String correctCapitalCountry = getCountry(correctCapital);
 
-            tvCapital.setText(correctCapital);
 
             List<String> wrongAnswers = new ArrayList<>();
 
             while (wrongAnswers.size() < 3) {
 
-                String wrongCapital = easyCapitalsArray[random.nextInt(easyCapitalsArray.length)];
-                if (!wrongCapital.equals(quizQuestion.correctCapital)
-                        && !usedCapitals.contains(wrongCapital) && !wrongAnswers.contains(wrongCapital))
+                String wrongCapital = countriesArray[random.nextInt(countriesArray.length)];
+                if (!wrongCapital.equals(correctCapitalCountry) && !wrongAnswers.contains(wrongCapital))
                 {
-                    wrongAnswers.add(getCountry(wrongCapital));
+                    wrongAnswers.add(wrongCapital);
                 }
             }
 
@@ -169,18 +169,15 @@ public class CapitalQuiz extends AppCompatActivity {
             usedCapitals.add(correctCapital);
 
             quizQuestion.correctCapital = correctCapital;
-
-            tvCapital.setText(correctCapital);
+            String correctCapitalCountry = getCountry(correctCapital);
 
             List<String> wrongAnswers = new ArrayList<>();
             while (wrongAnswers.size() < 5) {
 
-                String wrongCapital = mediumCapitalsArray[random.nextInt(mediumCapitalsArray.length)];
-                if (!wrongCapital.equals(quizQuestion.correctCapital) &&
-                        !usedCapitals.contains(wrongCapital) &&
-                        !wrongAnswers.contains(wrongCapital))
+                String wrongCapital = countriesArray[random.nextInt(countriesArray.length)];
+                if (!wrongCapital.equals(correctCapitalCountry) && !wrongAnswers.contains(wrongCapital))
                 {
-                    wrongAnswers.add(getCountry(wrongCapital));
+                    wrongAnswers.add(wrongCapital);
                 }
             }
 
@@ -212,18 +209,15 @@ public class CapitalQuiz extends AppCompatActivity {
             usedCapitals.add(correctCapital);
 
             quizQuestion.correctCapital = correctCapital;
-
-            tvCapital.setText(correctCapital);
+            String correctCapitalCountry = getCountry(correctCapital);
 
             List<String> wrongAnswers = new ArrayList<>();
             while (wrongAnswers.size() < 7) {
 
-                String wrongCapital = hardCapitalsArray[random.nextInt(hardCapitalsArray.length)];
-                if (!wrongCapital.equals(quizQuestion.correctCapital) &&
-                        !usedCapitals.contains(wrongCapital) &&
-                        !wrongAnswers.contains(wrongCapital))
+                String wrongCapital = countriesArray[random.nextInt(countriesArray.length)];
+                if (!wrongCapital.equals(correctCapitalCountry) && !wrongAnswers.contains(wrongCapital))
                 {
-                    wrongAnswers.add(getCountry(wrongCapital));
+                    wrongAnswers.add(wrongCapital);
                 }
             }
 
@@ -280,7 +274,6 @@ public class CapitalQuiz extends AppCompatActivity {
         countryCapitalMap.put("Prague", "Czechia");
         countryCapitalMap.put("Copenhagen", "Denmark");
         countryCapitalMap.put("Roseau", "Dominica");
-        countryCapitalMap.put("Santa Domingo", "Dominican Republic");//
         countryCapitalMap.put("Quito", "Ecuador");
         countryCapitalMap.put("Cairo", "Egypt");
         countryCapitalMap.put("London", "England");
@@ -352,7 +345,6 @@ public class CapitalQuiz extends AppCompatActivity {
         countryCapitalMap.put("Muscat", "Oman");
         countryCapitalMap.put("Islamabad", "Pakistan");
         countryCapitalMap.put("Panama City", "Panama");
-        countryCapitalMap.put("Port Moresby", "Papua New Guinea");
         countryCapitalMap.put("Asunción", "Paraguay");
         countryCapitalMap.put("Lima", "Peru");
         countryCapitalMap.put("Manila", "Philippines");
@@ -420,7 +412,7 @@ public class CapitalQuiz extends AppCompatActivity {
 
         //Sets the answers to the radio buttons
         // Enable or disable radio buttons based on quiz level
-        if (displayDifficulty.equals("Easy")) {
+        if (intentDifficulty.equals("Easy")) {
             for (int i = 0; i < 4; i++) { // Only enable the first 4 radio buttons for Easy quiz
                 radioButtons.get(i).setVisibility(View.VISIBLE);
                 radioButtons.get(i).setEnabled(true);
@@ -430,7 +422,7 @@ public class CapitalQuiz extends AppCompatActivity {
                 radioButtons.get(i).setVisibility(View.GONE);
                 radioButtons.get(i).setEnabled(false);
             }
-        } else if (displayDifficulty.equals("Medium")) {
+        } else if (intentCategory.equals("Medium")) {
             for (int i = 0; i < 6; i++) { // Only enable the first 6 radio buttons for Medium quiz
                 radioButtons.get(i).setVisibility(View.VISIBLE);
                 radioButtons.get(i).setEnabled(true);
@@ -467,6 +459,8 @@ public class CapitalQuiz extends AppCompatActivity {
             // show results , new activity?
 
             Intent intent = new Intent(CapitalQuiz.this, Results.class);
+            intent.putExtra("Difficulty", intentDifficulty);
+            intent.putExtra("Category", intentCategory);
             startActivity(intent);
 
         } else {
@@ -477,6 +471,6 @@ public class CapitalQuiz extends AppCompatActivity {
     private String getCountry(String correctCapital) {
 
         String countryName = countryCapitalMap.get(correctCapital);
-        return countryName == null ? correctCapital.toUpperCase() : countryName; // Return default value if not found TODO-DEFAULT VALUE
+        return countryName == null ? "ERROR" : countryName; // Return default value if not found
     }
 }
