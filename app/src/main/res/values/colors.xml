@@ -2,9 +2,7 @@
     <color name="primaryColor">#C8E6C9</color>
     <color name="primaryDark">#66BB6A</color>
     <color name="primaryColourText">#300b0b</color>
-    <color name="secondaryColour">#e9c4e7</color>
-    #1970ae#5719ae#f5e8f4#e9c4e7
-
-    <color name="secondaryColourText">#6b1d92</color>
+    <color name="accent">#e9c4e7</color>
+    <color name="accentDark">#6b1d92</color>
     #6b1d92
 </resources>

@@ -134,7 +134,7 @@
         android:text="@string/qNumberStart"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:textColor="@color/secondaryColourText"
+        android:textColor="@color/primaryColourText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/submitBtn"
         app:layout_constraintStart_toStartOf="parent"

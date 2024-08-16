@@ -109,43 +109,30 @@ public class FlagQuiz extends AppCompatActivity {
     }
 
     private void generateEasyQuiz() {
-
-        List<String> usedCountries = new ArrayList<>();
-
-        Random random = new Random();
-
-        for (int i = 0; i < 20; i++) {
-
-            QuizQuestion quizQuestion = new QuizQuestion();
-
+        List<String> usedCountries = new ArrayList<>(); // a list to keep track of used correct answers
+        Random random = new Random(); // a random for use in accessing the arrays
+        for (int i = 0; i < 20; i++) {  // iterate 20 times to create 20 questions
+            QuizQuestion quizQuestion = new QuizQuestion(); // the QuizQuestion object for this iteration
             String correctCountry;
-
-            // Ensures user does not receive the same correct answer more than once in one quiz
-            do {
+            do { // ensures the same correct answer doesn't appear more than once in quiz
                 correctCountry = easyCountriesArray[random.nextInt(easyCountriesArray.length)];
             } while (usedCountries.contains(correctCountry));
-
-            usedCountries.add(correctCountry);
-
-            quizQuestion.correctCountry = correctCountry;
-
-            List<String> wrongAnswers = new ArrayList<>();
-
-            while (wrongAnswers.size() < 3) {
-
+            usedCountries.add(correctCountry); // add to usedCountries to prevent re-appearing
+            quizQuestion.correctCountry = correctCountry; //set to appropriate variable
+            List<String> wrongAnswers = new ArrayList<>(); // a list to keep wrong answers
+            while (wrongAnswers.size() < 3) { // sets size of wrong answers list -> 5 for medium, 7 for hard
                 String wrongCountry = easyCountriesArray[random.nextInt(easyCountriesArray.length)];
+                //while loop ensures wrong country isn't same as correct one and not a duplicate
                 if (!wrongCountry.equals(quizQuestion.correctCountry) && !wrongAnswers.contains(wrongCountry)) {
-                    wrongAnswers.add(wrongCountry);
+                    wrongAnswers.add(wrongCountry); //if suitable wrong country added to list
                 }
             }
-
-            List<String> allAnswers = new ArrayList<>();
-            allAnswers.add(quizQuestion.correctCountry);
-            allAnswers.addAll(wrongAnswers);
-            Collections.shuffle(allAnswers, random);
-
-            quizQuestion.allAnswers = allAnswers;
-            quizQuestions.add(quizQuestion);
+            List<String> allAnswers = new ArrayList<>();// new list for all the answers generated
+            allAnswers.add(quizQuestion.correctCountry); //add the correct country
+            allAnswers.addAll(wrongAnswers); // add the wrong answers
+            Collections.shuffle(allAnswers, random); // randomise the order of all answers
+            quizQuestion.allAnswers = allAnswers; // add all answers to the QuizQuestion list variable
+            quizQuestions.add(quizQuestion); //add completed QuizQuestion object to list in this class
         }
 
     }
