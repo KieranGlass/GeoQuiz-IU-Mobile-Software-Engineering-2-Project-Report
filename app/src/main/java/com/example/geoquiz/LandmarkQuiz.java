@@ -1,7 +1,10 @@
 package com.example.geoquiz;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -31,6 +34,7 @@ public class LandmarkQuiz extends AppCompatActivity {
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
     int score = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +119,13 @@ public class LandmarkQuiz extends AppCompatActivity {
     }
 
     private void generateEasyQuiz() {
+
+
+        //ArrayList<String> countries = DatabaseHelper.getCountriesWithDifficultyOne(LandmarkQuiz.this);
+
+        //Log.d("TAG", countries.toString());
+
+
 
         List<String> usedLandmarks = new ArrayList<>();
 
