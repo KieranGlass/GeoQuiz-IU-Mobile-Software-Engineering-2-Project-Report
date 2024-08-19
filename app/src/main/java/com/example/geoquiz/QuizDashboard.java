@@ -61,7 +61,7 @@ public class QuizDashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
-                intent.putExtra("Category", "Landmark");
+                intent.putExtra("Category", "com.example.geoquiz.Landmark");
                 startActivity(intent);
             }
         });

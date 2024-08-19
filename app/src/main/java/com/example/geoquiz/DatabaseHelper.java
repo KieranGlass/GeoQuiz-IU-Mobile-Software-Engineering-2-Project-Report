@@ -14,6 +14,10 @@ import androidx.annotation.Nullable;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -102,8 +106,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.d("DatabaseHelper", "Database copied successfully.");
         } catch (IOException e) {
             Log.e("DatabaseHelper", "Failed to copy database", e);
-            // Rethrow the exception to allow further handling
-            throw new IOException("Failed to copy database", e);
         }
     }
 
@@ -124,6 +126,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void open() {
+        myDatabase = this.getReadableDatabase();
+    }
     @Override
     public synchronized void close() {
         if(myDatabase != null){
@@ -140,25 +145,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             e.printStackTrace();
         }
 
-        if (tableExists("countries")) {
-            String result = "";
-            SQLiteDatabase db = this.getReadableDatabase();
-            Cursor c = db.rawQuery("SELECT * FROM Landmarks", null
-            );
-
-            while (c.moveToNext()) {
-                int result_id = c.getInt(0);
-                String result_name = c.getString(1);
-                result += String.valueOf(result_id) + "" + result_name + System.getProperty("line.separator");
-            }
-
-            c.close();
-            db.close();
-            return result;
-        } else {
-            // Handle the case where the table does not exist
-            return "Table 'countries' does not exist.";
-        }
+        return "";
     }
 
     private boolean tableExists(String tableName) {
@@ -171,6 +158,55 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return false;
+    }
+
+    public List<Landmark> fetchLandmarks() {
+
+        List<Landmark> landmarks = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM landmarks", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                landmarks.add(new Landmark(
+                        cursor.getInt(0), // Assuming the ID is in the first column
+                        cursor.getString(1), // Assuming the name is in the second column
+                        cursor.getInt(2),
+                        cursor.getString(3), // Assuming the image path is in the fourth column
+                        cursor.getInt(4) // difficulty id
+                ));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return landmarks;
+    }
+
+    public List<Country> fetchCountries() {
+
+        List<Country> countries = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM countries", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                countries.add(new Country(
+                        cursor.getInt(0), // country id
+                        cursor.getString(1), // country name
+                        cursor.getString(2), // country capital
+                        cursor.getString(3), // country flag image path
+                        cursor.getInt(4), // capital difficulty id
+                        cursor.getInt(5) // flag difficulty id
+                ));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return countries;
     }
 
 }

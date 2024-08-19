@@ -105,7 +105,7 @@ public class Difficulty extends AppCompatActivity {
                         }
                     });
                     break;
-                case "Landmark":
+                case "com.example.geoquiz.Landmark":
                     easyBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

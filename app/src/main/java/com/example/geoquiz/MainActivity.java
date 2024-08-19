@@ -35,9 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
         tvTitle = findViewById(R.id.tvTitle);
 
-
-        DatabaseHelper myHelper = new DatabaseHelper(this, null, null, 1);
-        tvTitle.setText(myHelper.loadHandler());
         startBtn = findViewById(R.id.startBtn);
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override

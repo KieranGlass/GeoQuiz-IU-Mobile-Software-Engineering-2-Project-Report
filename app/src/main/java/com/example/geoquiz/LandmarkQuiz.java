@@ -1,5 +1,7 @@
 package com.example.geoquiz;
 
+import static com.example.geoquiz.Landmark.getRandomLandmark;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,15 +13,22 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class LandmarkQuiz extends AppCompatActivity {
 
@@ -120,46 +129,56 @@ public class LandmarkQuiz extends AppCompatActivity {
 
     private void generateEasyQuiz() {
 
+        // working but not based on difficulty.
+        // results category element wrong.
+        // not bringing image path from database, still from hashmap.
 
-        //ArrayList<String> countries = DatabaseHelper.getCountriesWithDifficultyOne(LandmarkQuiz.this);
+        DatabaseHelper helper = new DatabaseHelper(LandmarkQuiz.this, null, null, 2);
+        helper.open();
 
-        //Log.d("TAG", countries.toString());
-
-
-
-        List<String> usedLandmarks = new ArrayList<>();
-
+        List<Landmark> landmarks = helper.fetchLandmarks();
+        List<Country> countries = helper.fetchCountries();
+        List<Landmark> usedLandmarks = new ArrayList<>();
         Random random = new Random();
 
         for (int i = 0; i < 20; i++) {
+            Landmark correctLandmark = getRandomLandmark(landmarks);
+            usedLandmarks.add(correctLandmark); // Mark this landmark as used
+
+            // Retrieve the correct country name for the correct landmark
+            String correctCountry = countries.stream()
+                    .filter(country -> country.getId() == correctLandmark.getCountry_id())
+                    .findFirst()
+                    .map(Country::getCountry_name)
+                    .orElse("");
 
             QuizQuestion quizQuestion = new QuizQuestion();
+            quizQuestion.correctLandmark = correctLandmark.getName();
+            quizQuestion.correctLandmarkCountry = correctCountry;
 
-            String correctLandmark;
+            // Generate wrong answers
+            List<Landmark> wrongLandmarks = new ArrayList<>(landmarks);
+            wrongLandmarks.removeIf(landmark -> usedLandmarks.contains(landmark)); // Exclude already used landmarks
+            Collections.shuffle(wrongLandmarks, random); // Shuffle to randomize order
 
-            do {
-                correctLandmark = easyLandmarksArray[random.nextInt(easyLandmarksArray.length)];
-            } while (usedLandmarks.contains(correctLandmark));
+            // Select the first three wrong landmarks
+            List<Landmark> selectedWrongLandmarks = wrongLandmarks.subList(0, Math.min(5, wrongLandmarks.size()));
 
-            usedLandmarks.add(correctLandmark);
+            // Retrieve country names for wrong landmarks
+            List<String> wrongCountryNames = selectedWrongLandmarks.stream()
+                    .map(landmark -> countries.stream()
+                            .filter(country -> country.getId() == landmark.getCountry_id())
+                            .findFirst()
+                            .map(Country::getCountry_name)
+                            .orElse(""))
+                    .collect(Collectors.toList());
 
-            quizQuestion.correctLandmark = correctLandmark;
-            quizQuestion.correctLandmarkCountry = getLandmarkCountry(correctLandmark);
-
-            List<String> wrongAnswers = new ArrayList<>();
-
-            while (wrongAnswers.size() < 5) {
-
-                String wrongLandmark = countriesArray[random.nextInt(countriesArray.length)];
-                if (!wrongAnswers.contains(wrongLandmark) && !quizQuestion.correctLandmarkCountry.equals(wrongLandmark))
-                {
-                    wrongAnswers.add(wrongLandmark);
-                }
-            }
-
+            // Combine correct and wrong answers
             List<String> allAnswers = new ArrayList<>();
-            allAnswers.add(getLandmarkCountry(quizQuestion.correctLandmark));  //fix this
-            allAnswers.addAll(wrongAnswers);
+            allAnswers.add(correctCountry); // Assuming correctCountry contains the correct country name
+            allAnswers.addAll(wrongCountryNames);
+
+            // Shuffle all answers
             Collections.shuffle(allAnswers, random);
 
             quizQuestion.allAnswers = allAnswers;
@@ -256,7 +275,7 @@ public class LandmarkQuiz extends AppCompatActivity {
         //Uses the currentQuestionIndex to retrieve the question to be displayed
         QuizQuestion currentQuestion = quizQuestions.get(currentQuestionIndex);
 
-        //sets Landmark textView in the activity to the landmark that is the focus of the question
+        //sets textView in the activity to the landmark that is the focus of the question
         tvLandmark.setText(currentQuestion.correctLandmark);
 
         ivLandmark.setImageResource(getLandmarkImage(currentQuestion.correctLandmark));
@@ -464,4 +483,71 @@ public class LandmarkQuiz extends AppCompatActivity {
 
     }
 
+
+
 }
+
+/*
+DatabaseHelper helper = new DatabaseHelper(LandmarkQuiz.this, null, null, 2);
+        helper.open();
+
+        List<Landmark> landmarks = helper.fetchLandmarks();
+        List<Country> countries = helper.fetchCountries();
+        String correctCountry = "";
+        Landmark correctLandmark;
+
+
+        List<Landmark> usedLandmarks = new ArrayList<>();
+
+        Random random = new Random();
+
+        for (int i = 0; i < 20; i++) {
+
+        correctLandmark = Landmark.getRandomLandmark(landmarks);
+        int correctCountry_id = correctLandmark.getCountry_id();
+
+        for (Country country: countries
+        ) {
+        if (correctCountry_id == country.getId()) {
+        correctCountry = country.getCountry_name();
+        }
+        }
+
+        QuizQuestion quizQuestion = new QuizQuestion();
+
+        String correctLandmarkName = correctLandmark.getName();
+
+        if (!usedLandmarks.contains(correctLandmark)) {
+        usedLandmarks.add(correctLandmark);
+        }
+
+        quizQuestion.correctLandmark = correctLandmarkName;
+        quizQuestion.correctLandmarkCountry = correctCountry;
+
+        List<Landmark> wrongAnswers = new ArrayList<>();
+
+        while (wrongAnswers.size() < 5) {
+
+        Landmark wrongLandmark = landmarks.get(random.nextInt(landmarks.size()));
+        if (!wrongAnswers.contains(wrongLandmark))
+        {
+        wrongAnswers.add(wrongLandmark);
+        }
+        }
+        List<String> wrongAnswersNames = Collections.emptyList();
+
+
+        for (Landmark landmark: wrongAnswers
+        ) {
+        int wrongLandmarkCountryId = landmark.getCountry_id();
+        String wrongCountryName;
+
+        for (Country country: countries
+        ) {
+        if (wrongLandmarkCountryId == country.getId()){
+        wrongCountryName = country.getCountry_name();
+        wrongAnswersNames.add(wrongCountryName);
+        }
+        }
+
+        }*/
