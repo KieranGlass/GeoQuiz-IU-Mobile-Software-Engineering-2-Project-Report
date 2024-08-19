@@ -18,6 +18,8 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
+    //TODO Need to design home screen along with organising usernames + logins
+
 
     Button startBtn;
     TextView tvTitle;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     });
 
     }
+
     public void startClick(View view) {
 
                 Intent intent = new Intent(MainActivity.this, QuizDashboard.class);

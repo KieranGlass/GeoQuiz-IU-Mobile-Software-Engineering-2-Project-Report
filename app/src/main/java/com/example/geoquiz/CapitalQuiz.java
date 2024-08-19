@@ -32,6 +32,8 @@ public class CapitalQuiz extends AppCompatActivity {
 
     int score = 0;
 
+    //TODO WHOLE QUIZ ISNT WORKING PROPERLY, HARD QUIZ ONLY ONE OPERATING
+    // TODO ALSO, PAGE LOOKS VERY BAD
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

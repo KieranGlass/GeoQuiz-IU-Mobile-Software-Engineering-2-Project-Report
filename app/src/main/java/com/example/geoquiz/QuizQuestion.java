@@ -11,6 +11,7 @@ public class QuizQuestion {
         String correctLandmark;
         String correctCapitalCountry;
         String correctLandmarkCountry;
+        String correctImagePath;
         List<String> allAnswers;
 
 

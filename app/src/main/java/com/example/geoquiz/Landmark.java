@@ -29,13 +29,4 @@ public class Landmark {
     public int getCountry_id() { return country_id; }
     public String getImagePath() { return imagePath; }
     public int getDifficulty_id() { return difficulty_id; }
-
-
-    public static Landmark getRandomLandmark(List<Landmark> landmarks) {
-        Random random = new Random();
-        int randomIndex = random.nextInt(landmarks.size());
-        Landmark randomLandmark = landmarks.get(randomIndex);
-        landmarks.remove(randomIndex); // Remove the selected landmark to avoid repetition
-        return randomLandmark;
-    }
 }

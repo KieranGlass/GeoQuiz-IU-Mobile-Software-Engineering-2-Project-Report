@@ -21,7 +21,7 @@ import java.util.Random;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 4;
     private static final String DB_NAME = "GeoQuizDatabase.db";
     private String DB_PATH = "/data/data/com.example.geoquiz/databases/";
     SQLiteDatabase myDatabase;
@@ -69,7 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS countries");
         db.execSQL("DROP TABLE IF EXISTS difficulty");
-        db.execSQL("DROP TABLE IF EXISTS landmarks");
+        db.execSQL("DROP TABLE IF EXISTS Landmarks");
 
         // Create tables again
         onCreate(db);
@@ -79,8 +79,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             final String mPath = DB_PATH + DB_NAME;
             final File file = new File(mPath);
-            if (file.exists())
+            if (file.exists()) {
                 return true;
+            }
             else
                 return false;
         } catch (SQLException e) {
@@ -109,24 +110,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void createDatabase() throws IOException {
-
-        boolean mDatabaseExists = checkDatabase();
-        if (!mDatabaseExists) {
-            this.getReadableDatabase();
-            this.close();
-            try {
-                copyDatabase();
-            } catch (IOException mIOException) {
-                mIOException.printStackTrace();
-                throw new Error("Error copying Database");
-            } finally {
-                this.close();
-            }
-        }
-    }
-
     public void open() {
+
         myDatabase = this.getReadableDatabase();
     }
     @Override
@@ -138,14 +123,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public String loadHandler() {
+    public void loadHandler() {
         try {
-            createDatabase();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            boolean mDatabaseExists = checkDatabase();
+            if (!mDatabaseExists) {
+                Log.i("DatabaseHelper", "Copying database...");
+                copyDatabase();
+                Log.i("DatabaseHelper", "Database copied successfully.");
+            }
+            copyDatabase();
+            myDatabase = this.getReadableDatabase();
+            Log.i("DatabaseHelper", "Database opened successfully.");
 
-        return "";
+            // Example of executing a query and logging results
+            Cursor cursor = myDatabase.rawQuery("SELECT COUNT(*) FROM your_table_name", null);
+            if (cursor.moveToFirst()) {
+                int count = cursor.getInt(0);
+                Log.d("DatabaseHelper", "Query result: " + count);
+            } else {
+                Log.w("DatabaseHelper", "Cursor is empty");
+            }
+            cursor.close();
+        } catch (IOException | SQLException e) {
+            Log.e("DatabaseHelper", "Error loading database", e);
+        }
     }
 
     private boolean tableExists(String tableName) {
@@ -160,11 +161,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
+
+    // ALL SQL RETRIEVAL METHODS BELOW //
+
     public List<Landmark> fetchLandmarks() {
 
         List<Landmark> landmarks = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM landmarks", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Landmarks", null);
 
         if (cursor.moveToFirst()) {
             do {

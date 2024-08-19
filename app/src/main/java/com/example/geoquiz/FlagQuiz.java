@@ -1,5 +1,7 @@
 package com.example.geoquiz;
 
+import static androidx.lifecycle.Transformations.map;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +21,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class FlagQuiz extends AppCompatActivity {
 
@@ -109,115 +112,192 @@ public class FlagQuiz extends AppCompatActivity {
     }
 
     private void generateEasyQuiz() {
-        List<String> usedCountries = new ArrayList<>(); // a list to keep track of used correct answers
-        Random random = new Random(); // a random for use in accessing the arrays
-        for (int i = 0; i < 20; i++) {  // iterate 20 times to create 20 questions
-            QuizQuestion quizQuestion = new QuizQuestion(); // the QuizQuestion object for this iteration
-            String correctCountry;
-            do { // ensures the same correct answer doesn't appear more than once in quiz
-                correctCountry = easyCountriesArray[random.nextInt(easyCountriesArray.length)];
-            } while (usedCountries.contains(correctCountry));
-            usedCountries.add(correctCountry); // add to usedCountries to prevent re-appearing
-            quizQuestion.correctCountry = correctCountry; //set to appropriate variable
-            List<String> wrongAnswers = new ArrayList<>(); // a list to keep wrong answers
-            while (wrongAnswers.size() < 3) { // sets size of wrong answers list -> 5 for medium, 7 for hard
-                String wrongCountry = easyCountriesArray[random.nextInt(easyCountriesArray.length)];
-                //while loop ensures wrong country isn't same as correct one and not a duplicate
-                if (!wrongCountry.equals(quizQuestion.correctCountry) && !wrongAnswers.contains(wrongCountry)) {
-                    wrongAnswers.add(wrongCountry); //if suitable wrong country added to list
+
+        DatabaseHelper helper = new DatabaseHelper(FlagQuiz.this, null, null, DatabaseHelper.DB_VERSION);
+
+        List<Country> countries = helper.fetchCountries();
+        List<Country> usedFlags = new ArrayList<>();
+        Country correctCountry;
+        Random random = new Random();
+
+        List<Country> easyFlags = countries.stream()
+                .filter(landmark -> landmark.getFlag_difficulty() == 1)
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < 20; i++) {
+            if (!easyFlags.isEmpty()) { // limits the correct answers to easy difficulty
+                do {
+                    // ensures no duplicate correct answers in same quiz
+                    correctCountry = easyFlags.get(random.nextInt(easyFlags.size()));
+                } while (usedFlags.contains(correctCountry));
+
+                usedFlags.add(correctCountry); // Marks landmark as used for above do while next time
+                String correctFlagImage = correctCountry.getFlag_path();
+                // Retrieve the correct country name for the correct landmark
+
+
+                QuizQuestion quizQuestion = new QuizQuestion();
+                quizQuestion.correctCountry = correctCountry.getCountry_name();
+                quizQuestion.correctImagePath = correctFlagImage;
+
+                // Generate wrong answers
+                List<Country> wrongCountries = new ArrayList<>(countries);
+                wrongCountries.removeIf(landmark -> usedFlags.contains(landmark)); // Exclude already used landmarks
+                Collections.shuffle(wrongCountries, random); // Shuffle to randomize order
+
+                // Select the first three wrong landmarks
+                List<Country> selectedWrongCountries = wrongCountries.subList(0, Math.min(3, wrongCountries.size()));
+
+                List<String> wrongCountryNames = new ArrayList<>();
+
+                for (Country country : selectedWrongCountries) {
+                    wrongCountryNames.add(country.getCountry_name());
                 }
+                // Combine correct and wrong answers
+                List<String> allAnswers = new ArrayList<>();
+                allAnswers.add(quizQuestion.correctCountry); // Assuming correctCountry contains the correct country name
+                allAnswers.addAll(wrongCountryNames);
+
+                // Shuffle all answers
+                Collections.shuffle(allAnswers, random);
+
+                quizQuestion.allAnswers = allAnswers;
+                quizQuestions.add(quizQuestion);
+
+            } else {
+                // return to dashboard for now
+                Intent intent = new Intent(FlagQuiz.this, QuizDashboard.class);
+                startActivity(intent);
             }
-            List<String> allAnswers = new ArrayList<>();// new list for all the answers generated
-            allAnswers.add(quizQuestion.correctCountry); //add the correct country
-            allAnswers.addAll(wrongAnswers); // add the wrong answers
-            Collections.shuffle(allAnswers, random); // randomise the order of all answers
-            quizQuestion.allAnswers = allAnswers; // add all answers to the QuizQuestion list variable
-            quizQuestions.add(quizQuestion); //add completed QuizQuestion object to list in this class
         }
 
     }
 
     private void generateMediumQuiz() {
 
-        List<String> usedCountries = new ArrayList<>();
+    DatabaseHelper helper = new DatabaseHelper(FlagQuiz.this, null, null, DatabaseHelper.DB_VERSION);
 
-        Random random = new Random();
+    List<Country> countries = helper.fetchCountries();
+    List<Country> usedFlags = new ArrayList<>();
+    Country correctCountry;
+    Random random = new Random();
+
+    List<Country> mediumFlags = countries.stream()
+            .filter(landmark -> landmark.getFlag_difficulty() == 2)
+            .collect(Collectors.toList());
 
         for (int i = 0; i < 20; i++) {
+        if (!mediumFlags.isEmpty()) { // limits the correct answers to easy difficulty
+            do {
+                // ensures no duplicate correct answers in same quiz
+                correctCountry = mediumFlags.get(random.nextInt(mediumFlags.size()));
+            } while (usedFlags.contains(correctCountry));
+
+            usedFlags.add(correctCountry); // Marks landmark as used for above do while next time
+            String correctFlagImage = correctCountry.getFlag_path();
+            // Retrieve the correct country name for the correct landmark
+
 
             QuizQuestion quizQuestion = new QuizQuestion();
+            quizQuestion.correctCountry = correctCountry.getCountry_name();
+            quizQuestion.correctImagePath = correctFlagImage;
 
-            String correctCountry;
+            // Generate wrong answers
+            List<Country> wrongCountries = new ArrayList<>(countries);
+            wrongCountries.removeIf(landmark -> usedFlags.contains(landmark)); // Exclude already used landmarks
+            Collections.shuffle(wrongCountries, random); // Shuffle to randomize order
 
-            // Ensures user does not receive the same correct answer more than once in one quiz
-            do {
-                correctCountry = mediumCountriesArray[random.nextInt(mediumCountriesArray.length)];
-            } while (usedCountries.contains(correctCountry));
+            // Select the first three wrong landmarks
+            List<Country> selectedWrongCountries = wrongCountries.subList(0, Math.min(3, wrongCountries.size()));
 
-            usedCountries.add(correctCountry);
+            List<String> wrongCountryNames = new ArrayList<>();
 
-            quizQuestion.correctCountry = correctCountry;
-
-
-            List<String> wrongAnswers = new ArrayList<>();
-            while (wrongAnswers.size() < 3) {
-
-                String wrongCountry = mediumCountriesArray[random.nextInt(mediumCountriesArray.length)];
-                if (!wrongCountry.equals(quizQuestion.correctCountry) && !wrongAnswers.contains(wrongCountry)) {
-                    wrongAnswers.add(wrongCountry);
-                }
+            for (Country country : selectedWrongCountries) {
+                wrongCountryNames.add(country.getCountry_name());
             }
-
+            // Combine correct and wrong answers
             List<String> allAnswers = new ArrayList<>();
-            allAnswers.add(quizQuestion.correctCountry);
-            allAnswers.addAll(wrongAnswers);
+            allAnswers.add(quizQuestion.correctCountry); // Assuming correctCountry contains the correct country name
+            allAnswers.addAll(wrongCountryNames);
+
+            // Shuffle all answers
             Collections.shuffle(allAnswers, random);
 
             quizQuestion.allAnswers = allAnswers;
             quizQuestions.add(quizQuestion);
+
+        } else {
+            // return to dashboard for now
+            Intent intent = new Intent(FlagQuiz.this, QuizDashboard.class);
+            startActivity(intent);
         }
     }
+
+}
 
     private void generateHardQuiz() {
-        List<String> usedCountries = new ArrayList<>();
 
+        DatabaseHelper helper = new DatabaseHelper(FlagQuiz.this, null, null, DatabaseHelper.DB_VERSION);
+
+        List<Country> countries = helper.fetchCountries();
+        List<Country> usedFlags = new ArrayList<>();
+        Country correctCountry;
         Random random = new Random();
 
+        List<Country> hardFlags = countries.stream()
+                .filter(landmark -> landmark.getFlag_difficulty() == 3)
+                .collect(Collectors.toList());
+
         for (int i = 0; i < 20; i++) {
+            if (!hardFlags.isEmpty()) { // limits the correct answers to easy difficulty
+                do {
+                    // ensures no duplicate correct answers in same quiz
+                    correctCountry = hardFlags.get(random.nextInt(hardFlags.size()));
+                } while (usedFlags.contains(correctCountry));
 
-            QuizQuestion quizQuestion = new QuizQuestion();
-
-            String correctCountry;
-
-            // Ensures user does not receive the same correct answer more than once in one quiz
-            do {
-                correctCountry = hardCountriesArray[random.nextInt(hardCountriesArray.length)];
-            } while (usedCountries.contains(correctCountry));
-
-            usedCountries.add(correctCountry);
-
-            quizQuestion.correctCountry = correctCountry;
+                usedFlags.add(correctCountry); // Marks landmark as used for above do while next time
+                String correctFlagImage = correctCountry.getFlag_path();
+                // Retrieve the correct country name for the correct landmark
 
 
-            List<String> wrongAnswers = new ArrayList<>();
-            while (wrongAnswers.size() < 3) {
+                QuizQuestion quizQuestion = new QuizQuestion();
+                quizQuestion.correctCountry = correctCountry.getCountry_name();
+                quizQuestion.correctImagePath = correctFlagImage;
 
-                String wrongCountry = hardCountriesArray[random.nextInt(hardCountriesArray.length)];
-                if (!wrongCountry.equals(quizQuestion.correctCountry) && !wrongAnswers.contains(wrongCountry)) {
-                    wrongAnswers.add(wrongCountry);
+                // Generate wrong answers
+                List<Country> wrongCountries = new ArrayList<>(countries);
+                wrongCountries.removeIf(landmark -> usedFlags.contains(landmark)); // Exclude already used landmarks
+                Collections.shuffle(wrongCountries, random); // Shuffle to randomize order
+
+                // Select the first three wrong landmarks
+                List<Country> selectedWrongCountries = wrongCountries.subList(0, Math.min(3, wrongCountries.size()));
+
+                List<String> wrongCountryNames = new ArrayList<>();
+
+                for (Country country : selectedWrongCountries) {
+                    wrongCountryNames.add(country.getCountry_name());
                 }
+                // Combine correct and wrong answers
+                List<String> allAnswers = new ArrayList<>();
+                allAnswers.add(quizQuestion.correctCountry); // Assuming correctCountry contains the correct country name
+                allAnswers.addAll(wrongCountryNames);
+
+                // Shuffle all answers
+                Collections.shuffle(allAnswers, random);
+
+                quizQuestion.allAnswers = allAnswers;
+                quizQuestions.add(quizQuestion);
+
+            } else {
+                // return to dashboard for now
+                Intent intent = new Intent(FlagQuiz.this, QuizDashboard.class);
+                startActivity(intent);
             }
-
-            List<String> allAnswers = new ArrayList<>();
-            allAnswers.add(quizQuestion.correctCountry);
-            allAnswers.addAll(wrongAnswers);
-            Collections.shuffle(allAnswers, random);
-
-            quizQuestion.allAnswers = allAnswers;
-            quizQuestions.add(quizQuestion);
         }
+
     }
 
+//TODO Move this into ResourceUtilies class
     private void initCountryFlagMap() {
         HashMap<String, Integer> countryFlagMap = new HashMap<>();
 

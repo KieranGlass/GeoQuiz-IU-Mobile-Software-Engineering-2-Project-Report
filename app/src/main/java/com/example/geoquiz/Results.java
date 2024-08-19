@@ -95,7 +95,7 @@ public class Results extends AppCompatActivity {
                 startActivity(intent);
                 break;
             }
-            case "com.example.geoquiz.Landmark": {
+            case "Landmark": {
                 Intent intent = new Intent(Results.this, LandmarkQuiz.class);
                 intent.putExtra("Category", "com.example.geoquiz.Landmark");
                 intent.putExtra("Difficulty", difficultyReceived);
