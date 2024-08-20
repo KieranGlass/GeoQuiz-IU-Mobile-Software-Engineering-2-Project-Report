@@ -23,6 +23,8 @@ public class Results extends AppCompatActivity {
     double score, scorePercentage;
     long finishedScore;
 
+    //TODO - Logic for saving scores into future database.
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +77,6 @@ public class Results extends AppCompatActivity {
         else {
             ivResults.setImageResource(R.drawable.crying);
         }
-
     }
 
     public void onClickTryAgain(View view){

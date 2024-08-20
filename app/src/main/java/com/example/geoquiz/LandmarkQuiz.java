@@ -108,9 +108,9 @@ public class LandmarkQuiz extends AppCompatActivity {
 
     }
 
-    //TODO The three methods as of now work well and with the database
-    //TODO but they do not completely disallow the possibility for
-    //TODO duplicate wrong answers
+    //TODO - The three methods as of now work well and with the database
+    //TODO - but they do not completely disallow the possibility for
+    //TODO - duplicate wrong answers, same issues in flag quiz
 
     private void generateEasyQuiz() {
 
@@ -341,7 +341,7 @@ public class LandmarkQuiz extends AppCompatActivity {
         //sets textView in the activity to the landmark that is the focus of the question
         tvLandmark.setText(currentQuestion.correctLandmark);
 
-        ivLandmark.setImageResource(ResourceUtilities.getResourceId(currentQuestion.correctImagePath));
+        ivLandmark.setImageResource(ResourceUtilities.getLandmarkResourceId(currentQuestion.correctImagePath));
 
         //Sets the question counter on display screen (tvCounter) to number of current question
         tvCounter.setText(String.valueOf(currentQuestionIndex + 1));

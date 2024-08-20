@@ -19,6 +19,7 @@ import java.util.List;
 
 public class QuizDashboard extends AppCompatActivity {
 
+    //TODO - Incorporate three new quiz categories to bring a total of 6
 
     Button flagBtn, capitalBtn, landmarkBtn;
 

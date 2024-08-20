@@ -9,6 +9,8 @@ public class Country {
     private int capital_difficulty;
     private int flag_difficulty;
 
+    //TODO - Write similar classes for capital object and three new quiz catgeories.
+
 
     public Country(int id, String country_name, String country_capital,
                    String flag_path, int capital_difficulty, int flag_difficulty) {
