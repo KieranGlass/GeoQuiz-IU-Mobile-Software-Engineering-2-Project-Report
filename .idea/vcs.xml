@@ -2,5 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/GeoQuiz-IU-Mobile-Software-Engineering-2-Project-Report" vcs="Git" />
   </component>
 </project>

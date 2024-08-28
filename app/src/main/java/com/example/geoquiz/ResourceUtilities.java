@@ -3,20 +3,15 @@ package com.example.geoquiz;
 import android.util.Log;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class ResourceUtilities {
 
     public static final HashMap<String, Integer> countryLandmarkImageMap = new HashMap<>();
     public static final HashMap<String, Integer> countryFlagImageMap = new HashMap<>();
 
-    //TODO Add flags for Switzerland, Nepal, Monaco, Trinidad + Tobago, + Palau.
-
     //TODO Get images for sports team, foods + corporations (haven't decided on 6th type yet).
 
         static {
-
-            HashMap<String, Integer> countryFlagMap = new HashMap<>();
 
             countryFlagImageMap.put("R.drawable.afghanistan_flag", R.drawable.afghanistan_flag);
             countryFlagImageMap.put("R.drawable.albania_flag", R.drawable.albania_flag);
@@ -112,12 +107,14 @@ public class ResourceUtilities {
             countryFlagImageMap.put("R.drawable.mauritius_flag", R.drawable.mauritius_flag);
             countryFlagImageMap.put("R.drawable.mexico_flag", R.drawable.mexico_flag);
             countryFlagImageMap.put("R.drawable.moldova_flag", R.drawable.moldova_flag);
+            countryFlagImageMap.put("R.drawable.monaco_flag", R.drawable.monaco_flag);
             countryFlagImageMap.put("R.drawable.mongolia_flag", R.drawable.mongolia_flag);
             countryFlagImageMap.put("R.drawable.montenegro_flag", R.drawable.montenegro_flag);
             countryFlagImageMap.put("R.drawable.morocco_flag", R.drawable.morocco_flag);
             countryFlagImageMap.put("R.drawable.mozambique_flag", R.drawable.mozambique_flag);
             countryFlagImageMap.put("R.drawable.myanmar_flag", R.drawable.myanmar_flag);
             countryFlagImageMap.put("R.drawable.namibia_flag", R.drawable.namibia_flag);
+            countryFlagImageMap.put("R.drawable.nepal_flag", R.drawable.nepal_flag);
             countryFlagImageMap.put("R.drawable.netherlands_flag", R.drawable.netherlands_flag);
             countryFlagImageMap.put("R.drawable.new_zealand_flag", R.drawable.new_zealand_flag);
             countryFlagImageMap.put("R.drawable.nicaragua_flag", R.drawable.nicaragua_flag);
@@ -128,6 +125,7 @@ public class ResourceUtilities {
             countryFlagImageMap.put("R.drawable.norway_flag", R.drawable.norway_flag);
             countryFlagImageMap.put("R.drawable.oman_flag", R.drawable.oman_flag);
             countryFlagImageMap.put("R.drawable.pakistan_flag", R.drawable.pakistan_flag);
+            countryFlagImageMap.put("R.drawable.palau_flag", R.drawable.palau_flag);
             countryFlagImageMap.put("R.drawable.panama_flag", R.drawable.panama_flag);
             countryFlagImageMap.put("R.drawable.paraguay_flag", R.drawable.paraguay_flag);
             countryFlagImageMap.put("R.drawable.peru_flag", R.drawable.peru_flag);
@@ -155,6 +153,7 @@ public class ResourceUtilities {
             countryFlagImageMap.put("R.drawable.sudan_flag", R.drawable.sudan_flag);
             countryFlagImageMap.put("R.drawable.suriname_flag", R.drawable.suriname_flag);
             countryFlagImageMap.put("R.drawable.sweden_flag", R.drawable.sweden_flag);
+            countryFlagImageMap.put("R.drawable.switzerland_flag", R.drawable.swiss_flag);
             countryFlagImageMap.put("R.drawable.syria_flag", R.drawable.syria_flag);
             countryFlagImageMap.put("R.drawable.taiwan_flag", R.drawable.taiwan_flag);
             countryFlagImageMap.put("R.drawable.tajikistan_flag", R.drawable.tajikistan_flag);
@@ -162,6 +161,7 @@ public class ResourceUtilities {
             countryFlagImageMap.put("R.drawable.thailand_flag", R.drawable.thailand_flag);
             countryFlagImageMap.put("R.drawable.togo_flag", R.drawable.togo_flag);
             countryFlagImageMap.put("R.drawable.tonga_flag", R.drawable.tonga_flag);
+            countryFlagImageMap.put("R.drawable.trinidad_and_tobago_flag", R.drawable.trinidad_and_tobago_flag);
             countryFlagImageMap.put("R.drawable.tunisia_flag", R.drawable.tunisia_flag);
             countryFlagImageMap.put("R.drawable.turkey_flag", R.drawable.turkey_flag);
             countryFlagImageMap.put("R.drawable.turkmenistan_flag", R.drawable.turkmenistan_flag);
