@@ -21,6 +21,10 @@ import java.util.stream.Collectors;
 
 public class FlagQuiz extends AppCompatActivity {
 
+
+    //TODO ADD FLAGS FOR NEWLY ADDED COUNTRIES, START IMPLEMENTING TILE MAPS IF CAN SOLVE SIZE ISSUE
+
+    //TODO ADD SOME SORT OF FUNCTIONALITY AROUND THE CONTINENTS - POSSIBLE A CONTINENT MODE?
     private ImageView ivFlagQuestion;
     private TextView tvCounter;
     private List<RadioButton> radioButtons;
@@ -54,10 +58,12 @@ public class FlagQuiz extends AppCompatActivity {
             // Initializing all Radio Buttons into the radioButtons Array List
             RadioButton rbFlag1 = findViewById(R.id.rb1Flag); RadioButton rbFlag2 = findViewById(R.id.rb2Flag);
             RadioButton rbFlag3 = findViewById(R.id.rb3Flag); RadioButton rbFlag4 = findViewById(R.id.rb4Flag);
+            RadioButton rbFlag5 = findViewById(R.id.rb5Flag); RadioButton rbFlag6 = findViewById(R.id.rb6Flag);
 
             // Add RadioButtons to the list
             radioButtons.add(rbFlag1); radioButtons.add(rbFlag2);
             radioButtons.add(rbFlag3); radioButtons.add(rbFlag4);
+            radioButtons.add(rbFlag5); radioButtons.add(rbFlag6);
 
             // Set OnCheckedChangeListener for each RadioButton
             CompoundButton.OnCheckedChangeListener listener = (buttonView, isChecked) -> {
@@ -70,7 +76,7 @@ public class FlagQuiz extends AppCompatActivity {
 
             rbFlag1.setOnCheckedChangeListener(listener); rbFlag2.setOnCheckedChangeListener(listener);
             rbFlag3.setOnCheckedChangeListener(listener); rbFlag4.setOnCheckedChangeListener(listener);
-
+            rbFlag5.setOnCheckedChangeListener(listener); rbFlag6.setOnCheckedChangeListener(listener);
         }
 
         //Receive difficulty info from previous activity
@@ -137,7 +143,7 @@ public class FlagQuiz extends AppCompatActivity {
                 Collections.shuffle(wrongCountries, random); // Shuffle to randomize order
 
                 // Select the first three wrong landmarks
-                List<Country> selectedWrongCountries = wrongCountries.subList(0, Math.min(3, wrongCountries.size()));
+                List<Country> selectedWrongCountries = wrongCountries.subList(0, Math.min(5, wrongCountries.size()));
 
                 List<String> wrongCountryNames = new ArrayList<>();
 
@@ -199,7 +205,7 @@ public class FlagQuiz extends AppCompatActivity {
             Collections.shuffle(wrongCountries, random); // Shuffle to randomize order
 
             // Select the first three wrong landmarks
-            List<Country> selectedWrongCountries = wrongCountries.subList(0, Math.min(3, wrongCountries.size()));
+            List<Country> selectedWrongCountries = wrongCountries.subList(0, Math.min(5, wrongCountries.size()));
 
             List<String> wrongCountryNames = new ArrayList<>();
 
@@ -261,7 +267,7 @@ public class FlagQuiz extends AppCompatActivity {
                 Collections.shuffle(wrongCountries, random); // Shuffle to randomize order
 
                 // Select the first three wrong landmarks
-                List<Country> selectedWrongCountries = wrongCountries.subList(0, Math.min(3, wrongCountries.size()));
+                List<Country> selectedWrongCountries = wrongCountries.subList(0, Math.min(5, wrongCountries.size()));
 
                 List<String> wrongCountryNames = new ArrayList<>();
 
