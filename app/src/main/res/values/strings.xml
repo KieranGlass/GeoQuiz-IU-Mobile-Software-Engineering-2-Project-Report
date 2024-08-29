@@ -39,4 +39,7 @@
     <string name="landmark_question_text">In which country is the following landmark found?</string>
     <string name="image_landmark_description">The landmark image associated with the question</string>
     <string name="name_the_country">Name The Country!</string>
+    <string name="Food">Foods</string>
+    <string name="Sports">Sports</string>
+    <string name="Brands">Brands</string>
 </resources>

@@ -34,6 +34,7 @@ public class Difficulty extends AppCompatActivity {
         Intent intent = getIntent();
         category = intent.getStringExtra("Category");
 
+        //Todo Create activity designs for three new categories and then use intents here to direct user to correct activity.
 
         if (category != null) {
             switch (category) {

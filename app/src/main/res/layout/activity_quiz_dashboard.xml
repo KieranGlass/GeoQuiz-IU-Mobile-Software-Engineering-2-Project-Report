@@ -8,13 +8,15 @@
     android:background="@color/primaryColor"
     tools:context=".MainActivity">
 
+    <!-- TODO get images for latest three categories -->
+
     <androidx.cardview.widget.CardView
         android:id="@+id/flagCV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         app:cardBackgroundColor="@color/primaryDark"
-        app:cardCornerRadius="80dp"
+        app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toTopOf="@id/capitalCV"
         app:layout_constraintEnd_toStartOf="@id/flagBtn"
@@ -23,22 +25,11 @@
 
         <ImageView
             android:id="@+id/ivFlag"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:contentDescription="@string/flagWaveDescription"
             android:focusable="true"
             android:src="@drawable/flagwave" />
-
-        <TextView
-            android:id="@+id/tvFlag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/flag"
-            android:textAlignment="center"
-            android:textColor="@color/primaryColourText"
-            android:textSize="16sp"
-            android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
 
@@ -67,6 +58,21 @@
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
+        android:id="@+id/tvFlag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/flag"
+        android:textAlignment="center"
+        android:textColor="@color/primaryColourText"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/dividerFlag"
+        app:layout_constraintTop_toBottomOf="@id/flagBtn"
+        app:layout_constraintStart_toEndOf="@id/flagCV"
+        app:layout_constraintEnd_toStartOf="@id/tvFlagCompletion"/>
+
+    <TextView
         android:id="@+id/tvFlagCompletion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,7 +82,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/dividerFlag"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/flagCV"
+        app:layout_constraintStart_toEndOf="@id/tvLandmark"
         app:layout_constraintTop_toBottomOf="@id/flagBtn" />
 
     <androidx.cardview.widget.CardView
@@ -85,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         app:cardBackgroundColor="@color/primaryDark"
-        app:cardCornerRadius="80dp"
+        app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toTopOf="@id/landmarkCV"
         app:layout_constraintEnd_toStartOf="@id/capitalBtn"
@@ -94,23 +100,12 @@
 
         <ImageView
             android:id="@+id/ivCapital"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:contentDescription="@string/capitalImgViewDescription"
             android:focusable="true"
             android:src="@drawable/capitol"
             tools:ignore="ImageContrastCheck" />
-
-        <TextView
-            android:id="@+id/tvCapital"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/capitals"
-            android:textAlignment="center"
-            android:textColor="@color/primaryColourText"
-            android:textSize="16sp"
-            android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
 
@@ -138,6 +133,21 @@
         app:layout_constraintTop_toTopOf="@+id/capitalCV" />
 
     <TextView
+        android:id="@+id/tvCapital"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/capitals"
+        android:textAlignment="center"
+        android:textColor="@color/primaryColourText"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/dividerCapital"
+        app:layout_constraintEnd_toStartOf="@+id/tvCapitalCompletion"
+        app:layout_constraintStart_toEndOf="@+id/capitalCV"
+        app:layout_constraintTop_toBottomOf="@id/capitalBtn"/>
+
+    <TextView
         android:id="@+id/tvCapitalCompletion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -147,7 +157,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/dividerCapital"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/capitalCV"
+        app:layout_constraintStart_toEndOf="@id/tvLandmark"
         app:layout_constraintTop_toBottomOf="@id/capitalBtn" />
 
     <androidx.cardview.widget.CardView
@@ -157,34 +167,31 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         app:cardBackgroundColor="@color/primaryDark"
-        app:cardCornerRadius="80dp"
+        app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/foodCV"
         app:layout_constraintEnd_toStartOf="@id/landmarkBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/capitalCV">
 
         <ImageView
             android:id="@+id/ivLandmark"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:contentDescription="@string/landmarkDescription"
             android:focusable="true"
             android:src="@drawable/mt_fuji"
             tools:ignore="ImageContrastCheck" />
 
-        <TextView
-            android:id="@+id/tvLandmark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/Landmarks"
-            android:textAlignment="center"
-            android:textColor="@color/primaryColourText"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
     </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/dividerLandmark"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/primaryColourText"
+        app:layout_constraintBottom_toTopOf="@id/foodCV"
+        app:layout_constraintTop_toBottomOf="@id/landmarkCV"/>
 
     <Button
         android:id="@+id/landmarkBtn"
@@ -194,10 +201,25 @@
         android:text="@string/lets_quiz_landmarks"
         android:textColor="@color/primaryColourText"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tvLandmarkCompletion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/landmarkCV"
         app:layout_constraintTop_toTopOf="@+id/landmarkCV" />
+
+    <TextView
+        android:id="@+id/tvLandmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="13dp"
+        android:text="@string/Landmarks"
+        android:textAlignment="center"
+        android:textColor="@color/primaryColourText"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/dividerLandmark"
+        app:layout_constraintEnd_toStartOf="@+id/tvLandmarkCompletion"
+        app:layout_constraintStart_toEndOf="@+id/landmarkCV"
+        app:layout_constraintTop_toBottomOf="@id/landmarkBtn"/>
 
     <TextView
         android:id="@+id/tvLandmarkCompletion"
@@ -207,10 +229,211 @@
         android:text="@string/startCompletion"
         android:textSize="40sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/landmarkCV"
+        app:layout_constraintStart_toEndOf="@id/tvLandmark"
         app:layout_constraintTop_toBottomOf="@id/landmarkBtn" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/foodCV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:cardBackgroundColor="@color/primaryDark"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toTopOf="@id/sportsCV"
+        app:layout_constraintEnd_toStartOf="@id/flagBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/landmarkCV">
+
+        <ImageView
+            android:id="@+id/ivFood"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="@string/flagWaveDescription"
+            android:focusable="true"
+            android:src="@drawable/flagwave" />
+
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/dividerFood"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/primaryColourText"
+        app:layout_constraintTop_toBottomOf="@id/foodCV"
+        app:layout_constraintBottom_toTopOf="@id/sportsCV"/>
+
+    <Button
+        android:id="@+id/foodBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:text="@string/lets_quiz_landmarks"
+        android:textColor="@color/primaryColourText"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/foodCV"
+        app:layout_constraintTop_toTopOf="@+id/foodCV" />
+
+    <TextView
+        android:id="@+id/tvFood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/Food"
+        android:textAlignment="center"
+        android:textColor="@color/primaryColourText"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/dividerFood"
+        app:layout_constraintEnd_toStartOf="@+id/tvFoodCompletion"
+        app:layout_constraintStart_toEndOf="@+id/foodCV"
+        app:layout_constraintTop_toBottomOf="@id/foodBtn"/>
+
+    <TextView
+        android:id="@+id/tvFoodCompletion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        android:text="@string/startCompletion"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvLandmark"
+        app:layout_constraintTop_toBottomOf="@id/foodBtn" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/sportsCV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:cardBackgroundColor="@color/primaryDark"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toTopOf="@id/brandCV"
+        app:layout_constraintEnd_toStartOf="@id/flagBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/foodCV">
+
+        <ImageView
+            android:id="@+id/ivSports"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="@string/flagWaveDescription"
+            android:focusable="true"
+            android:src="@drawable/flagwave" />
+
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/dividerSports"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/primaryColourText"
+        app:layout_constraintTop_toBottomOf="@id/sportsCV"
+        app:layout_constraintBottom_toTopOf="@id/brandCV"/>
+
+    <Button
+        android:id="@+id/sportsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:text="@string/lets_quiz_landmarks"
+        android:textColor="@color/primaryColourText"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sportsCV"
+        app:layout_constraintTop_toTopOf="@+id/sportsCV" />
+
+    <TextView
+        android:id="@+id/tvSports"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/Sports"
+        android:textAlignment="center"
+        android:textColor="@color/primaryColourText"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/dividerSports"
+        app:layout_constraintEnd_toStartOf="@+id/tvSportsCompletion"
+        app:layout_constraintStart_toEndOf="@+id/sportsCV"
+        app:layout_constraintTop_toBottomOf="@id/sportsBtn"/>
+
+    <TextView
+        android:id="@+id/tvSportsCompletion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        android:text="@string/startCompletion"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvLandmark"
+        app:layout_constraintTop_toBottomOf="@id/sportsBtn" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/brandCV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:cardBackgroundColor="@color/primaryDark"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/flagBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sportsCV">
+
+        <ImageView
+            android:id="@+id/ivBrand"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="@string/flagWaveDescription"
+            android:focusable="true"
+            android:src="@drawable/flagwave" />
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/brandBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:text="@string/lets_quiz_landmarks"
+        android:textColor="@color/primaryColourText"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/brandCV"
+        app:layout_constraintTop_toTopOf="@+id/brandCV" />
+
+    <TextView
+        android:id="@+id/tvBrand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/Brands"
+        android:textAlignment="center"
+        android:textColor="@color/primaryColourText"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvBrandCompletion"
+        app:layout_constraintStart_toEndOf="@+id/brandCV"
+        app:layout_constraintTop_toBottomOf="@id/brandBtn"/>
+
+    <TextView
+        android:id="@+id/tvBrandCompletion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        android:text="@string/startCompletion"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvLandmark"
+        app:layout_constraintTop_toBottomOf="@id/brandBtn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

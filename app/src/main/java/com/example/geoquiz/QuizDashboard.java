@@ -21,7 +21,7 @@ public class QuizDashboard extends AppCompatActivity {
 
     //TODO - Incorporate three new quiz categories to bring a total of 6
 
-    Button flagBtn, capitalBtn, landmarkBtn;
+    Button flagBtn, capitalBtn, landmarkBtn, foodBtn, sportsBtn, brandBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +34,12 @@ public class QuizDashboard extends AppCompatActivity {
             return insets;
         });
 
-
-
         flagBtn = findViewById(R.id.flagBtn);
         capitalBtn = findViewById(R.id.capitalBtn);
         landmarkBtn = findViewById(R.id.landmarkBtn);
+        foodBtn = findViewById(R.id.foodBtn);
+        sportsBtn = findViewById(R.id.sportsBtn);
+        brandBtn = findViewById(R.id.brandBtn);
 
         flagBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,8 +68,32 @@ public class QuizDashboard extends AppCompatActivity {
             }
         });
 
+        foodBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
+                intent.putExtra("Category", "Food");
+                startActivity(intent);
+            }
+        });
 
+        sportsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
+                intent.putExtra("Category", "Sports");
+                startActivity(intent);
+            }
+        });
 
+        brandBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
+                intent.putExtra("Category", "Brand");
+                startActivity(intent);
+            }
+        });
     }
 
 }

@@ -25,6 +25,8 @@ public class FlagQuiz extends AppCompatActivity {
     //TODO ADD FLAGS FOR NEWLY ADDED COUNTRIES, START IMPLEMENTING TILE MAPS IF CAN SOLVE SIZE ISSUE
 
     //TODO ADD SOME SORT OF FUNCTIONALITY AROUND THE CONTINENTS - POSSIBLE A CONTINENT MODE?
+
+    //TODO ADD TOAST OR SIMILAR MESSAGE AFTER EVERY SUBMIT CLICK TO IMMEDIATELY GIVE QUESTION FEEDBACK - DO FOR ALL 6 QUIZ CATEGORIES
     private ImageView ivFlagQuestion;
     private TextView tvCounter;
     private List<RadioButton> radioButtons;
@@ -34,7 +36,7 @@ public class FlagQuiz extends AppCompatActivity {
     private String intentDifficulty, intentCategory;
     int score = 0;
 
-    // TODO - Fix issue where certain nations (Dominican Republic) are too long for radio button
+    // TODO - Fix issue where certain nations (Dominican Republic, Trinidad + Tobago) are too long for radio button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
