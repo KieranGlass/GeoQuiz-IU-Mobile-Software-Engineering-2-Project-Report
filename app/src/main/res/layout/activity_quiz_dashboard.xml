@@ -252,7 +252,7 @@
             android:layout_height="100dp"
             android:contentDescription="@string/flagWaveDescription"
             android:focusable="true"
-            android:src="@drawable/flagwave" />
+            android:src="@drawable/hamburger" />
 
     </androidx.cardview.widget.CardView>
 
@@ -322,7 +322,7 @@
             android:layout_height="100dp"
             android:contentDescription="@string/flagWaveDescription"
             android:focusable="true"
-            android:src="@drawable/flagwave" />
+            android:src="@drawable/baseball" />
 
     </androidx.cardview.widget.CardView>
 
@@ -392,7 +392,7 @@
             android:layout_height="100dp"
             android:contentDescription="@string/flagWaveDescription"
             android:focusable="true"
-            android:src="@drawable/flagwave" />
+            android:src="@drawable/brands" />
 
     </androidx.cardview.widget.CardView>
 

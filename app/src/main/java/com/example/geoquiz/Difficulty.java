@@ -34,7 +34,7 @@ public class Difficulty extends AppCompatActivity {
         Intent intent = getIntent();
         category = intent.getStringExtra("Category");
 
-        //Todo Create activity designs for three new categories and then use intents here to direct user to correct activity.
+        //Todo Create activity designs for three new categories
 
         if (category != null) {
             switch (category) {
@@ -72,6 +72,7 @@ public class Difficulty extends AppCompatActivity {
                         }
                     });
                     break;
+
                 case "Capital":
                     easyBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -106,6 +107,7 @@ public class Difficulty extends AppCompatActivity {
                         }
                     });
                     break;
+
                 case "Landmark":
                     easyBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -134,6 +136,111 @@ public class Difficulty extends AppCompatActivity {
                         public void onClick(View view) {
 
                             Intent intent = new Intent(Difficulty.this, LandmarkQuiz.class);
+                            intent.putExtra("Difficulty", "Hard");
+                            intent.putExtra("Category", category);
+                            startActivity(intent);
+                        }
+                    });
+                    break;
+
+                case "Food":
+                    easyBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, FoodQuiz.class);
+                            intent.putExtra("Difficulty", "Easy");
+                            intent.putExtra("Category", category);
+                            startActivity(intent);
+                        }
+                    });
+
+                    mediumBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, FoodQuiz.class);
+                            intent.putExtra("Difficulty", "Medium");
+                            intent.putExtra("Category", category);
+                            startActivity(intent);
+                        }
+                    });
+
+                    hardBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, FoodQuiz.class);
+                            intent.putExtra("Difficulty", "Hard");
+                            intent.putExtra("Category", category);
+                            startActivity(intent);
+                        }
+                    });
+                    break;
+
+                case "Sports":
+                    easyBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, SportsQuiz.class);
+                            intent.putExtra("Difficulty", "Easy");
+                            intent.putExtra("Category", category);
+                            startActivity(intent);
+                        }
+                    });
+
+                    mediumBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, SportsQuiz.class);
+                            intent.putExtra("Difficulty", "Medium");
+                            intent.putExtra("Category", category);
+                            startActivity(intent);
+                        }
+                    });
+
+                    hardBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, SportsQuiz.class);
+                            intent.putExtra("Difficulty", "Hard");
+                            intent.putExtra("Category", category);
+                            startActivity(intent);
+                        }
+                    });
+                    break;
+
+                case "Brand":
+                    easyBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, BrandQuiz.class);
+                            intent.putExtra("Difficulty", "Easy");
+                            intent.putExtra("Category", category);
+                            startActivity(intent);
+                        }
+                    });
+
+                    mediumBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, BrandQuiz.class);
+                            intent.putExtra("Difficulty", "Medium");
+                            intent.putExtra("Category", category);
+                            startActivity(intent);
+                        }
+                    });
+
+                    hardBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Intent intent = new Intent(Difficulty.this, BrandQuiz.class);
                             intent.putExtra("Difficulty", "Hard");
                             intent.putExtra("Category", category);
                             startActivity(intent);
