@@ -11,7 +11,10 @@ public class QuizQuestion {
         String correctLandmark;
         String correctCapitalCountry;
         String correctLandmarkCountry;
-        String correctImagePath;
+        String correctImage;
+        String difficultyLevel;
+        int correctImageRow;
+        int correctImageColumn;
         List<String> allAnswers;
 
 

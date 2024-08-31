@@ -21,7 +21,7 @@ import java.util.Random;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 4;
+    public static final int DB_VERSION = 5;
     private static final String DB_NAME = "GeoQuizDatabase.db";
     private String DB_PATH = "/data/data/com.example.geoquiz/databases/";
     SQLiteDatabase myDatabase;
@@ -34,13 +34,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        // Creating 'countries' table
         String CREATE_COUNTRIES_TABLE = "CREATE TABLE IF NOT EXISTS countries (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "country_name TEXT NOT NULL, " +
                 "country_capital TEXT NOT NULL, " +
                 "flag_path TEXT NOT NULL, " +
-                "capital_difficulty INTEGER, " +
-                "flag_difficulty INTEGER, " +
+                "capital_difficulty INTEGER NOT NULL, " +
+                "flag_difficulty INTEGER NOT NULL, " +
+                "continent_id INTEGER NOT NULL, " +
+                "tilemap_row INTEGER NOT NULL, " +
+                "tilemap_column INTEGER NOT NULL, " +
+                "FOREIGN KEY(continent_id) REFERENCES continents(id), " +
                 "FOREIGN KEY(capital_difficulty) REFERENCES difficulty(id), " +
                 "FOREIGN KEY(flag_difficulty) REFERENCES difficulty(id))";
         db.execSQL(CREATE_COUNTRIES_TABLE);
@@ -61,6 +67,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(country_id) REFERENCES countries(id), " +
                 "FOREIGN KEY(difficulty_id) REFERENCES difficulty(id))";
         db.execSQL(CREATE_LANDMARKS_TABLE);
+
+        // Creating the 'continents' table
+        String CREATE_CONTINENT_TABLE = "CREATE TABLE IF NOT EXISTS continents (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "continent_name TEXT NOT NULL)";
+        db.execSQL(CREATE_CONTINENT_TABLE);
+
+        // Creating the 'food' table
+        String CREATE_FOOD_TABLE = "CREATE TABLE IF NOT EXISTS food (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "food_name TEXT NOT NULL, " +
+                "country_id INTEGER NOT NULL, " +
+                "difficulty_id INTEGER NOT NULL, " +
+                "FOREIGN KEY(country_id) REFERENCES countries(id), " +
+                "FOREIGN KEY(difficulty_id) REFERENCES difficulty(id))";
+        db.execSQL(CREATE_FOOD_TABLE);
+
+        // Creating the 'sports' table
+        String CREATE_SPORTS_TABLE = "CREATE TABLE IF NOT EXISTS sports (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "team_name TEXT NOT NULL, " +
+                "country_id INTEGER NOT NULL, " +
+                "difficulty_id INTEGER NOT NULL, " +
+                "FOREIGN KEY(country_id) REFERENCES countries(id), " +
+                "FOREIGN KEY(difficulty_id) REFERENCES difficulty(id))";
+        db.execSQL(CREATE_SPORTS_TABLE);
+
+        // Creating the 'brands' table
+        String CREATE_BRANDS_TABLE = "CREATE TABLE IF NOT EXISTS brands (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "brand_name TEXT NOT NULL, " +
+                "country_id INTEGER NOT NULL, " +
+                "difficulty_id INTEGER NOT NULL, " +
+                "FOREIGN KEY(country_id) REFERENCES countries(id), " +
+                "FOREIGN KEY(difficulty_id) REFERENCES difficulty(id))";
+        db.execSQL(CREATE_BRANDS_TABLE);
     }
 
     @Override
@@ -173,10 +215,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 landmarks.add(new Landmark(
-                        cursor.getInt(0), // Assuming the ID is in the first column
-                        cursor.getString(1), // Assuming the name is in the second column
-                        cursor.getInt(2),
-                        cursor.getString(3), // Assuming the image path is in the fourth column
+                        cursor.getInt(0), // ID
+                        cursor.getString(1), // landmark name
+                        cursor.getInt(2),   // county id
+                        cursor.getString(3), // image path
                         cursor.getInt(4) // difficulty id
                 ));
             } while (cursor.moveToNext());
@@ -202,7 +244,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(2), // country capital
                         cursor.getString(3), // country flag image path
                         cursor.getInt(4), // capital difficulty id
-                        cursor.getInt(5) // flag difficulty id
+                        cursor.getInt(5), // flag difficulty id
+                        cursor.getInt(6), // continent id
+                        cursor.getInt(7), // tilemap row
+                        cursor.getInt(8)  // tilemap column
                 ));
             } while (cursor.moveToNext());
         }

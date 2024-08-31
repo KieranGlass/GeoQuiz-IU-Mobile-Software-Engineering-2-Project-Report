@@ -1,7 +1,13 @@
 package com.example.geoquiz;
 
+import static com.example.geoquiz.ResourceUtilities.getFlagImage;
+import static com.example.geoquiz.ResourceUtilities.getFlagResourceId;
+
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -22,7 +28,7 @@ import java.util.stream.Collectors;
 public class FlagQuiz extends AppCompatActivity {
 
 
-    //TODO ADD FLAGS FOR NEWLY ADDED COUNTRIES, START IMPLEMENTING TILE MAPS IF CAN SOLVE SIZE ISSUE
+    //TODO ADD A DIFFICULTY ACTIVITY JUST FOR FLAGS AS WILL HAVE EXTRA DIFFICULTIES AND OTHER GAME MODES
 
     //TODO ADD SOME SORT OF FUNCTIONALITY AROUND THE CONTINENTS - POSSIBLE A CONTINENT MODE?
 
@@ -132,19 +138,24 @@ public class FlagQuiz extends AppCompatActivity {
 
                 usedFlags.add(correctCountry); // Marks landmark as used for above do while next time
                 String correctFlagImage = correctCountry.getFlag_path();
-                // Retrieve the correct country name for the correct landmark
+                int correctRowNumber = correctCountry.getTilemap_row();
+                int correctColumnNumber = correctCountry.getTilemap_column();
+                // Retrieve the correct country name for the correct country
 
 
                 QuizQuestion quizQuestion = new QuizQuestion();
                 quizQuestion.correctCountry = correctCountry.getCountry_name();
-                quizQuestion.correctImagePath = correctFlagImage;
+                quizQuestion.correctImage = correctFlagImage;
+                quizQuestion.correctImageRow = correctRowNumber;
+                quizQuestion.correctImageColumn = correctColumnNumber;
+                quizQuestion.difficultyLevel = "easy";
 
                 // Generate wrong answers
                 List<Country> wrongCountries = new ArrayList<>(countries);
-                wrongCountries.removeIf(landmark -> usedFlags.contains(landmark)); // Exclude already used landmarks
+                wrongCountries.removeIf(landmark -> usedFlags.contains(landmark)); // Exclude already used country
                 Collections.shuffle(wrongCountries, random); // Shuffle to randomize order
 
-                // Select the first three wrong landmarks
+                // Select the first five wrong countries
                 List<Country> selectedWrongCountries = wrongCountries.subList(0, Math.min(5, wrongCountries.size()));
 
                 List<String> wrongCountryNames = new ArrayList<>();
@@ -194,19 +205,24 @@ public class FlagQuiz extends AppCompatActivity {
 
             usedFlags.add(correctCountry); // Marks landmark as used for above do while next time
             String correctFlagImage = correctCountry.getFlag_path();
-            // Retrieve the correct country name for the correct landmark
+            int correctRowNumber = correctCountry.getTilemap_row();
+            int correctColumnNumber = correctCountry.getTilemap_column();
+            // Retrieve the correct country name
 
 
             QuizQuestion quizQuestion = new QuizQuestion();
             quizQuestion.correctCountry = correctCountry.getCountry_name();
-            quizQuestion.correctImagePath = correctFlagImage;
+            quizQuestion.correctImage = correctFlagImage;
+            quizQuestion.correctImageRow = correctRowNumber;
+            quizQuestion.correctImageColumn = correctColumnNumber;
+            quizQuestion.difficultyLevel = "medium";
 
             // Generate wrong answers
             List<Country> wrongCountries = new ArrayList<>(countries);
-            wrongCountries.removeIf(landmark -> usedFlags.contains(landmark)); // Exclude already used landmarks
+            wrongCountries.removeIf(landmark -> usedFlags.contains(landmark)); // Exclude already used countries
             Collections.shuffle(wrongCountries, random); // Shuffle to randomize order
 
-            // Select the first three wrong landmarks
+            // Select the first three wrong countries
             List<Country> selectedWrongCountries = wrongCountries.subList(0, Math.min(5, wrongCountries.size()));
 
             List<String> wrongCountryNames = new ArrayList<>();
@@ -256,12 +272,17 @@ public class FlagQuiz extends AppCompatActivity {
 
                 usedFlags.add(correctCountry); // Marks landmark as used for above do while next time
                 String correctFlagImage = correctCountry.getFlag_path();
+                int correctRowNumber = correctCountry.getTilemap_row();
+                int correctColumnNumber = correctCountry.getTilemap_column();
                 // Retrieve the correct country name for the correct landmark
 
 
                 QuizQuestion quizQuestion = new QuizQuestion();
                 quizQuestion.correctCountry = correctCountry.getCountry_name();
-                quizQuestion.correctImagePath = correctFlagImage;
+                quizQuestion.correctImage = correctFlagImage;
+                quizQuestion.correctImageRow = correctRowNumber;
+                quizQuestion.correctImageColumn = correctColumnNumber;
+                quizQuestion.difficultyLevel = "hard";
 
                 // Generate wrong answers
                 List<Country> wrongCountries = new ArrayList<>(countries);
@@ -297,12 +318,27 @@ public class FlagQuiz extends AppCompatActivity {
     }
 
     private void displayCurrentQuestion() {
-
-        //Uses the currentQuestionIndex to retrieve the question to be displayed
         QuizQuestion currentQuestion = quizQuestions.get(currentQuestionIndex);
 
-        //sets flag image in the image view element (ivFlagQuestion)
-        ivFlagQuestion.setImageResource(ResourceUtilities.getFlagResourceId(currentQuestion.correctImagePath));
+        // Get the correct tilemap resource ID based on the difficulty level
+        int tileMapResId = getFlagResourceId(currentQuestion.correctImage, currentQuestion.difficultyLevel);
+
+        if (tileMapResId != -1) {
+            Bitmap tileMap = BitmapFactory.decodeResource(getResources(), tileMapResId);
+
+            // Extract the flag image
+            Bitmap flagBitmap = ResourceUtilities.getFlagImage(tileMap, currentQuestion.correctImageRow, currentQuestion.correctImageColumn);
+
+            if (flagBitmap != null) {
+                ivFlagQuestion.setImageBitmap(flagBitmap);
+            } else {
+                Log.e("FlagLoader", "Failed to load flag");
+                ivFlagQuestion.setImageResource(R.drawable.england_flag); // Set a default flag
+            }
+        } else {
+            Log.e("ResourceUtil", "Unable to find tilemap resource for difficulty level " + currentQuestion.difficultyLevel);
+            ivFlagQuestion.setImageResource(R.drawable.england_flag); // Set a default flag
+        }
 
         //Sets the question counter on display screen (tvCounter) to number of current question
         tvCounter.setText(String.valueOf(currentQuestionIndex + 1));

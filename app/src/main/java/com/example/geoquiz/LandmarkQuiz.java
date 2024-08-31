@@ -174,7 +174,7 @@ public class LandmarkQuiz extends AppCompatActivity {
                 Collections.shuffle(allAnswers, random);
 
                 quizQuestion.allAnswers = allAnswers;
-                quizQuestion.correctImagePath = correctImagePath;
+                quizQuestion.correctImage = correctImagePath;
                 quizQuestions.add(quizQuestion);
 
             } else {
@@ -248,7 +248,7 @@ public class LandmarkQuiz extends AppCompatActivity {
                 Collections.shuffle(allAnswers, random);
 
                 quizQuestion.allAnswers = allAnswers;
-                quizQuestion.correctImagePath = correctImagePath;
+                quizQuestion.correctImage = correctImagePath;
                 quizQuestions.add(quizQuestion);
 
             } else {
@@ -321,7 +321,7 @@ public class LandmarkQuiz extends AppCompatActivity {
                 Collections.shuffle(allAnswers, random);
 
                 quizQuestion.allAnswers = allAnswers;
-                quizQuestion.correctImagePath = correctImagePath;
+                quizQuestion.correctImage = correctImagePath;
                 quizQuestions.add(quizQuestion);
 
             } else {
@@ -340,7 +340,7 @@ public class LandmarkQuiz extends AppCompatActivity {
         //sets textView in the activity to the landmark that is the focus of the question
         tvLandmark.setText(currentQuestion.correctLandmark);
 
-        ivLandmark.setImageResource(ResourceUtilities.getLandmarkResourceId(currentQuestion.correctImagePath));
+        ivLandmark.setImageResource(ResourceUtilities.getLandmarkResourceId(currentQuestion.correctImage));
 
         //Sets the question counter on display screen (tvCounter) to number of current question
         tvCounter.setText(String.valueOf(currentQuestionIndex + 1));
