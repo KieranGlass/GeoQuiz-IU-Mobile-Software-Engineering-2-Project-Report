@@ -112,6 +112,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS countries");
         db.execSQL("DROP TABLE IF EXISTS difficulty");
         db.execSQL("DROP TABLE IF EXISTS Landmarks");
+        db.execSQL("DROP TABLE IF EXISTS continents");
+        db.execSQL("DROP TABLE IF EXISTS food");
+        db.execSQL("DROP TABLE IF EXISTS sports");
+        db.execSQL("DROP TABLE IF EXISTS brands");
 
         // Create tables again
         onCreate(db);
