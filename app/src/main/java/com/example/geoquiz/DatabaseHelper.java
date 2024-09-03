@@ -21,7 +21,7 @@ import java.util.Random;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 5;
+    public static final int DB_VERSION = 6;
     private static final String DB_NAME = "GeoQuizDatabase.db";
     private String DB_PATH = "/data/data/com.example.geoquiz/databases/";
     SQLiteDatabase myDatabase;
@@ -80,6 +80,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "food_name TEXT NOT NULL, " +
                 "country_id INTEGER NOT NULL, " +
                 "difficulty_id INTEGER NOT NULL, " +
+                "tilemap_row INTEGER NOT NULL, " +
+                "tilmap_column INTEGER NOT NULL, " +
+                "food_path TEXT, " +
                 "FOREIGN KEY(country_id) REFERENCES countries(id), " +
                 "FOREIGN KEY(difficulty_id) REFERENCES difficulty(id))";
         db.execSQL(CREATE_FOOD_TABLE);
@@ -90,6 +93,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "team_name TEXT NOT NULL, " +
                 "country_id INTEGER NOT NULL, " +
                 "difficulty_id INTEGER NOT NULL, " +
+                "sport_path TEXT, " +
+                "tilemap_row INTEGER NOT NULL, " +
+                "tilmap_column INTEGER NOT NULL, " +
                 "FOREIGN KEY(country_id) REFERENCES countries(id), " +
                 "FOREIGN KEY(difficulty_id) REFERENCES difficulty(id))";
         db.execSQL(CREATE_SPORTS_TABLE);
@@ -100,6 +106,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "brand_name TEXT NOT NULL, " +
                 "country_id INTEGER NOT NULL, " +
                 "difficulty_id INTEGER NOT NULL, " +
+                "brand_path TEXT, " +
+                "tilemap_row INTEGER NOT NULL, " +
+                "tilmap_column INTEGER NOT NULL, " +
                 "FOREIGN KEY(country_id) REFERENCES countries(id), " +
                 "FOREIGN KEY(difficulty_id) REFERENCES difficulty(id))";
         db.execSQL(CREATE_BRANDS_TABLE);
@@ -263,6 +272,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return countries;
+    }
+
+    public List<Sports> fetchSports() {
+
+        List<Sports> sports = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM sports", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                sports.add(new Sports(
+                        cursor.getInt(0), // ID
+                        cursor.getString(1), // team name
+                        cursor.getInt(2),   // county id
+                        cursor.getInt(3), // difficulty id
+                        cursor.getString(4), // sport image path
+                        cursor.getInt(5), // tilemap row
+                        cursor.getInt(6) // tilemap column
+
+                ));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return sports;
     }
 
 }

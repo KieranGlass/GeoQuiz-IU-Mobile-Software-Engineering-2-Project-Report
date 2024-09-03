@@ -114,5 +114,55 @@ public class ResourceUtilities {
                 Math.round(flagWidth * scaleX),
                 Math.round(flagHeight * scaleY));
     }
+
+    public static int getSportsResourceId (String key, String difficultyLevel){
+        String tileMapName = difficultyLevel + "_sport_tile_map";
+
+        // Map of tilemap names to resource IDs
+        Map<String, Integer> tileMapResources = new HashMap<>();
+
+        {
+            tileMapResources.put("easy_sport_tile_map", R.drawable.easy_sport_tile_map);
+            tileMapResources.put("medium_sport_tile_map", R.drawable.medium_sport_tile_map);
+            tileMapResources.put("hard_sport_tile_map", R.drawable.hard_sport_tile_map);
+        }
+
+        Integer resourceId = tileMapResources.get(tileMapName);
+        if (resourceId != null) {
+            return resourceId;
+        } else {
+            Log.w("ResourceUtil", "No resource found for key: " + tileMapName);
+            return -1;
+        }
+    }
+
+    public static Bitmap getSportsImage(Bitmap tileMap, int row, int column) {
+        int imageWidth = 300;
+        int imageHeight = 300;
+
+        // Calculate the starting position of the flag
+        float scaleX = (float) tileMap.getWidth() / 1200; // 2400 is the original width
+        float scaleY = (float) tileMap.getHeight() / 1500; // 1000 is the original height
+
+        int startX = Math.round(column * imageWidth * scaleX);
+        int startY = Math.round(row * imageHeight * scaleY);
+
+        Log.d("FlagExtractor", "Tilemap dimensions: " + tileMap.getWidth() + "x" + tileMap.getHeight());
+        Log.d("FlagExtractor", "Original dimensions: 1600x1500");
+        Log.d("FlagExtractor", "Scale factors: X=" + scaleX + ", Y=" + scaleY);
+        Log.d("FlagExtractor", "Extracting flag at: (" + startX + ", " + startY + ")");
+
+        // Check if the requested position is within the tilemap bounds
+        if (startX + Math.round(imageWidth * scaleX) > tileMap.getWidth() ||
+                startY + Math.round(imageHeight * scaleY) > tileMap.getHeight()) {
+            Log.w("FlagExtractor", "Flag out of bounds: (" + startX + ", " + startY + ")");
+            return null;
+        }
+
+        // Extract the flag image
+        return Bitmap.createBitmap(tileMap, startX, startY,
+                Math.round(imageWidth * scaleX),
+                Math.round(imageHeight * scaleY));
+    }
 }
 

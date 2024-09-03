@@ -42,4 +42,10 @@
     <string name="Food">Foods</string>
     <string name="Sports">Sports</string>
     <string name="Brands">Brands</string>
+    <string name="this_food_belongs_to_the_cuisine_of_which_nation">This Food belongs to the cuisine of which nation?</string>
+    <string name="foooooooooooood">FOOOOOOOOOOOOOD</string>
+    <string name="the_following_brand_comes_from_which_country">The following brand comes from which country?</string>
+    <string name="braaaaaaands">Braaaaaaands</string>
+    <string name="the_following_sports_team_is_based_in_which_nation">The following Sports Team is based in which nation?</string>
+    <string name="sports">SPORTS!</string>
 </resources>

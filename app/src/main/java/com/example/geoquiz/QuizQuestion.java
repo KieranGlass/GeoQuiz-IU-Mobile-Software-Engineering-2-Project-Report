@@ -13,6 +13,8 @@ public class QuizQuestion {
         String correctLandmarkCountry;
         String correctImage;
         String difficultyLevel;
+        String correctSportsTeam;
+        String correctSportsTeamCountry;
         int correctImageRow;
         int correctImageColumn;
         List<String> allAnswers;

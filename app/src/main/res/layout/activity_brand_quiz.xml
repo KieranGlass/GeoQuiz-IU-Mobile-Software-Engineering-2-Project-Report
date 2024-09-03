@@ -5,6 +5,173 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BrandQuiz">
+    android:background="@color/primaryColor"
+    tools:context=".LandmarkQuiz">
+
+    <TextView
+        android:id="@+id/tvBrandQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/the_following_brand_comes_from_which_country"
+        android:textStyle="bold"
+        android:textColor="@color/primaryColourText"
+        android:textSize="24sp"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/ivBrand"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivBrand"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:contentDescription="@string/image_landmark_description"
+        app:srcCompat="@drawable/eiffel_tower"
+        android:background="#000000"
+        app:layout_constraintBottom_toTopOf="@id/tvBrandName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBrandQuestion" />
+
+    <TextView
+        android:id="@+id/tvBrandName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/braaaaaaands"
+        android:textStyle="bold"
+        android:textColor="@color/primaryColourText"
+        android:textSize="30sp"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/groupBrand1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivBrand" />
+
+    <LinearLayout
+        android:id="@+id/groupBrand1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:weightSum="2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBrandName"
+        app:layout_constraintBottom_toTopOf="@id/groupBrand2"
+        >
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rbBrand1"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:text="@string/country_placeholder"
+            tools:ignore="DuplicateSpeakableTextCheck,VisualLintButtonSize" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rbBrand2"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/groupBrand2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:weightSum="2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/groupBrand1"
+        app:layout_constraintBottom_toTopOf="@id/groupBrand3">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rbBrand3"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rbBrand4"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/groupBrand3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:weightSum="2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/groupBrand2"
+        app:layout_constraintBottom_toTopOf="@id/submitBtnBrand">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rbBrand5"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rbBrand6"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:text="@string/country_placeholder"
+            tools:ignore="VisualLintButtonSize" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submitBtnBrand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        android:onClick="onSubmitClicked"
+        android:background="@drawable/button_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/groupBrand3"
+        app:layout_constraintStart_toEndOf="@id/tvCounterBrand"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCounterBrand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/qNumberStart"
+        android:textSize="26sp"
+        android:textColor="@color/primaryColourText"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/submitBtnBrand"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/groupBrand3" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

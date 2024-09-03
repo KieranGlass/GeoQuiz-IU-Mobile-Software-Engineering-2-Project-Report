@@ -1,6 +1,4 @@
 package com.example.geoquiz;
-
-import static com.example.geoquiz.ResourceUtilities.getFlagResourceId;
 import static com.example.geoquiz.ResourceUtilities.getLandmarkResourceId;
 
 import android.content.Intent;
@@ -120,7 +118,6 @@ public class LandmarkQuiz extends AppCompatActivity {
     private void generateEasyQuiz() {
 
         DatabaseHelper helper = new DatabaseHelper(LandmarkQuiz.this, null, null, DatabaseHelper.DB_VERSION);
-        helper.open();
 
         List<Landmark> landmarks = helper.fetchLandmarks();
         List<Country> countries = helper.fetchCountries();
@@ -150,9 +147,17 @@ public class LandmarkQuiz extends AppCompatActivity {
                         .map(Country::getCountry_name)
                         .orElse("");
 
+                String correctFlagImage = correctLandmark.getImagePath();
+                int correctRowNumber = correctLandmark.getTilemap_row();
+                int correctColumnNumber = correctLandmark.getTilemap_column();
+
                 QuizQuestion quizQuestion = new QuizQuestion();
                 quizQuestion.correctLandmark = correctLandmark.getName();
                 quizQuestion.correctLandmarkCountry = correctCountry;
+                quizQuestion.correctImage = correctFlagImage;
+                quizQuestion.correctImageRow = correctRowNumber;
+                quizQuestion.correctImageColumn = correctColumnNumber;
+                quizQuestion.difficultyLevel = "easy";
 
                 // Generate wrong answers
                 List<Landmark> wrongLandmarks = new ArrayList<>(landmarks);
@@ -194,7 +199,6 @@ public class LandmarkQuiz extends AppCompatActivity {
     private void generateMediumQuiz() {
 
         DatabaseHelper helper = new DatabaseHelper(LandmarkQuiz.this, null, null, DatabaseHelper.DB_VERSION);
-        helper.open();
 
         List<Landmark> landmarks = helper.fetchLandmarks();
         List<Country> countries = helper.fetchCountries();
@@ -224,9 +228,17 @@ public class LandmarkQuiz extends AppCompatActivity {
                         .map(Country::getCountry_name)
                         .orElse("");
 
+                String correctFlagImage = correctLandmark.getImagePath();
+                int correctRowNumber = correctLandmark.getTilemap_row();
+                int correctColumnNumber = correctLandmark.getTilemap_column();
+
                 QuizQuestion quizQuestion = new QuizQuestion();
                 quizQuestion.correctLandmark = correctLandmark.getName();
                 quizQuestion.correctLandmarkCountry = correctCountry;
+                quizQuestion.correctImage = correctFlagImage;
+                quizQuestion.correctImageRow = correctRowNumber;
+                quizQuestion.correctImageColumn = correctColumnNumber;
+                quizQuestion.difficultyLevel = "medium";
 
                 // Generate wrong answers
                 List<Landmark> wrongLandmarks = new ArrayList<>(landmarks);
@@ -288,7 +300,6 @@ public class LandmarkQuiz extends AppCompatActivity {
                 } while (usedLandmarks.contains(correctLandmark));
 
                 usedLandmarks.add(correctLandmark); // Marks landmark as used for above do while next time
-                String correctImagePath = correctLandmark.getImagePath();
                 // Retrieve the correct country name for the correct landmark
                 Landmark finalCorrectLandmark = correctLandmark; // final just for use in following lambda
                 String correctCountry = countries.stream()
@@ -297,14 +308,14 @@ public class LandmarkQuiz extends AppCompatActivity {
                         .map(Country::getCountry_name)
                         .orElse("");
 
-                String correctFlagImage = correctLandmark.getImagePath();
+                String correctLandmarkImage = correctLandmark.getImagePath();
                 int correctRowNumber = correctLandmark.getTilemap_row();
                 int correctColumnNumber = correctLandmark.getTilemap_column();
 
                 QuizQuestion quizQuestion = new QuizQuestion();
                 quizQuestion.correctLandmark = correctLandmark.getName();
                 quizQuestion.correctLandmarkCountry = correctCountry;
-                quizQuestion.correctImage = correctFlagImage;
+                quizQuestion.correctImage = correctLandmarkImage;
                 quizQuestion.correctImageRow = correctRowNumber;
                 quizQuestion.correctImageColumn = correctColumnNumber;
                 quizQuestion.difficultyLevel = "hard";
@@ -335,7 +346,6 @@ public class LandmarkQuiz extends AppCompatActivity {
                 Collections.shuffle(allAnswers, random);
 
                 quizQuestion.allAnswers = allAnswers;
-                quizQuestion.correctImage = correctImagePath;
                 quizQuestions.add(quizQuestion);
 
             } else {
@@ -351,23 +361,25 @@ public class LandmarkQuiz extends AppCompatActivity {
         QuizQuestion currentQuestion = quizQuestions.get(currentQuestionIndex);
 
         // Get the correct tilemap resource ID based on the difficulty level
-        int tileMapResId = getLandmarkResourceId(currentQuestion.correctImage, currentQuestion.difficultyLevel);
+        int tileMapResId = ResourceUtilities.getLandmarkResourceId(currentQuestion.correctImage, currentQuestion.difficultyLevel);
+
+        tvLandmark.setText(currentQuestion.correctLandmark);
 
         if (tileMapResId != -1) {
             Bitmap tileMap = BitmapFactory.decodeResource(getResources(), tileMapResId);
 
-            // Extract the flag image
-            Bitmap flagBitmap = ResourceUtilities.getFlagImage(tileMap, currentQuestion.correctImageRow, currentQuestion.correctImageColumn);
+            // Extract the Landmark image
+            Bitmap flagBitmap = ResourceUtilities.getLandmarkImage(tileMap, currentQuestion.correctImageRow, currentQuestion.correctImageColumn);
 
             if (flagBitmap != null) {
                 ivLandmark.setImageBitmap(flagBitmap);
             } else {
                 Log.e("FlagLoader", "Failed to load flag");
-                ivLandmark.setImageResource(R.drawable.england_flag); // Set a default flag
+                ivLandmark.setImageResource(R.drawable.eiffel_tower); // Set a default image for now
             }
         } else {
             Log.e("ResourceUtil", "Unable to find tilemap resource for difficulty level " + currentQuestion.difficultyLevel);
-            ivLandmark.setImageResource(R.drawable.england_flag); // Set a default flag
+            ivLandmark.setImageResource(R.drawable.eiffel_tower); // Set a default image
         }
 
         //Sets the question counter on display screen (tvCounter) to number of current question
