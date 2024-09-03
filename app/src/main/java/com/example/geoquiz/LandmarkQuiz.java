@@ -1,7 +1,13 @@
 package com.example.geoquiz;
 
+import static com.example.geoquiz.ResourceUtilities.getFlagResourceId;
+import static com.example.geoquiz.ResourceUtilities.getLandmarkResourceId;
+
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -291,9 +297,17 @@ public class LandmarkQuiz extends AppCompatActivity {
                         .map(Country::getCountry_name)
                         .orElse("");
 
+                String correctFlagImage = correctLandmark.getImagePath();
+                int correctRowNumber = correctLandmark.getTilemap_row();
+                int correctColumnNumber = correctLandmark.getTilemap_column();
+
                 QuizQuestion quizQuestion = new QuizQuestion();
                 quizQuestion.correctLandmark = correctLandmark.getName();
                 quizQuestion.correctLandmarkCountry = correctCountry;
+                quizQuestion.correctImage = correctFlagImage;
+                quizQuestion.correctImageRow = correctRowNumber;
+                quizQuestion.correctImageColumn = correctColumnNumber;
+                quizQuestion.difficultyLevel = "hard";
 
                 // Generate wrong answers
                 List<Landmark> wrongLandmarks = new ArrayList<>(landmarks);
@@ -334,13 +348,27 @@ public class LandmarkQuiz extends AppCompatActivity {
 
     private void displayCurrentQuestion() {
 
-        //Uses the currentQuestionIndex to retrieve the question to be displayed
         QuizQuestion currentQuestion = quizQuestions.get(currentQuestionIndex);
 
-        //sets textView in the activity to the landmark that is the focus of the question
-        tvLandmark.setText(currentQuestion.correctLandmark);
+        // Get the correct tilemap resource ID based on the difficulty level
+        int tileMapResId = getLandmarkResourceId(currentQuestion.correctImage, currentQuestion.difficultyLevel);
 
-        ivLandmark.setImageResource(ResourceUtilities.getLandmarkResourceId(currentQuestion.correctImage));
+        if (tileMapResId != -1) {
+            Bitmap tileMap = BitmapFactory.decodeResource(getResources(), tileMapResId);
+
+            // Extract the flag image
+            Bitmap flagBitmap = ResourceUtilities.getFlagImage(tileMap, currentQuestion.correctImageRow, currentQuestion.correctImageColumn);
+
+            if (flagBitmap != null) {
+                ivLandmark.setImageBitmap(flagBitmap);
+            } else {
+                Log.e("FlagLoader", "Failed to load flag");
+                ivLandmark.setImageResource(R.drawable.england_flag); // Set a default flag
+            }
+        } else {
+            Log.e("ResourceUtil", "Unable to find tilemap resource for difficulty level " + currentQuestion.difficultyLevel);
+            ivLandmark.setImageResource(R.drawable.england_flag); // Set a default flag
+        }
 
         //Sets the question counter on display screen (tvCounter) to number of current question
         tvCounter.setText(String.valueOf(currentQuestionIndex + 1));

@@ -13,24 +13,54 @@ public class ResourceUtilities {
 
     //TODO Get images for sports team, foods + corporations (haven't decided on 6th type yet).
 
-        static {
+    public static int getLandmarkResourceId (String key, String difficultyLevel){
+        String tileMapName = difficultyLevel + "_landmark_tile_map";
 
-            // HashMap linking landmark database image paths to resource directory paths.
+        // Map of tilemap names to resource IDs
+        Map<String, Integer> tileMapResources = new HashMap<>();
 
-            countryLandmarkImageMap.put("R.drawable.eiffel_tower", R.drawable.eiffel_tower);
-            countryLandmarkImageMap.put("R.drawable.pyramids", R.drawable.pyramids);
-            countryLandmarkImageMap.put("R.drawable.the_great_wall", R.drawable.the_great_wall);
-    }
+        {
+            tileMapResources.put("easy_landmark_tile_map", R.drawable.easy_landmark_tile_map);
+            tileMapResources.put("medium_landmark_tile_map", R.drawable.medium_landmark_tile_map);
+            tileMapResources.put("hard_landmark_tile_map", R.drawable.hard_landmarks_tile_map);
+        }
 
-    public static int getLandmarkResourceId (String key){
-
-        Integer resourceId = countryLandmarkImageMap.get(key);
+        Integer resourceId = tileMapResources.get(tileMapName);
         if (resourceId != null) {
             return resourceId;
         } else {
-            Log.w("ResourceUtil", "No resource found for key: " + key);
-            return -1; // Or handle the missing resource appropriately
+            Log.w("ResourceUtil", "No resource found for key: " + tileMapName);
+            return -1;
         }
+    }
+
+    public static Bitmap getLandmarkImage(Bitmap tileMap, int row, int column) {
+        int flagWidth = 400;
+        int flagHeight = 300;
+
+        // Calculate the starting position of the flag
+        float scaleX = (float) tileMap.getWidth() / 1600; // 2400 is the original width
+        float scaleY = (float) tileMap.getHeight() / 1500; // 1000 is the original height
+
+        int startX = Math.round(column * flagWidth * scaleX);
+        int startY = Math.round(row * flagHeight * scaleY);
+
+        Log.d("FlagExtractor", "Tilemap dimensions: " + tileMap.getWidth() + "x" + tileMap.getHeight());
+        Log.d("FlagExtractor", "Original dimensions: 1600x1500");
+        Log.d("FlagExtractor", "Scale factors: X=" + scaleX + ", Y=" + scaleY);
+        Log.d("FlagExtractor", "Extracting flag at: (" + startX + ", " + startY + ")");
+
+        // Check if the requested position is within the tilemap bounds
+        if (startX + Math.round(flagWidth * scaleX) > tileMap.getWidth() ||
+                startY + Math.round(flagHeight * scaleY) > tileMap.getHeight()) {
+            Log.w("FlagExtractor", "Flag out of bounds: (" + startX + ", " + startY + ")");
+            return null;
+        }
+
+        // Extract the flag image
+        return Bitmap.createBitmap(tileMap, startX, startY,
+                Math.round(flagWidth * scaleX),
+                Math.round(flagHeight * scaleY));
     }
 
     public static int getFlagResourceId(String key, String difficultyLevel) {
@@ -52,7 +82,7 @@ public class ResourceUtilities {
             return resourceId;
         } else {
             Log.w("ResourceUtil", "No resource found for key: " + tileMapName);
-            return -1; // Or handle the missing resource appropriately
+            return -1;
         }
     }
 
@@ -61,8 +91,8 @@ public class ResourceUtilities {
         int flagHeight = 200;
 
         // Calculate the starting position of the flag
-        float scaleX = (float) tileMap.getWidth() / 2400; // Assuming 2400 is the original width
-        float scaleY = (float) tileMap.getHeight() / 1000; // Assuming 1000 is the original height
+        float scaleX = (float) tileMap.getWidth() / 2400; // 2400 is the original width
+        float scaleY = (float) tileMap.getHeight() / 1000; // 1000 is the original height
 
         int startX = Math.round(column * flagWidth * scaleX);
         int startY = Math.round(row * flagHeight * scaleY);

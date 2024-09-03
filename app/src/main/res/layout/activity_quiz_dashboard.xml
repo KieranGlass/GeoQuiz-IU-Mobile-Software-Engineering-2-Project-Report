@@ -8,8 +8,6 @@
     android:background="@color/primaryColor"
     tools:context=".MainActivity">
 
-    <!-- TODO get images for latest three categories -->
-
     <androidx.cardview.widget.CardView
         android:id="@+id/flagCV"
         android:layout_width="wrap_content"

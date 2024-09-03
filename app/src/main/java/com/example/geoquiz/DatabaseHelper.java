@@ -223,7 +223,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(1), // landmark name
                         cursor.getInt(2),   // county id
                         cursor.getString(3), // image path
-                        cursor.getInt(4) // difficulty id
+                        cursor.getInt(4), // difficulty id
+                        cursor.getInt(5), // tilemap row
+                        cursor.getInt(6) // tilemap column
+
                 ));
             } while (cursor.moveToNext());
         }
