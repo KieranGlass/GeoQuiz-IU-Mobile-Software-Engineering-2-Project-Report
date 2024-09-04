@@ -103,6 +103,27 @@ public class Results extends AppCompatActivity {
                 startActivity(intent);
                 break;
             }
+            case "Food": {
+                Intent intent = new Intent(Results.this, FoodQuiz.class);
+                intent.putExtra("Category", "com.example.geoquiz.Landmark");
+                intent.putExtra("Difficulty", difficultyReceived);
+                startActivity(intent);
+                break;
+            }
+            case "Sports": {
+                Intent intent = new Intent(Results.this, SportsQuiz.class);
+                intent.putExtra("Category", "com.example.geoquiz.Landmark");
+                intent.putExtra("Difficulty", difficultyReceived);
+                startActivity(intent);
+                break;
+            }
+            case "Brand": {
+                Intent intent = new Intent(Results.this, BrandQuiz.class);
+                intent.putExtra("Category", "com.example.geoquiz.Landmark");
+                intent.putExtra("Difficulty", difficultyReceived);
+                startActivity(intent);
+                break;
+            }
         }
 
     }

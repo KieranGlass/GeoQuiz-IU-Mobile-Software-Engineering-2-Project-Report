@@ -8,9 +8,157 @@
     android:background="@color/primaryColor"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/ivTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/Logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="8dp"
+        app:srcCompat="@drawable/title_design"
+        tools:ignore="ImageContrastCheck" />
+
+    <LinearLayout
+        android:id="@+id/radioContainer"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivTitle"
+
+        android:weightSum="2">
+
+        <RadioButton
+            android:id="@+id/rbTitle1"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:height="52dp"
+            android:maxWidth="310dp"
+            android:textColor="@color/primaryColourText"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto"
+            android:buttonTint="@color/accentDark"
+            android:checked="true"
+            android:text="@string/login" />
+
+        <RadioButton
+            android:id="@+id/rbTitle2"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:height="52dp"
+            android:maxWidth="310dp"
+            android:textColor="@color/primaryColourText"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto"
+            android:buttonTint="@color/accentDark"
+            android:text="@string/sign_up" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/usernames"
+        android:layout_width="410dp"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/passwords"
+        app:layout_constraintTop_toBottomOf="@id/radioContainer"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <EditText
+            android:id="@+id/loginUsername"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autofillHints="your username"
+            android:height="52dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="5dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/roboto"
+            android:background="#ffffff"
+            android:hint="@string/choose_a_username"
+            android:elevation="8dp"
+            android:padding="8dp"
+            tools:ignore="TextFields" />
+
+        <EditText
+            android:id="@+id/signupUsername"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autofillHints="your username"
+            android:height="52dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="5dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/roboto"
+            android:background="#ffffff"
+            android:elevation="8dp"
+            android:hint="@string/enter_your_username"
+            android:padding="8dp"
+            tools:ignore="TextFields" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/passwords"
+        android:layout_width="410dp"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/usernames"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/startBtn">
+
+        <EditText
+            android:id="@+id/loginPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autofillHints="your password"
+            android:height="52dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="5dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/roboto"
+            android:hint="@string/enter_your_password"
+            android:background="#ffffff"
+            android:elevation="8dp"
+            android:padding="8dp"
+            tools:ignore="TextFields" />
+
+        <EditText
+            android:id="@+id/signupPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autofillHints="your password"
+            android:height="52dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="5dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/roboto"
+            android:hint="@string/choose_your_password"
+            android:background="#ffffff"
+            android:elevation="8dp"
+            android:padding="8dp"
+            tools:ignore="TextFields" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/startBtn"
-        android:layout_width="156dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:contentDescription="@string/title_button_description"
@@ -21,27 +169,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/passwords" />
 
-    <ImageView
-        android:id="@+id/ivTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/Logo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/geo_quiz__1_"
-        tools:ignore="ImageContrastCheck" />
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/ivTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

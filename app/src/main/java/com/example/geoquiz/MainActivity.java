@@ -19,6 +19,10 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity {
 
     //TODO Need to design home screen along with organising usernames + logins
+    //TODO SET UP NEW RADIO BUTTONS AND EDIT TEXTS along with isChecked functionality
+
+    //TODO Figure out how to organise database for logins
+    //TODO Figure out how to load previously saved best scores
 
 
     Button startBtn;
@@ -34,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        tvTitle = findViewById(R.id.tvTitle);
 
         startBtn = findViewById(R.id.startBtn);
         startBtn.setOnClickListener(new View.OnClickListener() {

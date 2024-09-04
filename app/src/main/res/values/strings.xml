@@ -49,4 +49,10 @@
     <string name="the_following_sports_team_is_based_in_which_nation">The following Sports Team is based in which nation?</string>
     <string name="sports">SPORTS!</string>
     <string name="next">- NEXT -</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_your_username">Enter Your Username.</string>
+    <string name="choose_a_username">Choose a Username.</string>
+    <string name="enter_your_password">Enter Your Password</string>
+    <string name="choose_your_password">Choose Your Password</string>
 </resources>
