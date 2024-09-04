@@ -70,6 +70,7 @@
             android:layout_marginStart="20dp"
             android:layout_weight="1"
             android:text="@string/country_placeholder"
+            android:buttonTint="@color/accentDark"
             tools:ignore="DuplicateSpeakableTextCheck,VisualLintButtonSize" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
@@ -79,6 +80,7 @@
             android:layout_weight="1"
             android:layout_marginStart="20dp"
             android:text="@string/country_placeholder"
+            android:buttonTint="@color/accentDark"
             tools:ignore="VisualLintButtonSize" />
 
     </LinearLayout>
@@ -102,6 +104,7 @@
             android:layout_weight="1"
             android:layout_marginStart="20dp"
             android:text="@string/country_placeholder"
+            android:buttonTint="@color/accentDark"
             tools:ignore="VisualLintButtonSize" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
@@ -111,6 +114,7 @@
             android:layout_weight="1"
             android:layout_marginStart="20dp"
             android:text="@string/country_placeholder"
+            android:buttonTint="@color/accentDark"
             tools:ignore="VisualLintButtonSize" />
 
     </LinearLayout>
@@ -134,6 +138,7 @@
             android:layout_weight="1"
             android:layout_marginStart="20dp"
             android:text="@string/country_placeholder"
+            android:buttonTint="@color/accentDark"
             tools:ignore="VisualLintButtonSize" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
@@ -143,6 +148,7 @@
             android:layout_weight="1"
             android:layout_marginStart="20dp"
             android:text="@string/country_placeholder"
+            android:buttonTint="@color/accentDark"
             tools:ignore="VisualLintButtonSize" />
 
     </LinearLayout>

@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class SportsQuiz extends AppCompatActivity {
+public class SportsQuiz extends AppCompatActivity implements MessagePopupFragment.OnPopupDismissListener {
 
     private TextView tvSports, tvCounter;
     private ImageView ivSports;
@@ -367,7 +367,7 @@ public class SportsQuiz extends AppCompatActivity {
             Bitmap tileMap = BitmapFactory.decodeResource(getResources(), tileMapResId);
 
             // Extract the Landmark image
-            Bitmap flagBitmap = ResourceUtilities.getLandmarkImage(tileMap, currentQuestion.correctImageRow, currentQuestion.correctImageColumn);
+            Bitmap flagBitmap = ResourceUtilities.getSportsImage(tileMap, currentQuestion.correctImageRow, currentQuestion.correctImageColumn);
 
             if (flagBitmap != null) {
                 ivSports.setImageBitmap(flagBitmap);
@@ -403,6 +403,10 @@ public class SportsQuiz extends AppCompatActivity {
 
         if (currentQuestion.correctSportsTeamCountry.equals(answer)) {
             score++;
+            checkAnswer(true);
+
+        } else {
+            checkAnswer(false);
         }
 
         currentQuestionIndex++;
@@ -423,6 +427,22 @@ public class SportsQuiz extends AppCompatActivity {
             }
             displayCurrentQuestion();
         }
+    }
+
+    @Override
+    public void onPopupDismissed(boolean isCorrect) {
+
+    }
+
+    private void checkAnswer(boolean isCorrect) {
+        String message;
+        if(isCorrect) {
+            message = "Correct! Well Done";
+        }
+        else {
+            message = "Incorrect, Better luck next time!";
+        }
+        MessagePopupFragment.newInstance(message, isCorrect).show(getSupportFragmentManager(), "popup");
     }
 
 }

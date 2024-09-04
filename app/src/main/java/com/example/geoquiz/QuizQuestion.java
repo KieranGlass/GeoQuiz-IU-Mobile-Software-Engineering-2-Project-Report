@@ -15,6 +15,10 @@ public class QuizQuestion {
         String difficultyLevel;
         String correctSportsTeam;
         String correctSportsTeamCountry;
+        String correctBrand;
+        String correctBrandCountry;
+        String correctFood;
+        String correctFoodCountry;
         int correctImageRow;
         int correctImageColumn;
         List<String> allAnswers;

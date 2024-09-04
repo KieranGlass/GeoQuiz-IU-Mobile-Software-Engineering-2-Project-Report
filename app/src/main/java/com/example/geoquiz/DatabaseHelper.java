@@ -164,11 +164,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.e("DatabaseHelper", "Failed to copy database", e);
         }
     }
-
-    public void open() {
-
-        myDatabase = this.getReadableDatabase();
-    }
     @Override
     public synchronized void close() {
         if(myDatabase != null){
@@ -177,7 +172,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             super.close();
         }
     }
-
+    // Load Handler method called in application activity. Calls copyDatabase method if a database exists or not to ensure
+    // database is up to date. Puts this into a SQLiteDatabase variable myDatabase
     public void loadHandler() {
         try {
             boolean mDatabaseExists = checkDatabase();
@@ -190,7 +186,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             myDatabase = this.getReadableDatabase();
             Log.i("DatabaseHelper", "Database opened successfully.");
 
-            // Example of executing a query and logging results
+
             Cursor cursor = myDatabase.rawQuery("SELECT COUNT(*) FROM your_table_name", null);
             if (cursor.moveToFirst()) {
                 int count = cursor.getInt(0);
@@ -204,6 +200,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    // No real use for this method other than used for debugging when having issues during development
     private boolean tableExists(String tableName) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='" + tableName + "'", null);
@@ -216,8 +213,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-
-    // ALL SQL RETRIEVAL METHODS BELOW //
+    // -- ALL SQL RETRIEVAL METHODS BELOW -- //
 
     public List<Landmark> fetchLandmarks() {
 
@@ -299,6 +295,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return sports;
+    }
+
+    public List<Food> fetchFoods() {
+
+        List<Food> foods = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM food", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                foods.add(new Food(
+                        cursor.getInt(0), // ID
+                        cursor.getString(1), // team name
+                        cursor.getInt(2),   // county id
+                        cursor.getInt(3), // difficulty id
+                        cursor.getInt(4), // tilemap row
+                        cursor.getInt(5), // tilemap column
+                        cursor.getString(6) // food image path
+
+                ));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return foods;
+    }
+
+    public List<Brand> fetchBrands() {
+
+        List<Brand> brands = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM brands", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                brands.add(new Brand(
+                        cursor.getInt(0), // ID
+                        cursor.getString(1), // brand name
+                        cursor.getInt(2),   // country id
+                        cursor.getInt(3), // difficulty id
+                        cursor.getString(4), // brand image path
+                        cursor.getInt(5), // tilemap row
+                        cursor.getInt(6) // tilemap column
+
+                ));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return brands;
     }
 
 }

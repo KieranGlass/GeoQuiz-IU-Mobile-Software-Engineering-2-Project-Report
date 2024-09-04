@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class CapitalQuiz extends AppCompatActivity {
+public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragment.OnPopupDismissListener {
 
     private TextView tvCapital, tvCounter;
     private String[] easyCapitalsArray, mediumCapitalsArray, hardCapitalsArray, countriesArray;
@@ -32,7 +32,7 @@ public class CapitalQuiz extends AppCompatActivity {
 
     int score = 0;
 
-    //TODO WHOLE QUIZ ISNT WORKING PROPERLY, HARD QUIZ ONLY ONE OPERATING
+    // TODO WHOLE QUIZ ISNT WORKING PROPERLY, HARD QUIZ ONLY ONE OPERATING
     // TODO ALSO, PAGE LOOKS VERY BAD
 
     @Override
@@ -467,9 +467,12 @@ public class CapitalQuiz extends AppCompatActivity {
             }
         }
 
-        if(currentQuestion.correctCapitalCountry.equals(answer))
-        {
+        if (currentQuestion.correctCapitalCountry.equals(answer)) {
             score++;
+            checkAnswer(true);
+
+        } else {
+            checkAnswer(false);
         }
 
         currentQuestionIndex++;
@@ -492,5 +495,21 @@ public class CapitalQuiz extends AppCompatActivity {
 
         String countryName = countryCapitalMap.get(correctCapital);
         return countryName == null ? "ERROR" : countryName; // Return default value if not found
+    }
+
+    @Override
+    public void onPopupDismissed(boolean isCorrect) {
+
+    }
+
+    private void checkAnswer(boolean isCorrect) {
+        String message;
+        if(isCorrect) {
+            message = "Correct! Well Done";
+        }
+        else {
+            message = "Incorrect, Better luck next time!";
+        }
+        MessagePopupFragment.newInstance(message, isCorrect).show(getSupportFragmentManager(), "popup");
     }
 }

@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class LandmarkQuiz extends AppCompatActivity {
+public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragment.OnPopupDismissListener {
 
     private TextView tvLandmark, tvCounter;
     private ImageView ivLandmark;
@@ -405,6 +405,10 @@ public class LandmarkQuiz extends AppCompatActivity {
 
         if (currentQuestion.correctLandmarkCountry.equals(answer)) {
             score++;
+            checkAnswer(true);
+
+        } else {
+            checkAnswer(false);
         }
 
         currentQuestionIndex++;
@@ -425,6 +429,22 @@ public class LandmarkQuiz extends AppCompatActivity {
             }
             displayCurrentQuestion();
         }
+    }
+
+    @Override
+    public void onPopupDismissed(boolean isCorrect) {
+
+    }
+
+    private void checkAnswer(boolean isCorrect) {
+        String message;
+        if(isCorrect) {
+            message = "Correct! Well Done";
+        }
+        else {
+            message = "Incorrect, Better luck next time!";
+        }
+        MessagePopupFragment.newInstance(message, isCorrect).show(getSupportFragmentManager(), "popup");
     }
 
 }

@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class FlagQuiz extends AppCompatActivity {
+public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.OnPopupDismissListener {
 
 
     //TODO ADD A DIFFICULTY ACTIVITY JUST FOR FLAGS AS WILL HAVE EXTRA DIFFICULTIES AND OTHER GAME MODES
@@ -363,9 +363,12 @@ public class FlagQuiz extends AppCompatActivity {
             }
         }
 
-        if(currentQuestion.correctCountry.equals(answer))
-        {
+        if (currentQuestion.correctCountry.equals(answer)) {
             score++;
+            checkAnswer(true);
+
+        } else {
+            checkAnswer(false);
         }
 
         currentQuestionIndex++;
@@ -387,6 +390,22 @@ public class FlagQuiz extends AppCompatActivity {
             }
             displayCurrentQuestion();
         }
+    }
+
+    @Override
+    public void onPopupDismissed(boolean isCorrect) {
+
+    }
+
+    private void checkAnswer(boolean isCorrect) {
+        String message;
+        if(isCorrect) {
+            message = "Correct! Well Done";
+        }
+        else {
+            message = "Incorrect, Better luck next time!";
+        }
+        MessagePopupFragment.newInstance(message, isCorrect).show(getSupportFragmentManager(), "popup");
     }
 
 }
