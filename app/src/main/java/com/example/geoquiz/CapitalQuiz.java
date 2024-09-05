@@ -15,15 +15,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragment.OnPopupDismissListener {
 
     private TextView tvCapital, tvCounter;
-    private String[] easyCapitalsArray, mediumCapitalsArray, hardCapitalsArray, countriesArray;
-    private HashMap<String, String> countryCapitalMap;
     private List<RadioButton> radioButtons;
     private final List<QuizQuestion> quizQuestions = new ArrayList<>();
     private int currentQuestionIndex = 0;
@@ -32,7 +30,6 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
 
     int score = 0;
 
-    // TODO WHOLE QUIZ ISNT WORKING PROPERLY, HARD QUIZ ONLY ONE OPERATING
     // TODO ALSO, PAGE LOOKS VERY BAD
 
     @Override
@@ -46,15 +43,8 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
             return insets;
         });
 
-        initCountryCapitalMap();
-
         tvCapital = findViewById(R.id.tvCapitalName);
         tvCounter = findViewById(R.id.tvCounterCapital);
-
-        easyCapitalsArray = getResources().getStringArray(R.array.easyCapitals);
-        mediumCapitalsArray = getResources().getStringArray(R.array.mediumCapitals);
-        hardCapitalsArray = getResources().getStringArray(R.array.hardCapitals);
-        countriesArray = getResources().getStringArray(R.array.countries);
 
         radioButtons = new ArrayList<>();
         // Everything to do with the Radio Buttons
@@ -85,7 +75,6 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
 
                 }
 
-
         Intent receivedIntent = getIntent();
 
         String difficulty = receivedIntent.getStringExtra("Difficulty");
@@ -94,314 +83,305 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
         intentDifficulty = difficulty;
         intentCategory = category;
 
-
         assert difficulty != null;
-        if (difficulty.equals("Easy"))
-        {
-            generateEasyQuiz();
-            displayCurrentQuestion();
-        }
-        else if (difficulty.equals("Medium"))
-        {
-            generateMediumQuiz();
-            displayCurrentQuestion();
-        }
-        else
-        {
-            generateHardQuiz();
-            displayCurrentQuestion();
+        switch (difficulty) {
+            case "Easy":
+                generateEasyQuiz();
+                displayCurrentQuestion();
+                break;
+            case "Medium":
+                generateMediumQuiz();
+                displayCurrentQuestion();
+                break;
+            case "Hard":
+                generateHardQuiz();
+                displayCurrentQuestion();
+                break;
+            case "VeryHard":
+                generateVeryHardQuiz();
+                displayCurrentQuestion();
+                break;
+            default:
+                generateImpossibleQuiz();
+                displayCurrentQuestion();
+                break;
         }
     }
 
     private void generateEasyQuiz() {
 
-        List<String> usedCapitals = new ArrayList<>();
+        DatabaseHelper helper = new DatabaseHelper(CapitalQuiz.this, null, null, DatabaseHelper.DB_VERSION);
+
+        List<Country> countries = helper.fetchCountries();
+        List<Country> usedCapitals = new ArrayList<>();
 
         Random random = new Random();
 
+        List<Country> easyCapitals = countries.stream()
+                .filter(country -> country.getCapital_difficulty() == 1)
+                .collect(Collectors.toList());
+
         for (int i = 0; i < 20; i++) {
 
-            QuizQuestion quizQuestion = new QuizQuestion();
+            Country correctCapital;
 
-            String correctCapital;
-            do {
-                correctCapital = easyCapitalsArray[random.nextInt(easyCapitalsArray.length)];
-            } while (usedCapitals.contains(correctCapital));
+            if (!easyCapitals.isEmpty()) {
+                do {
+                    correctCapital = easyCapitals.get(random.nextInt(easyCapitals.size()));
+                } while (usedCapitals.contains(correctCapital));
 
-            usedCapitals.add(correctCapital);
-
-            quizQuestion.correctCapital = correctCapital;
-            String correctCapitalCountry = getCountry(correctCapital);
+                usedCapitals.add(correctCapital);
 
 
-            List<String> wrongAnswers = new ArrayList<>();
+                QuizQuestion quizQuestion = new QuizQuestion();
+                quizQuestion.correctCapital = correctCapital.getCountry_capital();
+                quizQuestion.correctCapitalCountry = correctCapital.getCountry_name();
 
-            while (wrongAnswers.size() < 3) {
+                List<String> wrongAnswers = new ArrayList<>();
+                while (wrongAnswers.size() < 5) {
 
-                String wrongCapital = countriesArray[random.nextInt(countriesArray.length)];
-                if (!wrongCapital.equals(correctCapitalCountry) && !wrongAnswers.contains(wrongCapital))
-                {
-                    wrongAnswers.add(wrongCapital);
+                    Country wrongCapital = countries.get(random.nextInt(countries.size()));
+                    if (!wrongCapital.equals(correctCapital) && !wrongAnswers.contains(wrongCapital.getCountry_name()))
+                    {
+                        wrongAnswers.add(wrongCapital.getCountry_name());
+                    }
                 }
+
+                List<String> allAnswers = new ArrayList<>();
+                allAnswers.add(quizQuestion.correctCapitalCountry);
+                allAnswers.addAll(wrongAnswers);
+                Collections.shuffle(allAnswers, random);
+
+                quizQuestion.allAnswers = allAnswers;
+                quizQuestions.add(quizQuestion);
+
+            } else {
+                // return to dashboard for now
+                Intent intent = new Intent(CapitalQuiz.this, QuizDashboard.class);
+                startActivity(intent);
             }
-
-        List<String> allAnswers = new ArrayList<>();
-        allAnswers.add(getCountry(quizQuestion.correctCapital));
-        allAnswers.addAll(wrongAnswers);
-        Collections.shuffle(allAnswers, random);
-
-        quizQuestion.allAnswers = allAnswers;
-        quizQuestions.add(quizQuestion);
         }
     }
 
     private void generateMediumQuiz() {
 
-        List<String> usedCapitals = new ArrayList<>();
+        DatabaseHelper helper = new DatabaseHelper(CapitalQuiz.this, null, null, DatabaseHelper.DB_VERSION);
+
+        List<Country> countries = helper.fetchCountries();
+        List<Country> usedCapitals = new ArrayList<>();
 
         Random random = new Random();
 
+        List<Country> mediumCapitals = countries.stream()
+                .filter(country -> country.getCapital_difficulty() == 2)
+                .collect(Collectors.toList());
+
         for (int i = 0; i < 20; i++) {
 
-            QuizQuestion quizQuestion = new QuizQuestion();
+            Country correctCapital;
 
-            String correctCapital;
-            do {
-                correctCapital = mediumCapitalsArray[random.nextInt(mediumCapitalsArray.length)];
-            } while (usedCapitals.contains(correctCapital));
+            if (!mediumCapitals.isEmpty()) {
+                do {
+                    correctCapital = mediumCapitals.get(random.nextInt(mediumCapitals.size()));
+                } while (usedCapitals.contains(correctCapital));
 
-            usedCapitals.add(correctCapital);
+                usedCapitals.add(correctCapital);
 
-            quizQuestion.correctCapital = correctCapital;
-            String correctCapitalCountry = getCountry(correctCapital);
 
-            List<String> wrongAnswers = new ArrayList<>();
-            while (wrongAnswers.size() < 5) {
+                QuizQuestion quizQuestion = new QuizQuestion();
+                quizQuestion.correctCapital = correctCapital.getCountry_capital();
+                quizQuestion.correctCapitalCountry = correctCapital.getCountry_name();
 
-                String wrongCapital = countriesArray[random.nextInt(countriesArray.length)];
-                if (!wrongCapital.equals(correctCapitalCountry) && !wrongAnswers.contains(wrongCapital))
-                {
-                    wrongAnswers.add(wrongCapital);
+                List<String> wrongAnswers = new ArrayList<>();
+                while (wrongAnswers.size() < 5) {
+
+                    Country wrongCapital = countries.get(random.nextInt(countries.size()));
+                    if (!wrongCapital.equals(correctCapital) && !wrongAnswers.contains(wrongCapital.getCountry_name()))
+                    {
+                        wrongAnswers.add(wrongCapital.getCountry_name());
+                    }
                 }
+
+                List<String> allAnswers = new ArrayList<>();
+                allAnswers.add(quizQuestion.correctCapitalCountry);
+                allAnswers.addAll(wrongAnswers);
+                Collections.shuffle(allAnswers, random);
+
+                quizQuestion.allAnswers = allAnswers;
+                quizQuestions.add(quizQuestion);
+
+            } else {
+                // return to dashboard for now
+                Intent intent = new Intent(CapitalQuiz.this, QuizDashboard.class);
+                startActivity(intent);
             }
-
-            List<String> allAnswers = new ArrayList<>();
-            allAnswers.add(getCountry(quizQuestion.correctCapital));
-            allAnswers.addAll(wrongAnswers);
-            Collections.shuffle(allAnswers, random);
-
-            quizQuestion.allAnswers = allAnswers;
-            quizQuestions.add(quizQuestion);
         }
     }
 
     private void generateHardQuiz()  {
 
-        List<String> usedCapitals = new ArrayList<>();
+        DatabaseHelper helper = new DatabaseHelper(CapitalQuiz.this, null, null, DatabaseHelper.DB_VERSION);
+
+        List<Country> countries = helper.fetchCountries();
+        List<Country> usedCapitals = new ArrayList<>();
 
         Random random = new Random();
 
+        List<Country> hardCapitals = countries.stream()
+                .filter(country -> country.getCapital_difficulty() == 3)
+                .collect(Collectors.toList());
+
         for (int i = 0; i < 20; i++) {
 
-            QuizQuestion quizQuestion = new QuizQuestion();
+            Country correctCapital;
 
-            String correctCapital;
-            do {
-                correctCapital = hardCapitalsArray[random.nextInt(hardCapitalsArray.length)];
-            } while (usedCapitals.contains(correctCapital));
+            if (!hardCapitals.isEmpty()) {
+                do {
+                    correctCapital = hardCapitals.get(random.nextInt(hardCapitals.size()));
+                } while (usedCapitals.contains(correctCapital));
 
-            usedCapitals.add(correctCapital);
+                usedCapitals.add(correctCapital);
 
-            quizQuestion.correctCapital = correctCapital;
-            quizQuestion.correctCapitalCountry = getCountry(correctCapital);
 
-            List<String> wrongAnswers = new ArrayList<>();
-            while (wrongAnswers.size() < 7) {
+                QuizQuestion quizQuestion = new QuizQuestion();
+                quizQuestion.correctCapital = correctCapital.getCountry_capital();
+                quizQuestion.correctCapitalCountry = correctCapital.getCountry_name();
 
-                String wrongCapital = countriesArray[random.nextInt(countriesArray.length)];
-                if (!wrongCapital.equals(quizQuestion.correctCapitalCountry) && !wrongAnswers.contains(wrongCapital))
-                {
-                    wrongAnswers.add(wrongCapital);
+                List<String> wrongAnswers = new ArrayList<>();
+                while (wrongAnswers.size() < 7) {
+
+                    Country wrongCapital = countries.get(random.nextInt(countries.size()));
+                    if (!wrongCapital.equals(correctCapital) && !wrongAnswers.contains(wrongCapital.getCountry_name()))
+                    {
+                        wrongAnswers.add(wrongCapital.getCountry_name());
+                    }
                 }
+
+                List<String> allAnswers = new ArrayList<>();
+                allAnswers.add(quizQuestion.correctCapitalCountry);
+                allAnswers.addAll(wrongAnswers);
+                Collections.shuffle(allAnswers, random);
+
+                quizQuestion.allAnswers = allAnswers;
+                quizQuestions.add(quizQuestion);
+
+            } else {
+                // return to dashboard for now
+                Intent intent = new Intent(CapitalQuiz.this, QuizDashboard.class);
+                startActivity(intent);
             }
-
-            List<String> allAnswers = new ArrayList<>();
-            allAnswers.add(getCountry(quizQuestion.correctCapital));
-            allAnswers.addAll(wrongAnswers);
-            Collections.shuffle(allAnswers, random);
-
-            quizQuestion.allAnswers = allAnswers;
-            quizQuestions.add(quizQuestion);
         }
     }
 
-    private void initCountryCapitalMap() {
+    private void generateVeryHardQuiz(){
 
-        HashMap<String, String> countryCapitalMap = new HashMap<>();
+        DatabaseHelper helper = new DatabaseHelper(CapitalQuiz.this, null, null, DatabaseHelper.DB_VERSION);
 
-        countryCapitalMap.put("Kabul", "Afghanistan");
-        countryCapitalMap.put("Tirana", "Albania");
-        countryCapitalMap.put("Algiers", "Algeria");
-        countryCapitalMap.put("Luanda", "Angola");
-        countryCapitalMap.put("Buenos Aires", "Argentina");
-        countryCapitalMap.put("Canberra", "Australia");
-        countryCapitalMap.put("Vienna", "Austria");
-        countryCapitalMap.put("Baku", "Azerbaijan");
-        countryCapitalMap.put("Manama", "Bahrain");
-        countryCapitalMap.put("Dhaka", "Bangladesh");
-        countryCapitalMap.put("Bridgetown", "Barbados");
-        countryCapitalMap.put("Minsk", "Belarus");
-        countryCapitalMap.put("Brussels", "Belgium");
-        countryCapitalMap.put("Belmopan", "Belize");
-        countryCapitalMap.put("Thimphu", "Bhutan");
-        countryCapitalMap.put("La Paz", "Bolivia");
-        countryCapitalMap.put("Gaborone", "Botswana");
-        countryCapitalMap.put("Brasilia", "Brazil");
-        countryCapitalMap.put("Sofia", "Bulgaria");
-        countryCapitalMap.put("Ouagadougou", "Burkina Faso");
-        countryCapitalMap.put("Gitega", "Burundi");
-        countryCapitalMap.put("Praia", "Cape Verde");
-        countryCapitalMap.put("Phnom Penh", "Cambodia");
-        countryCapitalMap.put("Yaoundé", "Cameroon");
-        countryCapitalMap.put("Ottawa", "Canada");
-        countryCapitalMap.put("Santiago", "Chile");
-        countryCapitalMap.put("Beijing", "China");
-        countryCapitalMap.put("Bogota", "Colombia");
-        countryCapitalMap.put("Moroni", "Comoros");
-        countryCapitalMap.put("Kinshasa", "DR Congo");
-        countryCapitalMap.put("Brazzaville", "Congo");
-        countryCapitalMap.put("San José", "Costa Rica");
-        countryCapitalMap.put("Yamoussoukro", "Ivory Coast");
-        countryCapitalMap.put("Zagreb", "Croatia");
-        countryCapitalMap.put("Havana", "Cuba");
-        countryCapitalMap.put("Nicosia", "Cyprus");
-        countryCapitalMap.put("Prague", "Czechia");
-        countryCapitalMap.put("Copenhagen", "Denmark");
-        countryCapitalMap.put("Roseau", "Dominica");
-        countryCapitalMap.put("Quito", "Ecuador");
-        countryCapitalMap.put("Cairo", "Egypt");
-        countryCapitalMap.put("London", "England");
-        countryCapitalMap.put("Asmara", "Eritrea");
-        countryCapitalMap.put("Tallinn", "Estonia");
-        countryCapitalMap.put("Addis Ababa", "Ethiopia");
-        countryCapitalMap.put("Suva", "Fiji");
-        countryCapitalMap.put("Helsinki", "Finland");
-        countryCapitalMap.put("Paris", "France");
-        countryCapitalMap.put("Banjul", "Gambia");
-        countryCapitalMap.put("Tbilisi", "Georgia");
-        countryCapitalMap.put("Berlin", "Germany");
-        countryCapitalMap.put("Accra", "Ghana");
-        countryCapitalMap.put("Athens", "Greece");
-        countryCapitalMap.put("Guatemala City", "Guatemala");
-        countryCapitalMap.put("Conakry", "Guinea");
-        countryCapitalMap.put("Bissau", "Guinea-Bissau");
-        countryCapitalMap.put("Georgetown", "Guyana");
-        countryCapitalMap.put("Port-au-Prince", "Haiti");
-        countryCapitalMap.put("Tegucigalpa", "Honduras");
-        countryCapitalMap.put("Budapest", "Hungary");
-        countryCapitalMap.put("Reykjavik", "Iceland");
-        countryCapitalMap.put("New Delhi", "India");
-        countryCapitalMap.put("Jakarta", "Indonesia");
-        countryCapitalMap.put("Tehran", "Iran");
-        countryCapitalMap.put("Baghdad", "Iraq");
-        countryCapitalMap.put("Dublin", "Ireland");
-        countryCapitalMap.put("Jerusalem", "Israel");
-        countryCapitalMap.put("Rome", "Italy");
-        countryCapitalMap.put("Kingston", "Jamaica");
-        countryCapitalMap.put("Tokyo", "Japan");
-        countryCapitalMap.put("Amman", "Jordan");
-        countryCapitalMap.put("Astana", "Kazakhstan");
-        countryCapitalMap.put("Nairobi", "Kenya");
-        countryCapitalMap.put("Pyongyang", "North Korea");
-        countryCapitalMap.put("Seoul", "South Korea");
-        countryCapitalMap.put("Pristina", "Kosovo");
-        countryCapitalMap.put("Bishkek", "Kyrgyzstan");
-        countryCapitalMap.put("Vientiane", "Laos");
-        countryCapitalMap.put("Riga", "Latvia");
-        countryCapitalMap.put("Beirut", "Lebanon");
-        countryCapitalMap.put("Maseru", "Lesotho");
-        countryCapitalMap.put("Monrovia", "Liberia");
-        countryCapitalMap.put("Vaduz", "Liechtenstein");
-        countryCapitalMap.put("Vilnius", "Lithuania");
-        countryCapitalMap.put("Luxembourg City", "Luxembourg");
-        countryCapitalMap.put("Antananarivo", "Madagascar");
-        countryCapitalMap.put("Kuala Lumpur", "Malaysia");
-        countryCapitalMap.put("Malé", "Maldives");
-        countryCapitalMap.put("Bamako", "Mali");
-        countryCapitalMap.put("Valletta", "Malta");
-        countryCapitalMap.put("Port Louis", "Mauritius");
-        countryCapitalMap.put("Mexico City", "Mexico");
-        countryCapitalMap.put("Chișinău", "Moldova");
-        countryCapitalMap.put("Ulaanbaatar", "Mongolia");
-        countryCapitalMap.put("Podgorica", "Montenegro");
-        countryCapitalMap.put("Rabat", "Morocco");
-        countryCapitalMap.put("Maputo", "Mozambique");
-        countryCapitalMap.put("Naypyidaw", "Myanmar");
-        countryCapitalMap.put("Windhoek", "Namibia");
-        countryCapitalMap.put("Amsterdam", "Netherlands");
-        countryCapitalMap.put("Wellington", "New Zealand");
-        countryCapitalMap.put("Managua", "Nicaragua");
-        countryCapitalMap.put("Niamey", "Niger");
-        countryCapitalMap.put("Abuja", "Nigeria");
-        countryCapitalMap.put("Skopje", "North Macedonia");
-        countryCapitalMap.put("Belfast", "Northern Ireland");
-        countryCapitalMap.put("Oslo", "Norway");
-        countryCapitalMap.put("Muscat", "Oman");
-        countryCapitalMap.put("Islamabad", "Pakistan");
-        countryCapitalMap.put("Panama City", "Panama");
-        countryCapitalMap.put("Asunción", "Paraguay");
-        countryCapitalMap.put("Lima", "Peru");
-        countryCapitalMap.put("Manila", "Philippines");
-        countryCapitalMap.put("Warsaw", "Poland");
-        countryCapitalMap.put("Lisbon", "Portugal");
-        countryCapitalMap.put("Doha", "Qatar");
-        countryCapitalMap.put("Bucharest", "Romania");
-        countryCapitalMap.put("Moscow", "Russia");
-        countryCapitalMap.put("Kigali", "Rwanda");
-        countryCapitalMap.put("Apia", "Samoa");
-        countryCapitalMap.put("San Marino", "San Marino");
-        countryCapitalMap.put("Riyadh", "Saudi Arabia");
-        countryCapitalMap.put("Edinburgh", "Scotland");
-        countryCapitalMap.put("Dakar", "Senegal");
-        countryCapitalMap.put("Belgrade", "Serbia");
-        countryCapitalMap.put("Victoria", "Seychelles");
-        countryCapitalMap.put("Singapore", "Singapore");
-        countryCapitalMap.put("Bratislava", "Slovakia");
-        countryCapitalMap.put("Ljubljana", "Slovenia");
-        countryCapitalMap.put("Mogadishu", "Somalia");
-        countryCapitalMap.put("Madrid", "Spain");
-        countryCapitalMap.put("Colombo", "Sri Lanka");
-        countryCapitalMap.put("Khartoum", "Sudan");
-        countryCapitalMap.put("Paramaribo", "Suriname");
-        countryCapitalMap.put("Stockholm", "Sweden");
-        countryCapitalMap.put("Damascus", "Syria");
-        countryCapitalMap.put("Taipei City", "Taiwan");
-        countryCapitalMap.put("Dushanbe", "Tajikistan");
-        countryCapitalMap.put("Dodoma", "Tanzania");
-        countryCapitalMap.put("Bangkok", "Thailand");
-        countryCapitalMap.put("Lomé", "Togo");
-        countryCapitalMap.put("Nukualofa", "Tonga");
-        countryCapitalMap.put("Tunis", "Tunisia");
-        countryCapitalMap.put("Ankara", "Turkey");
-        countryCapitalMap.put("Ashgabat", "Turkmenistan");
-        countryCapitalMap.put("Kampala", "Uganda");
-        countryCapitalMap.put("Kyiv", "Ukraine");
-        countryCapitalMap.put("Abu Dhabi", "UAE");
-        countryCapitalMap.put("Washington D.C.", "USA");
-        countryCapitalMap.put("Montevideo", "Uruguay");
-        countryCapitalMap.put("Tashkent", "Uzbekistan");
-        countryCapitalMap.put("Port Vila", "Vanuatu");
-        countryCapitalMap.put("Caracas", "Venezuela");
-        countryCapitalMap.put("Hanoi", "Vietnam");
-        countryCapitalMap.put("Cardiff", "Wales");
-        countryCapitalMap.put("Sanaa", "Yemen");
-        countryCapitalMap.put("Lusaka", "Zambia");
-        countryCapitalMap.put("Harare", "Zimbabwe");
+        List<Country> countries = helper.fetchCountries();
+        List<Country> usedCapitals = new ArrayList<>();
 
-        this.countryCapitalMap = countryCapitalMap;
+        Random random = new Random();
 
+        List<Country> veryHardCapitals = countries.stream()
+                .filter(country -> country.getCapital_difficulty() == 4)
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < 20; i++) {
+
+            Country correctCapital;
+
+            if (!veryHardCapitals.isEmpty()) {
+                do {
+                    correctCapital = veryHardCapitals.get(random.nextInt(veryHardCapitals.size()));
+                } while (usedCapitals.contains(correctCapital));
+
+                usedCapitals.add(correctCapital);
+
+
+                QuizQuestion quizQuestion = new QuizQuestion();
+                quizQuestion.correctCapital = correctCapital.getCountry_capital();
+                quizQuestion.correctCapitalCountry = correctCapital.getCountry_name();
+
+                List<String> wrongAnswers = new ArrayList<>();
+                while (wrongAnswers.size() < 7) {
+
+                    Country wrongCapital = countries.get(random.nextInt(countries.size()));
+                    if (!wrongCapital.equals(correctCapital) && !wrongAnswers.contains(wrongCapital.getCountry_name()))
+                    {
+                        wrongAnswers.add(wrongCapital.getCountry_name());
+                    }
+                }
+
+                List<String> allAnswers = new ArrayList<>();
+                allAnswers.add(quizQuestion.correctCapitalCountry);
+                allAnswers.addAll(wrongAnswers);
+                Collections.shuffle(allAnswers, random);
+
+                quizQuestion.allAnswers = allAnswers;
+                quizQuestions.add(quizQuestion);
+
+            } else {
+                // return to dashboard for now
+                Intent intent = new Intent(CapitalQuiz.this, QuizDashboard.class);
+                startActivity(intent);
+            }
+        }
     }
 
+    private void generateImpossibleQuiz() {
+
+        DatabaseHelper helper = new DatabaseHelper(CapitalQuiz.this, null, null, DatabaseHelper.DB_VERSION);
+
+        List<Country> countries = helper.fetchCountries();
+        List<Country> usedCapitals = new ArrayList<>();
+
+        Random random = new Random();
+
+        List<Country> impossibleCapitals = countries.stream()
+                .filter(country -> country.getCapital_difficulty() == 5)
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < 20; i++) {
+
+            Country correctCapital;
+
+            if (!impossibleCapitals.isEmpty()) {
+                do {
+                    correctCapital = impossibleCapitals.get(random.nextInt(impossibleCapitals.size()));
+                } while (usedCapitals.contains(correctCapital));
+
+                usedCapitals.add(correctCapital);
+
+
+                QuizQuestion quizQuestion = new QuizQuestion();
+                quizQuestion.correctCapital = correctCapital.getCountry_capital();
+                quizQuestion.correctCapitalCountry = correctCapital.getCountry_name();
+
+                List<String> wrongAnswers = new ArrayList<>();
+                while (wrongAnswers.size() < 7) {
+
+                    Country wrongCapital = countries.get(random.nextInt(countries.size()));
+                    if (!wrongCapital.equals(correctCapital) && !wrongAnswers.contains(wrongCapital.getCountry_name()))
+                    {
+                        wrongAnswers.add(wrongCapital.getCountry_name());
+                    }
+                }
+
+                List<String> allAnswers = new ArrayList<>();
+                allAnswers.add(quizQuestion.correctCapitalCountry);
+                allAnswers.addAll(wrongAnswers);
+                Collections.shuffle(allAnswers, random);
+
+                quizQuestion.allAnswers = allAnswers;
+                quizQuestions.add(quizQuestion);
+
+            } else {
+                // return to dashboard for now
+                Intent intent = new Intent(CapitalQuiz.this, QuizDashboard.class);
+                startActivity(intent);
+            }
+        }
+    }
 
     private void displayCurrentQuestion() {
 
@@ -417,12 +397,12 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
         //Sets the answers to the radio buttons
         // Enable or disable radio buttons based on quiz level
         if (intentDifficulty.equals("Easy")) {
-            for (int i = 0; i < 4; i++) { // Only enable the first 4 radio buttons for Easy quiz
+            for (int i = 0; i < 6; i++) { // Only enable the first 6 radio buttons for Easy quiz
                 radioButtons.get(i).setVisibility(View.VISIBLE);
                 radioButtons.get(i).setEnabled(true);
                 radioButtons.get(i).setChecked(false);
             }
-            for (int i = 4; i < 8; i++) { // Disable the last 4 radio buttons for Easy quiz
+            for (int i = 6; i < 8; i++) { // Disable the last 2 radio buttons for Easy quiz
                 radioButtons.get(i).setVisibility(View.GONE);
                 radioButtons.get(i).setEnabled(false);
             }
@@ -489,12 +469,6 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
         } else {
             displayCurrentQuestion();
         }
-    }
-
-    private String getCountry(String correctCapital) {
-
-        String countryName = countryCapitalMap.get(correctCapital);
-        return countryName == null ? "ERROR" : countryName; // Return default value if not found
     }
 
     @Override

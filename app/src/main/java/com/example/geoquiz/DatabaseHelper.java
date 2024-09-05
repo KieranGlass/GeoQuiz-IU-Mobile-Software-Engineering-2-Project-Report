@@ -3,25 +3,26 @@ package com.example.geoquiz;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import android.content.ContentValues;
 import android.database.SQLException;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 6;
+    public static final int DB_VERSION = 7;
     private static final String DB_NAME = "GeoQuizDatabase.db";
     private String DB_PATH = "/data/data/com.example.geoquiz/databases/";
     SQLiteDatabase myDatabase;
@@ -81,7 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "country_id INTEGER NOT NULL, " +
                 "difficulty_id INTEGER NOT NULL, " +
                 "tilemap_row INTEGER NOT NULL, " +
-                "tilmap_column INTEGER NOT NULL, " +
+                "tilemap_column INTEGER NOT NULL, " +
                 "food_path TEXT, " +
                 "FOREIGN KEY(country_id) REFERENCES countries(id), " +
                 "FOREIGN KEY(difficulty_id) REFERENCES difficulty(id))";
@@ -112,33 +113,64 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(country_id) REFERENCES countries(id), " +
                 "FOREIGN KEY(difficulty_id) REFERENCES difficulty(id))";
         db.execSQL(CREATE_BRANDS_TABLE);
+
+        // Creating the Users Table
+        String CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS users (" +
+                "user_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "username TEXT NOT NULL, " +
+                "password TEXT NOT NULL)";
+        db.execSQL(CREATE_USERS_TABLE);
+
+        // Creating Categories Table
+        String CREATE_CATEGORIES_TABLE = "CREATE TABLE IF NOT EXISTS categories (" +
+                "category_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "category_name TEXT NOT NULL)";
+        db.execSQL(CREATE_CATEGORIES_TABLE);
+
+        // Creating user progress table
+        String CREATE_USER_PROGRESS_TABLE = "CREATE TABLE IF NOT EXISTS user_progress (" +
+                "user_id INTEGER, " +
+                "category_id INTEGER, " +
+                "difficulty_id INTEGER, " +
+                "best_score REAL, " +
+                "FOREIGN KEY(user_id) REFERENCES users(user_id), " +
+                "FOREIGN KEY(category_id) REFERENCES categories(category_id), " +
+                "FOREIGN KEY(difficulty_id) REFERENCES difficulty(id), " +
+                "PRIMARY KEY(user_id, category_id, difficulty_id))";
+        db.execSQL(CREATE_USER_PROGRESS_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1)
     {
-        // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS countries");
-        db.execSQL("DROP TABLE IF EXISTS difficulty");
-        db.execSQL("DROP TABLE IF EXISTS Landmarks");
-        db.execSQL("DROP TABLE IF EXISTS continents");
-        db.execSQL("DROP TABLE IF EXISTS food");
-        db.execSQL("DROP TABLE IF EXISTS sports");
-        db.execSQL("DROP TABLE IF EXISTS brands");
 
-        // Create tables again
-        onCreate(db);
+            // Drop older table if existed
+            db.execSQL("DROP TABLE IF EXISTS countries");
+            db.execSQL("DROP TABLE IF EXISTS difficulty");
+            db.execSQL("DROP TABLE IF EXISTS Landmarks");
+            db.execSQL("DROP TABLE IF EXISTS continents");
+            db.execSQL("DROP TABLE IF EXISTS food");
+            db.execSQL("DROP TABLE IF EXISTS sports");
+            db.execSQL("DROP TABLE IF EXISTS brands");
+            db.execSQL("DROP TABLE IF EXISTS users");
+            db.execSQL("DROP TABLE IF EXISTS categories");
+            db.execSQL("DROP TABLE IF EXISTS user_progress");
+
+            // Create tables again
+            onCreate(db);
+
     }
 
     private boolean checkDatabase() {
         try {
-            final String mPath = DB_PATH + DB_NAME;
-            final File file = new File(mPath);
-            if (file.exists()) {
-                return true;
-            }
-            else
-                return false;
+            return mContext.getDatabasePath(DB_NAME).exists();
+            //final String mPath = DB_PATH + DB_NAME;
+            //final File file = new File(mPath);
+            //if (file.exists()) {
+              //  return true;
+           // }
+            //else
+               // return false;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -159,7 +191,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             mOutputStream.flush();
             mOutputStream.close();
             mInputStream.close();
-            Log.d("DatabaseHelper", "Database copied successfully.");
+            Log.d("DatabaseHelper", "Database copied successfully1.");
         } catch (IOException e) {
             Log.e("DatabaseHelper", "Failed to copy database", e);
         }
@@ -182,12 +214,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 copyDatabase();
                 Log.i("DatabaseHelper", "Database copied successfully.");
             }
-            copyDatabase();
+            //copyDatabase();
             myDatabase = this.getReadableDatabase();
             Log.i("DatabaseHelper", "Database opened successfully.");
 
 
-            Cursor cursor = myDatabase.rawQuery("SELECT COUNT(*) FROM your_table_name", null);
+            Cursor cursor = myDatabase.rawQuery("SELECT COUNT(*) FROM users", null);
             if (cursor.moveToFirst()) {
                 int count = cursor.getInt(0);
                 Log.d("DatabaseHelper", "Query result: " + count);
@@ -213,7 +245,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    // -- ALL SQL RETRIEVAL METHODS BELOW -- //
+    // -- ALL SQL RETRIEVAL METHODS FOR QUIZ QUESTIONS BELOW -- //
 
     public List<Landmark> fetchLandmarks() {
 
@@ -349,6 +381,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return brands;
+    }
+
+    // -- ALL METHODS RELATED TO USERS AND LOGINS BELOW-- //
+
+    public void createUser(String username, String password) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query("users", new String[]{"username"}, "username = ?", new String[]{username}, null, null, null);
+
+        if (cursor.getCount() > 0) {
+            cursor.close();
+            db.close();
+            Toast.makeText(this.mContext, "Username already exists!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        cursor.close();
+        ContentValues values = new ContentValues();
+        values.put("username", username);
+        values.put("password", password);
+
+        long newRowId = db.insert("users", null, values);
+        db.close();
+
+        Log.d("DatabaseHelper", "New user inserted with ID: " + newRowId);
     }
 
 }

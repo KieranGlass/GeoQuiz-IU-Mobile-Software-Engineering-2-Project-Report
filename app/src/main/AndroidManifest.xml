@@ -14,6 +14,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".FlagCapitalDifficulty"
+            android:exported="false" />
+        <activity
             android:name=".BrandQuiz"
             android:exported="false" />
         <activity

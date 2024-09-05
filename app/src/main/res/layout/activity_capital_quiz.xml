@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/capital_name_placeholder"
-        android:textColor="@color/primaryColourText"
+        android:textColor="@color/accentDark"
         android:textStyle="bold"
         android:textSize="35sp"
         android:fontFamily="@font/roboto"
@@ -36,6 +36,15 @@
         app:layout_constraintTop_toBottomOf="@+id/tvCapitalName"
         app:layout_constraintBottom_toTopOf="@id/radioGroupCapital1"/>
 
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/primaryColourText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCapitalQuestion"
+        app:layout_constraintBottom_toTopOf="@id/radioGroupCapital1"/>
+
     <LinearLayout
         android:id="@+id/radioGroupCapital1"
         android:layout_width="match_parent"
@@ -56,6 +65,7 @@
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
+            android:buttonTint="@color/accentDark"
             android:text="@string/country_placeholder"
             tools:ignore="DuplicateSpeakableTextCheck,VisualLintButtonSize" />
 
@@ -69,6 +79,7 @@
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
+            android:buttonTint="@color/accentDark"
             android:text="@string/country_placeholder"
             tools:ignore="VisualLintButtonSize" />
 
@@ -94,6 +105,7 @@
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
+            android:buttonTint="@color/accentDark"
             android:text="@string/country_placeholder"
             tools:ignore="VisualLintButtonSize" />
 
@@ -107,6 +119,7 @@
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
+            android:buttonTint="@color/accentDark"
             android:text="@string/country_placeholder"
             tools:ignore="VisualLintButtonSize" />
 
@@ -132,6 +145,7 @@
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
+            android:buttonTint="@color/accentDark"
             android:text="@string/country_placeholder"
             tools:ignore="VisualLintButtonSize" />
 
@@ -145,6 +159,7 @@
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
+            android:buttonTint="@color/accentDark"
             android:text="@string/country_placeholder"
             tools:ignore="VisualLintButtonSize" />
 
@@ -170,6 +185,7 @@
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
+            android:buttonTint="@color/accentDark"
             android:text="@string/country_placeholder"
             tools:ignore="VisualLintButtonSize" />
 
@@ -183,10 +199,20 @@
             android:textColor="@color/primaryColourText"
             android:textStyle="bold"
             android:textSize="18sp"
+            android:buttonTint="@color/accentDark"
             android:text="@string/country_placeholder"
             tools:ignore="VisualLintButtonSize" />
 
     </LinearLayout>
+
+    <View
+        android:id="@+id/capitalDivider2"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/primaryColourText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radioGroupCapital4"
+        app:layout_constraintBottom_toTopOf="@id/submitBtnCapital"/>
 
     <Button
         android:id="@+id/submitBtnCapital"

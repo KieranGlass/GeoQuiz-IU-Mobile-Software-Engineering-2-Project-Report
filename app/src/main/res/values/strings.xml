@@ -14,7 +14,8 @@
     <string name="getName">What\'s your name?</string>
     <string name="nameHint">Enter Your Name</string>
     <string name="start">Start</string>
-    <string name="title_button_description">For navigating to Dashboard</string>
+    <string name="title_login_button_description">For navigating to Dashboard after logging in</string>
+    <string name="title_signup_button_description">For navigating to Dashboard after signing up</string>
     <string name="Logo">Logo</string>
     <string name="flag_question">This Flag Belongs to which country?</string>
     <string name="flagimage_for_question">The flag image used for the question</string>
@@ -55,4 +56,8 @@
     <string name="choose_a_username">Choose a Username.</string>
     <string name="enter_your_password">Enter Your Password</string>
     <string name="choose_your_password">Choose Your Password</string>
+    <string name="very_hard">Very Hard</string>
+    <string name="impossible">Impossible</string>
+    <string name="join">Join!</string>
+    <string name="enter">Enter!</string>
 </resources>

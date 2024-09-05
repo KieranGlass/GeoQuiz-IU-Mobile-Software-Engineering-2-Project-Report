@@ -20,155 +20,156 @@
         app:srcCompat="@drawable/title_design"
         tools:ignore="ImageContrastCheck" />
 
-    <LinearLayout
-        android:id="@+id/radioContainer"
-        android:layout_width="320dp"
+
+    <RadioButton
+        android:id="@+id/rbTitle1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+        android:height="52dp"
+        android:buttonTint="@color/accentDark"
+        android:checked="true"
+        android:fontFamily="@font/roboto"
+        android:maxWidth="310dp"
+        android:minHeight="48dp"
+        android:text="@string/login"
+        android:textColor="@color/primaryColourText"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/loginUsername"
+        app:layout_constraintEnd_toEndOf="@id/loginUsername"
+        app:layout_constraintStart_toStartOf="@id/loginUsername"
+        app:layout_constraintTop_toBottomOf="@id/ivTitle" />
+
+    <RadioButton
+        android:id="@+id/rbTitle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:height="52dp"
+        android:buttonTint="@color/accentDark"
+        android:fontFamily="@font/roboto"
+        android:maxWidth="310dp"
+        android:minHeight="48dp"
+        android:text="@string/sign_up"
+        android:textColor="@color/primaryColourText"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/signupUsername"
+        app:layout_constraintEnd_toEndOf="@id/signupUsername"
+        app:layout_constraintStart_toStartOf="@id/signupUsername"
+        app:layout_constraintTop_toBottomOf="@id/ivTitle" />
+
+    <EditText
+        android:id="@+id/loginUsername"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="your username"
+        android:height="52dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="5dp"
+        android:textSize="15sp"
+        android:fontFamily="@font/roboto"
+        android:background="#ffffff"
+        android:enabled="true"
+        android:hint="@string/enter_your_username"
+        android:elevation="8dp"
+        android:padding="8dp"
+        tools:ignore="TextFields,VisualLintTextFieldSize"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/signupUsername"
+        app:layout_constraintTop_toBottomOf="@id/rbTitle1"
+        app:layout_constraintBottom_toTopOf="@id/loginPassword"/>
+
+    <EditText
+        android:id="@+id/signupUsername"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="your username"
+        android:height="52dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="5dp"
+        android:textSize="15sp"
+        android:fontFamily="@font/roboto"
+        android:background="#ffffff"
+        android:enabled="false"
+        android:elevation="8dp"
+        android:hint="@string/choose_a_username"
+        android:padding="8dp"
+        tools:ignore="TextFields,VisualLintTextFieldSize"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivTitle"
+        app:layout_constraintStart_toEndOf="@id/loginUsername"
+        app:layout_constraintTop_toBottomOf="@id/rbTitle2"
+        app:layout_constraintBottom_toTopOf="@id/signupPassword"/>
 
-        android:weightSum="2">
-
-        <RadioButton
-            android:id="@+id/rbTitle1"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_weight="1"
-            android:height="52dp"
-            android:maxWidth="310dp"
-            android:textColor="@color/primaryColourText"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto"
-            android:buttonTint="@color/accentDark"
-            android:checked="true"
-            android:text="@string/login" />
-
-        <RadioButton
-            android:id="@+id/rbTitle2"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_weight="1"
-            android:height="52dp"
-            android:maxWidth="310dp"
-            android:textColor="@color/primaryColourText"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto"
-            android:buttonTint="@color/accentDark"
-            android:text="@string/sign_up" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/usernames"
-        android:layout_width="410dp"
+    <EditText
+        android:id="@+id/loginPassword"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:orientation="horizontal"
+        android:autofillHints="your password"
+        android:height="52dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="5dp"
+        android:textSize="15sp"
+        android:fontFamily="@font/roboto"
+        android:hint="@string/enter_your_password"
+        android:background="#ffffff"
+        android:enabled="true"
+        android:elevation="8dp"
+        android:padding="8dp"
+        tools:ignore="TextFields,VisualLintTextFieldSize"
+        app:layout_constraintBottom_toTopOf="@id/enterBtn"
+        app:layout_constraintTop_toBottomOf="@id/loginUsername"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/passwords"
-        app:layout_constraintTop_toBottomOf="@id/radioContainer"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toStartOf="@id/signupPassword"/>
 
-        <EditText
-            android:id="@+id/loginUsername"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:autofillHints="your username"
-            android:height="52dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="5dp"
-            android:textSize="15sp"
-            android:fontFamily="@font/roboto"
-            android:background="#ffffff"
-            android:hint="@string/choose_a_username"
-            android:elevation="8dp"
-            android:padding="8dp"
-            tools:ignore="TextFields" />
-
-        <EditText
-            android:id="@+id/signupUsername"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:autofillHints="your username"
-            android:height="52dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="5dp"
-            android:textSize="15sp"
-            android:fontFamily="@font/roboto"
-            android:background="#ffffff"
-            android:elevation="8dp"
-            android:hint="@string/enter_your_username"
-            android:padding="8dp"
-            tools:ignore="TextFields" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/passwords"
-        android:layout_width="410dp"
+    <EditText
+        android:id="@+id/signupPassword"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/usernames"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/startBtn">
-
-        <EditText
-            android:id="@+id/loginPassword"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:autofillHints="your password"
-            android:height="52dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="5dp"
-            android:textSize="15sp"
-            android:fontFamily="@font/roboto"
-            android:hint="@string/enter_your_password"
-            android:background="#ffffff"
-            android:elevation="8dp"
-            android:padding="8dp"
-            tools:ignore="TextFields" />
-
-        <EditText
-            android:id="@+id/signupPassword"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:autofillHints="your password"
-            android:height="52dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="5dp"
-            android:textSize="15sp"
-            android:fontFamily="@font/roboto"
-            android:hint="@string/choose_your_password"
-            android:background="#ffffff"
-            android:elevation="8dp"
-            android:padding="8dp"
-            tools:ignore="TextFields" />
-
-    </LinearLayout>
+        android:autofillHints="your password"
+        android:height="52dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="5dp"
+        android:textSize="15sp"
+        android:fontFamily="@font/roboto"
+        android:hint="@string/choose_your_password"
+        android:background="#ffffff"
+        android:enabled="false"
+        android:elevation="8dp"
+        android:padding="8dp"
+        tools:ignore="TextFields,VisualLintTextFieldSize"
+        app:layout_constraintBottom_toTopOf="@id/joinBtn"
+        app:layout_constraintTop_toBottomOf="@id/signupUsername"
+        app:layout_constraintStart_toEndOf="@id/loginPassword"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
-        android:id="@+id/startBtn"
+        android:id="@+id/enterBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
-        android:contentDescription="@string/title_button_description"
+        android:contentDescription="@string/title_login_button_description"
+        android:enabled="true"
         android:onClick="startClick"
-        android:text="@string/start"
+        android:text="@string/enter"
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwords" />
+        app:layout_constraintEnd_toEndOf="@id/loginPassword"
+        app:layout_constraintStart_toStartOf="@id/loginPassword"
+        app:layout_constraintTop_toBottomOf="@+id/loginPassword" />
+
+    <Button
+        android:id="@+id/joinBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:contentDescription="@string/title_signup_button_description"
+        android:enabled="false"
+        android:text="@string/join"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/signupPassword"
+        app:layout_constraintStart_toStartOf="@id/signupPassword"
+        app:layout_constraintTop_toBottomOf="@+id/signupPassword" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
