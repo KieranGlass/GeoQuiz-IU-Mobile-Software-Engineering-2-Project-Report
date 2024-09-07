@@ -22,7 +22,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 7;
+    public static final int DB_VERSION = 8;
     private static final String DB_NAME = "GeoQuizDatabase.db";
     private String DB_PATH = "/data/data/com.example.geoquiz/databases/";
     SQLiteDatabase myDatabase;
@@ -141,23 +141,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1)
-    {
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
 
-            // Drop older table if existed
-            db.execSQL("DROP TABLE IF EXISTS countries");
-            db.execSQL("DROP TABLE IF EXISTS difficulty");
-            db.execSQL("DROP TABLE IF EXISTS Landmarks");
-            db.execSQL("DROP TABLE IF EXISTS continents");
-            db.execSQL("DROP TABLE IF EXISTS food");
-            db.execSQL("DROP TABLE IF EXISTS sports");
-            db.execSQL("DROP TABLE IF EXISTS brands");
-            db.execSQL("DROP TABLE IF EXISTS users");
-            db.execSQL("DROP TABLE IF EXISTS categories");
-            db.execSQL("DROP TABLE IF EXISTS user_progress");
+        // Drop older table if existed
+        db.execSQL("DROP TABLE IF EXISTS countries");
+        db.execSQL("DROP TABLE IF EXISTS difficulty");
+        db.execSQL("DROP TABLE IF EXISTS Landmarks");
+        db.execSQL("DROP TABLE IF EXISTS continents");
+        db.execSQL("DROP TABLE IF EXISTS food");
+        db.execSQL("DROP TABLE IF EXISTS sports");
+        db.execSQL("DROP TABLE IF EXISTS brands");
+        db.execSQL("DROP TABLE IF EXISTS users");
+        db.execSQL("DROP TABLE IF EXISTS categories");
+        db.execSQL("DROP TABLE IF EXISTS user_progress");
 
-            // Create tables again
-            onCreate(db);
+        // Create tables again
+        onCreate(db);
 
     }
 
@@ -167,10 +166,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //final String mPath = DB_PATH + DB_NAME;
             //final File file = new File(mPath);
             //if (file.exists()) {
-              //  return true;
-           // }
+            //  return true;
+            // }
             //else
-               // return false;
+            // return false;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -196,14 +195,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.e("DatabaseHelper", "Failed to copy database", e);
         }
     }
+
     @Override
     public synchronized void close() {
-        if(myDatabase != null){
+        if (myDatabase != null) {
             myDatabase.close();
             SQLiteDatabase.releaseMemory();
             super.close();
         }
     }
+
     // Load Handler method called in application activity. Calls copyDatabase method if a database exists or not to ensure
     // database is up to date. Puts this into a SQLiteDatabase variable myDatabase
     public void loadHandler() {
@@ -385,10 +386,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // -- ALL METHODS RELATED TO USERS AND LOGINS BELOW-- //
 
-    public void createUser(String username, String password) {
+    public void createUser(User user) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.query("users", new String[]{"username"}, "username = ?", new String[]{username}, null, null, null);
+        Cursor cursor = db.query("users", new String[]{"username"}, "username = ?", new String[]{user.getUsername()}, null, null, null);
 
         if (cursor.getCount() > 0) {
             cursor.close();
@@ -399,13 +400,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
         ContentValues values = new ContentValues();
-        values.put("username", username);
-        values.put("password", password);
+        values.put("username", user.getUsername());
+        values.put("password", user.getPassword());
 
         long newRowId = db.insert("users", null, values);
-        db.close();
 
-        Log.d("DatabaseHelper", "New user inserted with ID: " + newRowId);
+        if (newRowId == -1) {
+            Log.e("DatabaseHelper", "Failed to insert new user.");
+            Toast.makeText(mContext, "Error inserting new user", Toast.LENGTH_SHORT).show();
+        } else {
+            Log.d("DatabaseHelper", "New user inserted with ID: " + newRowId);
+            Toast.makeText(mContext, "User created successfully!", Toast.LENGTH_SHORT).show();
+        }
+
+        db.close();
     }
 
+    public boolean doesUserExist (String username) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query("users", new String[]{"username"}, "username = ?", new String[]{username}, null, null, null);
+
+        if (cursor.getCount() > 0)
+        {
+            cursor.close();
+            db.close();
+            return true;
+        }
+
+        cursor.close();
+        db.close();
+        return false;
+    }
 }

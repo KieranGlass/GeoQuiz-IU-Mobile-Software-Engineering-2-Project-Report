@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,9 @@ public class QuizDashboard extends AppCompatActivity {
 
     Button flagBtn, capitalBtn, landmarkBtn, foodBtn, sportsBtn, brandBtn;
 
+    TextView tvUsername;
+    String username = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +35,14 @@ public class QuizDashboard extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Intent usernameIntent = getIntent();
+
+        username = usernameIntent.getStringExtra("Username");
+
+        tvUsername = findViewById(R.id.tvUsername);
+
+        tvUsername.setText(username);
 
         flagBtn = findViewById(R.id.flagBtn);
         capitalBtn = findViewById(R.id.capitalBtn);

@@ -2,23 +2,19 @@ package com.example.geoquiz;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.appcompat.widget.Toolbar;
 
-import org.w3c.dom.Text;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -89,20 +85,45 @@ public class MainActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, QuizDashboard.class);
-                startActivity(intent);
+
+                String username = loginUsername.getText().toString();
+                String password = loginPassword.getText().toString();
+
+                if (!username.isEmpty() && !password.isEmpty()) {
+                    DatabaseHelper db = new DatabaseHelper(MainActivity.this, null, null, DatabaseHelper.DB_VERSION);
+
+                    if (!db.doesUserExist(username))
+                    {
+                        Toast.makeText(MainActivity.this, "Username does not exist", Toast.LENGTH_SHORT).show();
+                        db.close();
+                    }
+                    else
+                    {
+                        // check password
+                        db.close();
+                        Intent intent = new Intent(MainActivity.this, QuizDashboard.class);
+                        intent.putExtra("Username", username);
+                        startActivity(intent);
+                    }
+
+                } else {
+                    Toast.makeText(MainActivity.this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String username = signupUsername.getText().toString();
                 String password = signupPassword.getText().toString();
 
+                User user = new User(username, password);
+
                 if (!username.isEmpty() && !password.isEmpty()) {
                     DatabaseHelper db = new DatabaseHelper(MainActivity.this, null, null, DatabaseHelper.DB_VERSION);
-                    db.createUser(username, password);
+                    db.createUser(user);
                 } else {
                     Toast.makeText(MainActivity.this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
                 }
