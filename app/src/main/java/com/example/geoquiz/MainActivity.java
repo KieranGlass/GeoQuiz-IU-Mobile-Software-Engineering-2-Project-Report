@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     EditText loginUsername, loginPassword, signupUsername, signupPassword;
     private RadioButton lastCheckedRadioButton = null;
 
+    DatabaseHelper db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 String password = loginPassword.getText().toString();
 
                 if (!username.isEmpty() && !password.isEmpty()) {
-                    DatabaseHelper db = new DatabaseHelper(MainActivity.this, null, null, DatabaseHelper.DB_VERSION);
+                    db = new DatabaseHelper(MainActivity.this, null, null, DatabaseHelper.DB_VERSION);
 
                     if (!db.doesUserExist(username))
                     {
@@ -122,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 User user = new User(username, password);
 
                 if (!username.isEmpty() && !password.isEmpty()) {
-                    DatabaseHelper db = new DatabaseHelper(MainActivity.this, null, null, DatabaseHelper.DB_VERSION);
+                    db = new DatabaseHelper(MainActivity.this, null, null, DatabaseHelper.DB_VERSION);
                     db.createUser(user);
                 } else {
                     Toast.makeText(MainActivity.this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
