@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.SQLException;
 import android.content.Context;
@@ -386,10 +387,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // -- ALL METHODS RELATED TO USERS AND LOGINS BELOW-- //
 
-    public void createUser(User user) {
+    public void createUser(String username, String password) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.query("users", new String[]{"username"}, "username = ?", new String[]{user.getUsername()}, null, null, null);
+        Cursor cursor = db.query("users", new String[]{"username"}, "username = ?", new String[]{username}, null, null, null);
 
         if (cursor.getCount() > 0) {
             cursor.close();
@@ -400,8 +401,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
         ContentValues values = new ContentValues();
-        values.put("username", user.getUsername());
-        values.put("password", user.getPassword());
+        values.put("username", username);
+        values.put("password", password);
 
         long newRowId = db.insert("users", null, values);
 
@@ -432,5 +433,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return false;
+    }
+
+    @SuppressLint("Range")
+    public User getUserByCredentials(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] columns = {"user_id", "username", "password"};
+        String selection = "username" + " = ? AND " + "password" + " = ?";
+        String[] selectionArgs = {username, password};
+
+        Cursor cursor = db.query("users", columns, selection, selectionArgs, null, null, null);
+
+        User user = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            user = new User();
+            user.setId(cursor.getInt(cursor.getColumnIndex("user_id")));
+            user.setUsername(cursor.getString(cursor.getColumnIndex("username")));
+            user.setPassword(cursor.getString(cursor.getColumnIndex("password")));
+            // Set other fields...
+
+            cursor.close();
+        }
+
+        db.close();
+        return user;
     }
 }

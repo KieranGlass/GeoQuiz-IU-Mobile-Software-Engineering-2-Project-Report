@@ -36,9 +36,11 @@ public class QuizDashboard extends AppCompatActivity {
             return insets;
         });
 
+        User currentUser = UserLogin.getCurrentUser();
+
         Intent usernameIntent = getIntent();
 
-        username = usernameIntent.getStringExtra("Username");
+        username = currentUser.getUsername();
 
         tvUsername = findViewById(R.id.tvUsername);
 

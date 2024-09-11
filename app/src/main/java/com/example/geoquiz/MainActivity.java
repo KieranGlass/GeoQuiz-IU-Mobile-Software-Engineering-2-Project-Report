@@ -94,17 +94,16 @@ public class MainActivity extends AppCompatActivity {
                 if (!username.isEmpty() && !password.isEmpty()) {
                     db = new DatabaseHelper(MainActivity.this, null, null, DatabaseHelper.DB_VERSION);
 
-                    if (!db.doesUserExist(username))
-                    {
-                        Toast.makeText(MainActivity.this, "Username does not exist", Toast.LENGTH_SHORT).show();
-                        db.close();
+                    User user = db.getUserByCredentials(username, password);
+
+                    if (user == null) {
+                        Toast.makeText(MainActivity.this, "User Not Recognized", Toast.LENGTH_SHORT).show();
                     }
                     else
                     {
-                        // check password
+                        UserLogin.setCurrentUser(user);
                         db.close();
                         Intent intent = new Intent(MainActivity.this, QuizDashboard.class);
-                        intent.putExtra("Username", username);
                         startActivity(intent);
                     }
 
@@ -121,11 +120,9 @@ public class MainActivity extends AppCompatActivity {
                 String username = signupUsername.getText().toString();
                 String password = signupPassword.getText().toString();
 
-                User user = new User(username, password);
-
                 if (!username.isEmpty() && !password.isEmpty()) {
                     db = new DatabaseHelper(MainActivity.this, null, null, DatabaseHelper.DB_VERSION);
-                    db.createUser(user);
+                    db.createUser(username, password);
                 } else {
                     Toast.makeText(MainActivity.this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
                 }
