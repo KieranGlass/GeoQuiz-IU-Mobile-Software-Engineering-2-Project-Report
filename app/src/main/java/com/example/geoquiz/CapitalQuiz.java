@@ -27,6 +27,7 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
     private int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
+    private int difficultyId, categoryId = 5;
 
     int score = 0;
 
@@ -86,22 +87,27 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
         assert difficulty != null;
         switch (difficulty) {
             case "Easy":
+                difficultyId = 1;
                 generateEasyQuiz();
                 displayCurrentQuestion();
                 break;
             case "Medium":
+                difficultyId = 2;
                 generateMediumQuiz();
                 displayCurrentQuestion();
                 break;
             case "Hard":
+                difficultyId = 3;
                 generateHardQuiz();
                 displayCurrentQuestion();
                 break;
             case "VeryHard":
+                difficultyId = 4;
                 generateVeryHardQuiz();
                 displayCurrentQuestion();
                 break;
             default:
+                difficultyId = 5;
                 generateImpossibleQuiz();
                 displayCurrentQuestion();
                 break;
@@ -458,7 +464,10 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
         currentQuestionIndex++;
 
         if (currentQuestionIndex >= quizQuestions.size()) {
-            // show results , new activity?
+
+            DatabaseHelper helper = new DatabaseHelper(CapitalQuiz.this, null, null, DatabaseHelper.DB_VERSION);
+
+            helper.updateUserProgress(UserLogin.getCurrentUser().getId(), categoryId, difficultyId, score);
 
             Intent intent = new Intent(CapitalQuiz.this, Results.class);
             intent.putExtra("Difficulty", intentDifficulty);

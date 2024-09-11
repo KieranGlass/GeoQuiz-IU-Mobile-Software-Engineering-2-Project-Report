@@ -22,7 +22,7 @@ public class QuizDashboard extends AppCompatActivity {
 
     Button flagBtn, capitalBtn, landmarkBtn, foodBtn, sportsBtn, brandBtn;
 
-    TextView tvUsername;
+    TextView tvUsername, tvFlagCompletion, tvCapitalCompletion, tvLandmarkCompletion, tvFoodCompletion, tvSportsCompletion, tvBrandCompletion;
     String username = "";
 
     @Override
@@ -38,13 +38,24 @@ public class QuizDashboard extends AppCompatActivity {
 
         User currentUser = UserLogin.getCurrentUser();
 
-        Intent usernameIntent = getIntent();
+        if(currentUser == null) {
+            Intent intent = new Intent(QuizDashboard.this, MainActivity.class);
+        }
 
         username = currentUser.getUsername();
 
+
         tvUsername = findViewById(R.id.tvUsername);
+        tvFlagCompletion = findViewById(R.id.tvFlagCompletion);
+        tvCapitalCompletion = findViewById(R.id.tvCapitalCompletion);
+        tvLandmarkCompletion = findViewById(R.id.tvLandmarkCompletion);
+        tvFoodCompletion = findViewById(R.id.tvFoodCompletion);
+        tvSportsCompletion = findViewById(R.id.tvSportsCompletion);
+        tvBrandCompletion = findViewById(R.id.tvBrandCompletion);
 
         tvUsername.setText(username);
+
+        displayCompletions();
 
         flagBtn = findViewById(R.id.flagBtn);
         capitalBtn = findViewById(R.id.capitalBtn);
@@ -108,4 +119,39 @@ public class QuizDashboard extends AppCompatActivity {
         });
     }
 
+
+    public void displayCompletions(){
+
+        DatabaseHelper flagHelper = new DatabaseHelper(QuizDashboard.this, null, null, DatabaseHelper.DB_VERSION);
+        DatabaseHelper capitalHelper = new DatabaseHelper(QuizDashboard.this, null, null, DatabaseHelper.DB_VERSION);
+        DatabaseHelper landmarkHelper = new DatabaseHelper(QuizDashboard.this, null, null, DatabaseHelper.DB_VERSION);
+        DatabaseHelper foodHelper = new DatabaseHelper(QuizDashboard.this, null, null, DatabaseHelper.DB_VERSION);
+        DatabaseHelper sportsHelper = new DatabaseHelper(QuizDashboard.this, null, null, DatabaseHelper.DB_VERSION);
+        DatabaseHelper brandHelper = new DatabaseHelper(QuizDashboard.this, null, null, DatabaseHelper.DB_VERSION);
+
+        UserProgress flagProgress = flagHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 6);
+        UserProgress capitalProgress = capitalHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 5);
+        UserProgress landmarkProgress = landmarkHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 4);
+        UserProgress foodProgress = foodHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 3);
+        UserProgress sportsProgress = sportsHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 2);
+        UserProgress brandProgress = brandHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 1);
+
+
+        displayCompletion(tvFlagCompletion, flagProgress, 5);
+        displayCompletion(tvCapitalCompletion, capitalProgress, 5);
+        displayCompletion(tvLandmarkCompletion, landmarkProgress, 3);
+        displayCompletion(tvFoodCompletion, foodProgress, 3);
+        displayCompletion(tvSportsCompletion, sportsProgress, 3);
+        displayCompletion(tvBrandCompletion, brandProgress,3);
+
+    }
+
+    private void displayCompletion(TextView textView, UserProgress progress, int divider) {
+        String percent = "%";
+        if (progress == null || progress.getBestScore() <= 0) {
+            textView.setText("0");
+        } else {
+            textView.setText(String.valueOf((progress.getBestScore() * 5 / divider)) + percent);
+        }
+    }
 }

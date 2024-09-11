@@ -31,6 +31,7 @@ public class SportsQuiz extends AppCompatActivity implements MessagePopupFragmen
     private int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
+    private int difficultyId, categoryId = 2;
     int score = 0;
 
 
@@ -98,12 +99,15 @@ public class SportsQuiz extends AppCompatActivity implements MessagePopupFragmen
         //pushes user into appropriate quiz based on difficulty choice
         assert difficulty != null;
         if (difficulty.equals("Easy")) {
+            difficultyId = 1;
             generateEasyQuiz();
             displayCurrentQuestion();
         } else if (difficulty.equals("Medium")) {
+            difficultyId = 2;
             generateMediumQuiz();
             displayCurrentQuestion();
         } else {
+            difficultyId = 3;
             generateHardQuiz();
             displayCurrentQuestion();
         }

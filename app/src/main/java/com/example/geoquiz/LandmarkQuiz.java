@@ -32,6 +32,7 @@ public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragm
     private int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
+    private int difficultyId, categoryId = 4;
     int score = 0;
 
 
@@ -99,12 +100,15 @@ public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragm
         //pushes user into appropriate quiz based on difficulty choice
         assert difficulty != null;
         if (difficulty.equals("Easy")) {
+            difficultyId = 1;
             generateEasyQuiz();
             displayCurrentQuestion();
         } else if (difficulty.equals("Medium")) {
+            difficultyId = 2;
             generateMediumQuiz();
             displayCurrentQuestion();
         } else {
+            difficultyId = 3;
             generateHardQuiz();
             displayCurrentQuestion();
         }
@@ -414,7 +418,10 @@ public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragm
         currentQuestionIndex++;
 
         if (currentQuestionIndex >= quizQuestions.size()) {
-            // show results , new activity?
+
+            DatabaseHelper helper = new DatabaseHelper(LandmarkQuiz.this, null, null, DatabaseHelper.DB_VERSION);
+
+            helper.updateUserProgress(UserLogin.getCurrentUser().getId(), categoryId, difficultyId, score);
 
             Intent intent = new Intent(LandmarkQuiz.this, Results.class);
             intent.putExtra("Difficulty", intentDifficulty);

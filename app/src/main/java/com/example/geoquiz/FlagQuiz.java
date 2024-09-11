@@ -3,6 +3,7 @@ package com.example.geoquiz;
 import static com.example.geoquiz.ResourceUtilities.getFlagResourceId;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -32,6 +33,8 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
     private int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
+
+    private int difficultyId, categoryId = 6;
     int score = 0;
 
     // TODO - Fix issue where certain nations (Dominican Republic, Trinidad + Tobago) are too long for radio button
@@ -98,26 +101,32 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
         assert difficulty != null;
         if (difficulty.equals("Easy"))
         {
+            difficultyId = 1;
             generateEasyQuiz();
             displayCurrentQuestion();
         }
         else if (difficulty.equals("Medium"))
         {
+            difficultyId = 2;
+
             generateMediumQuiz();
             displayCurrentQuestion();
         }
         else if (difficulty.equals("Hard"))
         {
+            difficultyId = 3;
             generateHardQuiz();
             displayCurrentQuestion();
         }
         else if (difficulty.equals("VeryHard"))
         {
+            difficultyId = 4;
             generateVeryHardQuiz();
             displayCurrentQuestion();
         }
         else
         {
+            difficultyId = 5;
             generateImpossibleQuiz();
             displayCurrentQuestion();
         }
@@ -517,6 +526,9 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
 
         if (currentQuestionIndex >= quizQuestions.size()) {
             // show results , new activity?
+            DatabaseHelper helper = new DatabaseHelper(FlagQuiz.this, null, null, DatabaseHelper.DB_VERSION);
+
+            helper.updateUserProgress(UserLogin.getCurrentUser().getId(), categoryId, difficultyId, score);
 
             Intent intent = new Intent(FlagQuiz.this, Results.class);
             intent.putExtra("Difficulty", intentDifficulty);

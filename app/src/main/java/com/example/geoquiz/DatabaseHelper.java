@@ -459,4 +459,76 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return user;
     }
+
+    public void updateUserProgress(int userId, int categoryId, int difficultyId, int score) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Check if an entry already exists
+        Cursor cursor = db.rawQuery("SELECT * FROM user_progress WHERE user_id = ? AND category_id = ? AND difficulty_id = ?", new String[]{String.valueOf(userId), String.valueOf(categoryId), String.valueOf(difficultyId)});
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("user_id", userId);
+        contentValues.put("category_id", categoryId);
+        contentValues.put("difficulty_id", difficultyId);
+        contentValues.put("best_score", score);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            @SuppressLint("Range") int existingScore = cursor.getInt(cursor.getColumnIndex("best_score"));
+            if (score > existingScore) {
+                db.update("user_progress", contentValues, "user_id" + " = ? AND " + "category_id" + " = ? AND " + "difficulty_id" + " = ?", new String[]{String.valueOf(userId), String.valueOf(categoryId), String.valueOf(difficultyId)});
+            }
+        } else {
+            db.insert("user_progress", null, contentValues);
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+        db.close();
+    }
+
+    @SuppressLint("Range")
+    public List<UserProgress> getUserProgress(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<UserProgress> userProgressList = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM user_progress WHERE user_id = ?", new String[]{String.valueOf(userId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                UserProgress progress = new UserProgress();
+                progress.setUserId(cursor.getInt(cursor.getColumnIndex("user_id")));
+                progress.setCategoryId(cursor.getInt(cursor.getColumnIndex("category_id")));
+                progress.setDifficultyId(cursor.getInt(cursor.getColumnIndex("difficulty_id")));
+                progress.setBestScore(cursor.getInt(cursor.getColumnIndex("best_score")));
+                userProgressList.add(progress);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return userProgressList;
+    }
+
+    @SuppressLint("Range")
+    public UserProgress getUserProgressByCategory(int userId, int categoryId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        UserProgress progress = null;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM user_progress WHERE user_id = ? AND category_id = ?", new String[]{String.valueOf(userId), String.valueOf(categoryId)});
+
+        //TODO MAKE THIS INTO A LIST TO GET EACH DIFFICULTY SCORE!
+        if (cursor.moveToFirst()) {
+            progress = new UserProgress();
+            progress.setUserId(cursor.getInt(cursor.getColumnIndex("user_id")));
+            progress.setCategoryId(cursor.getInt(cursor.getColumnIndex("category_id")));
+            progress.setDifficultyId(cursor.getInt(cursor.getColumnIndex("difficulty_id")));
+            progress.setBestScore(cursor.getInt(cursor.getColumnIndex("best_score")));
+        }
+
+        cursor.close();
+        db.close();
+        return progress;
+    }
+
 }
