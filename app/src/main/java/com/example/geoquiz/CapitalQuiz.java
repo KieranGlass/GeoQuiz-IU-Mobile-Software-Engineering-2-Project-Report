@@ -27,11 +27,8 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
     private int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
-    private int difficultyId, categoryId = 5;
-
+    private int difficultyId;
     int score = 0;
-
-    // TODO ALSO, PAGE LOOKS VERY BAD
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,7 +196,7 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
                 quizQuestion.correctCapitalCountry = correctCapital.getCountry_name();
 
                 List<String> wrongAnswers = new ArrayList<>();
-                while (wrongAnswers.size() < 5) {
+                while (wrongAnswers.size() < 7) {
 
                     Country wrongCapital = countries.get(random.nextInt(countries.size()));
                     if (!wrongCapital.equals(correctCapital) && !wrongAnswers.contains(wrongCapital.getCountry_name()))
@@ -412,17 +409,6 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
                 radioButtons.get(i).setVisibility(View.GONE);
                 radioButtons.get(i).setEnabled(false);
             }
-        } else if (intentCategory.equals("Medium")) {
-            for (int i = 0; i < 6; i++) { // Only enable the first 6 radio buttons for Medium quiz
-                radioButtons.get(i).setVisibility(View.VISIBLE);
-                radioButtons.get(i).setEnabled(true);
-                radioButtons.get(i).setChecked(false);
-
-            }
-            for (int i = 6; i < 8; i++) { // Disable the last 2 radio buttons for Medium quiz
-                radioButtons.get(i).setVisibility(View.GONE);
-                radioButtons.get(i).setEnabled(false);
-            }
         } else { // Hard quiz uses all 8 radio buttons
             for (RadioButton radioButton : radioButtons) {
                 radioButton.setVisibility(View.VISIBLE);
@@ -467,6 +453,7 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
 
             DatabaseHelper helper = new DatabaseHelper(CapitalQuiz.this, null, null, DatabaseHelper.DB_VERSION);
 
+            int categoryId = 5;
             helper.updateUserProgress(UserLogin.getCurrentUser().getId(), categoryId, difficultyId, score);
 
             Intent intent = new Intent(CapitalQuiz.this, Results.class);

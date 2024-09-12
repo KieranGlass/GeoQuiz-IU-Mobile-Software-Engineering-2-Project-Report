@@ -320,7 +320,8 @@
             android:layout_height="100dp"
             android:contentDescription="@string/flagWaveDescription"
             android:focusable="true"
-            android:src="@drawable/baseball" />
+            android:src="@drawable/baseball"
+            tools:ignore="ImageContrastCheck" />
 
     </androidx.cardview.widget.CardView>
 
@@ -390,7 +391,8 @@
             android:layout_height="100dp"
             android:contentDescription="@string/flagWaveDescription"
             android:focusable="true"
-            android:src="@drawable/brands" />
+            android:src="@drawable/brands"
+            tools:ignore="ImageContrastCheck" />
 
     </androidx.cardview.widget.CardView>
 
@@ -445,7 +447,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

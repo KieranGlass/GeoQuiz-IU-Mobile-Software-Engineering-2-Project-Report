@@ -1,7 +1,5 @@
 package com.example.geoquiz;
 
-import android.widget.ImageView;
-
 import java.util.List;
 
 public class QuizQuestion {

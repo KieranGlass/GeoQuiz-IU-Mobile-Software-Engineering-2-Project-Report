@@ -31,7 +31,7 @@ public class BrandQuiz extends AppCompatActivity implements MessagePopupFragment
     private int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
-    private int difficultyId, categoryId = 1;
+    private int difficultyId;
     int score = 0;
 
 
@@ -420,6 +420,7 @@ public class BrandQuiz extends AppCompatActivity implements MessagePopupFragment
 
             DatabaseHelper helper = new DatabaseHelper(BrandQuiz.this, null, null, DatabaseHelper.DB_VERSION);
 
+            int categoryId = 1;
             helper.updateUserProgress(UserLogin.getCurrentUser().getId(), categoryId, difficultyId, score);
 
             Intent intent = new Intent(BrandQuiz.this, Results.class);

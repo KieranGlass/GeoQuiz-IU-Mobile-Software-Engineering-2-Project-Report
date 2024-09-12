@@ -1,12 +1,4 @@
 package com.example.geoquiz;
-
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 public class Landmark {
 
     private int id;

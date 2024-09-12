@@ -1,9 +1,7 @@
 package com.example.geoquiz;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +19,7 @@ public class Results extends AppCompatActivity {
     Button tryAgainBtn, homeBtn, dashboardBtn;
     TextView difficultyChosen, categoryChosen, scoreObtained, resultWord;
     ImageView ivResults;
-    String difficultyReceived, categoryReceived, scoreReceived;
+    String difficultyReceived, categoryReceived;
     double score, scorePercentage;
     long finishedScore;
 
@@ -135,22 +133,16 @@ public class Results extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to log out?")
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Clear user session data
-                        UserLogin.clearCurrentUser();
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    // Clear user session data
+                    UserLogin.clearCurrentUser();
 
-                        // Navigate to MainActivity
-                        Intent intent = new Intent(Results.this, MainActivity.class);
-                        startActivity(intent);
-                        finish(); // Close this activity
-                    }
+                    // Navigate to MainActivity
+                    Intent intent = new Intent(Results.this, MainActivity.class);
+                    startActivity(intent);
+                    finish(); // Close this activity
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
         AlertDialog alert = builder.create();
         alert.show();
     }

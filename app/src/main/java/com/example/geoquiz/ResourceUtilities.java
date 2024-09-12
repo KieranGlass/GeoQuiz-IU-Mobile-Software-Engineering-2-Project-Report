@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class ResourceUtilities {
 
-    public static int getLandmarkResourceId (String key, String difficultyLevel){
+    public static int getLandmarkResourceId (String ignoredKey, String difficultyLevel){
 
         String tileMapName = difficultyLevel + "_landmark_tile_map";
 
@@ -59,7 +59,7 @@ public class ResourceUtilities {
                 Math.round(flagHeight * scaleY));
     }
 
-    public static int getFlagResourceId(String key, String difficultyLevel) {
+    public static int getFlagResourceId(String ignoredKey, String difficultyLevel) {
         String tileMapName = difficultyLevel + "_flag_tile_map";
 
         // Map of tilemap names to resource IDs
@@ -111,7 +111,7 @@ public class ResourceUtilities {
                 Math.round(flagHeight * scaleY));
     }
 
-    public static int getSportsResourceId (String key, String difficultyLevel){
+    public static int getSportsResourceId (String ignoredKey, String difficultyLevel){
         String tileMapName = difficultyLevel + "_sport_tile_map";
 
         // Map of tilemap names to resource IDs
@@ -161,7 +161,7 @@ public class ResourceUtilities {
                 Math.round(imageHeight * scaleY));
     }
 
-    public static int getBrandResourceId (String key, String difficultyLevel){
+    public static int getBrandResourceId (String ignoredKey, String difficultyLevel){
 
         String tileMapName = difficultyLevel + "_brand_tile_map";
 
@@ -212,7 +212,7 @@ public class ResourceUtilities {
                 Math.round(flagHeight * scaleY));
     }
 
-    public static int getFoodResourceId (String key, String difficultyLevel){
+    public static int getFoodResourceId (String ignoredKey, String difficultyLevel){
 
         String tileMapName = difficultyLevel + "_food_tile_map";
 
