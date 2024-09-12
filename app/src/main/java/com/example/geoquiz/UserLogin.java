@@ -13,4 +13,7 @@ public class UserLogin extends Application {
     public static void setCurrentUser(User user) {
         currentUser = user;
     }
+    public static void clearCurrentUser() {
+        currentUser = null;
+    }
 }

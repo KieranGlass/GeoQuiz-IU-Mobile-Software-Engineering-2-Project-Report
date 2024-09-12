@@ -416,7 +416,10 @@ public class SportsQuiz extends AppCompatActivity implements MessagePopupFragmen
         currentQuestionIndex++;
 
         if (currentQuestionIndex >= quizQuestions.size()) {
-            // show results , new activity?
+
+            DatabaseHelper helper = new DatabaseHelper(SportsQuiz.this, null, null, DatabaseHelper.DB_VERSION);
+
+            helper.updateUserProgress(UserLogin.getCurrentUser().getId(), categoryId, difficultyId, score);
 
             Intent intent = new Intent(SportsQuiz.this, Results.class);
             intent.putExtra("Difficulty", intentDifficulty);

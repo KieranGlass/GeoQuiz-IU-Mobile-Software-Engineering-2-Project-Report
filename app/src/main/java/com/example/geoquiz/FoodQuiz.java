@@ -10,8 +10,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -32,7 +30,7 @@ public class FoodQuiz extends AppCompatActivity implements MessagePopupFragment.
     private int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
-    private int difficultyId, categoryId = 3;
+    private int difficultyId;
     int score = 0;
 
 
@@ -414,14 +412,13 @@ public class FoodQuiz extends AppCompatActivity implements MessagePopupFragment.
             checkAnswer(false);
         }
 
-
         currentQuestionIndex++;
 
         if (currentQuestionIndex >= quizQuestions.size()) {
-            // show results , new activity?
-
+            // show results
             DatabaseHelper helper = new DatabaseHelper(FoodQuiz.this, null, null, DatabaseHelper.DB_VERSION);
 
+            int categoryId = 3;
             helper.updateUserProgress(UserLogin.getCurrentUser().getId(), categoryId, difficultyId, score);
 
             Intent intent = new Intent(FoodQuiz.this, Results.class);

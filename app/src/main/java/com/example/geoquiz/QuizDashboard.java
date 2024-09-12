@@ -1,30 +1,25 @@
 package com.example.geoquiz;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import java.util.ArrayList;
 import java.util.List;
 
+/** @noinspection resource*/
 public class QuizDashboard extends AppCompatActivity {
 
     Button flagBtn, capitalBtn, landmarkBtn, foodBtn, sportsBtn, brandBtn;
-
     TextView tvUsername, tvFlagCompletion, tvCapitalCompletion, tvLandmarkCompletion, tvFoodCompletion, tvSportsCompletion, tvBrandCompletion;
     String username = "";
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +35,10 @@ public class QuizDashboard extends AppCompatActivity {
 
         if(currentUser == null) {
             Intent intent = new Intent(QuizDashboard.this, MainActivity.class);
+            startActivity(intent);
+        } else {
+            username = currentUser.getUsername();
         }
-
-        username = currentUser.getUsername();
-
 
         tvUsername = findViewById(R.id.tvUsername);
         tvFlagCompletion = findViewById(R.id.tvFlagCompletion);
@@ -53,7 +48,7 @@ public class QuizDashboard extends AppCompatActivity {
         tvSportsCompletion = findViewById(R.id.tvSportsCompletion);
         tvBrandCompletion = findViewById(R.id.tvBrandCompletion);
 
-        tvUsername.setText(username);
+        tvUsername.setText("Welcome " + username);
 
         displayCompletions();
 
@@ -64,62 +59,44 @@ public class QuizDashboard extends AppCompatActivity {
         sportsBtn = findViewById(R.id.sportsBtn);
         brandBtn = findViewById(R.id.brandBtn);
 
-        flagBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (QuizDashboard.this, FlagCapitalDifficulty.class);
-                intent.putExtra("Category", "Flag");
-                startActivity(intent);
-            }
+        flagBtn.setOnClickListener(view -> {
+            Intent intent = new Intent (QuizDashboard.this, FlagCapitalDifficulty.class);
+            intent.putExtra("Category", "Flag");
+            startActivity(intent);
         });
 
-        capitalBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (QuizDashboard.this, FlagCapitalDifficulty.class);
-                intent.putExtra("Category", "Capital");
-                startActivity(intent);
-            }
+        capitalBtn.setOnClickListener(view -> {
+            Intent intent = new Intent (QuizDashboard.this, FlagCapitalDifficulty.class);
+            intent.putExtra("Category", "Capital");
+            startActivity(intent);
         });
 
-        landmarkBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
-                intent.putExtra("Category", "Landmark");
-                startActivity(intent);
-            }
+        landmarkBtn.setOnClickListener(view -> {
+            Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
+            intent.putExtra("Category", "Landmark");
+            startActivity(intent);
         });
 
-        foodBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
-                intent.putExtra("Category", "Food");
-                startActivity(intent);
-            }
+        foodBtn.setOnClickListener(view -> {
+            Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
+            intent.putExtra("Category", "Food");
+            startActivity(intent);
         });
 
-        sportsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
-                intent.putExtra("Category", "Sports");
-                startActivity(intent);
-            }
+        sportsBtn.setOnClickListener(view -> {
+            Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
+            intent.putExtra("Category", "Sports");
+            startActivity(intent);
         });
 
-        brandBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
-                intent.putExtra("Category", "Brand");
-                startActivity(intent);
-            }
+        brandBtn.setOnClickListener(view -> {
+            Intent intent = new Intent (QuizDashboard.this, Difficulty.class);
+            intent.putExtra("Category", "Brand");
+            startActivity(intent);
         });
     }
 
-
+    // Methods for displaying logged in users progress overall for a quiz category. I.e only full marks in all difficulties equals 100%
     public void displayCompletions(){
 
         DatabaseHelper flagHelper = new DatabaseHelper(QuizDashboard.this, null, null, DatabaseHelper.DB_VERSION);
@@ -129,13 +106,12 @@ public class QuizDashboard extends AppCompatActivity {
         DatabaseHelper sportsHelper = new DatabaseHelper(QuizDashboard.this, null, null, DatabaseHelper.DB_VERSION);
         DatabaseHelper brandHelper = new DatabaseHelper(QuizDashboard.this, null, null, DatabaseHelper.DB_VERSION);
 
-        UserProgress flagProgress = flagHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 6);
-        UserProgress capitalProgress = capitalHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 5);
-        UserProgress landmarkProgress = landmarkHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 4);
-        UserProgress foodProgress = foodHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 3);
-        UserProgress sportsProgress = sportsHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 2);
-        UserProgress brandProgress = brandHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 1);
-
+        List<UserProgress> flagProgress = flagHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 6);
+        List<UserProgress> capitalProgress = capitalHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 5);
+        List<UserProgress> landmarkProgress = landmarkHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 4);
+        List<UserProgress> foodProgress = foodHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 3);
+        List<UserProgress> sportsProgress = sportsHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 2);
+        List<UserProgress> brandProgress = brandHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 1);
 
         displayCompletion(tvFlagCompletion, flagProgress, 5);
         displayCompletion(tvCapitalCompletion, capitalProgress, 5);
@@ -145,13 +121,19 @@ public class QuizDashboard extends AppCompatActivity {
         displayCompletion(tvBrandCompletion, brandProgress,3);
 
     }
-
-    private void displayCompletion(TextView textView, UserProgress progress, int divider) {
+    @SuppressLint("SetTextI18n")
+    private void displayCompletion(TextView textView, List<UserProgress> progresses, int divider) {
         String percent = "%";
-        if (progress == null || progress.getBestScore() <= 0) {
-            textView.setText("0");
-        } else {
-            textView.setText(String.valueOf((progress.getBestScore() * 5 / divider)) + percent);
+
+        int totalQuestions = 20 * divider; // Total questions across all difficulties
+        int correctAnswers = 0;
+
+        for (UserProgress progress : progresses) {
+            correctAnswers += progress.getBestScore(); // Sum up all correct answers
         }
+
+        int progressPercentage = (int) (((float) correctAnswers / totalQuestions) * 100);
+
+        textView.setText((Math.max(progressPercentage, 0)) + percent);
     }
 }

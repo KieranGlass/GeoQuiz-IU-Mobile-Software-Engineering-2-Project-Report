@@ -19,7 +19,7 @@
         app:layout_constraintBottom_toTopOf="@id/capitalCV"
         app:layout_constraintEnd_toStartOf="@id/flagBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/tvUsername">
 
         <ImageView
             android:id="@+id/ivFlag"
@@ -438,9 +438,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
+        android:textColor="@color/primaryColourText"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/flagCV"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

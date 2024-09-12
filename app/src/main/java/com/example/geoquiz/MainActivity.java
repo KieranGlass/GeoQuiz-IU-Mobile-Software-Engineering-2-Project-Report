@@ -2,7 +2,6 @@ package com.example.geoquiz;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -14,14 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-
-
 public class MainActivity extends AppCompatActivity {
-
-    //TODO Need to design home screen along with organising usernames + logins
-
-    //TODO Figure out how to organise database for logins
-    //TODO Figure out how to load previously saved best scores
     Button startBtn, joinBtn;
     RadioButton rbLogin, rbSignup;
     EditText loginUsername, loginPassword, signupUsername, signupPassword;
@@ -84,48 +76,42 @@ public class MainActivity extends AppCompatActivity {
         rbLogin.setOnCheckedChangeListener(listener);
         rbSignup.setOnCheckedChangeListener(listener);
 
-        startBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        startBtn.setOnClickListener(v -> {
 
-                String username = loginUsername.getText().toString();
-                String password = loginPassword.getText().toString();
+            String username = loginUsername.getText().toString();
+            String password = loginPassword.getText().toString();
 
-                if (!username.isEmpty() && !password.isEmpty()) {
-                    db = new DatabaseHelper(MainActivity.this, null, null, DatabaseHelper.DB_VERSION);
+            if (!username.isEmpty() && !password.isEmpty()) {
+                db = new DatabaseHelper(MainActivity.this, null, null, DatabaseHelper.DB_VERSION);
 
-                    User user = db.getUserByCredentials(username, password);
+                User user = db.getUserByCredentials(username, password);
 
-                    if (user == null) {
-                        Toast.makeText(MainActivity.this, "User Not Recognized", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        UserLogin.setCurrentUser(user);
-                        db.close();
-                        Intent intent = new Intent(MainActivity.this, QuizDashboard.class);
-                        startActivity(intent);
-                    }
-
-                } else {
-                    Toast.makeText(MainActivity.this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
+                if (user == null) {
+                    Toast.makeText(MainActivity.this, "User Not Recognized", Toast.LENGTH_SHORT).show();
                 }
+                else
+                {
+                    UserLogin.setCurrentUser(user);
+                    db.close();
+                    Intent intent = new Intent(MainActivity.this, QuizDashboard.class);
+                    startActivity(intent);
+                }
+
+            } else {
+                Toast.makeText(MainActivity.this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
             }
         });
 
-        joinBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        joinBtn.setOnClickListener(v -> {
 
-                String username = signupUsername.getText().toString();
-                String password = signupPassword.getText().toString();
+            String username = signupUsername.getText().toString();
+            String password = signupPassword.getText().toString();
 
-                if (!username.isEmpty() && !password.isEmpty()) {
-                    db = new DatabaseHelper(MainActivity.this, null, null, DatabaseHelper.DB_VERSION);
-                    db.createUser(username, password);
-                } else {
-                    Toast.makeText(MainActivity.this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
-                }
+            if (!username.isEmpty() && !password.isEmpty()) {
+                db = new DatabaseHelper(MainActivity.this, null, null, DatabaseHelper.DB_VERSION);
+                db.createUser(username, password);
+            } else {
+                Toast.makeText(MainActivity.this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
             }
         });
 

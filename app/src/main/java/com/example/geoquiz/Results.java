@@ -1,5 +1,7 @@
 package com.example.geoquiz;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -129,9 +131,28 @@ public class Results extends AppCompatActivity {
     }
 
     public void onClickHome(View view){
+        // Show confirmation dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to log out?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Clear user session data
+                        UserLogin.clearCurrentUser();
 
-        Intent intent = new Intent(Results.this, MainActivity.class);
-        startActivity(intent);
+                        // Navigate to MainActivity
+                        Intent intent = new Intent(Results.this, MainActivity.class);
+                        startActivity(intent);
+                        finish(); // Close this activity
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     public void onClickDashboard(View view){

@@ -37,24 +37,21 @@ public class MessagePopupFragment extends DialogFragment {
         TextView messageTextView = dialogView.findViewById(R.id.popup_message);
         Button okButton = dialogView.findViewById(R.id.popup_ok_button);
 
+        assert getArguments() != null;
         String message = getArguments().getString(ARG_MESSAGE);
         boolean isCorrect = getArguments().getBoolean(ARG_IS_CORRECT);
 
         messageTextView.setText(message);
+        messageTextView.setTextColor(getResources().getColor(android.R.color.black));
         if (isCorrect) {
-            messageTextView.setTextColor(getResources().getColor(android.R.color.black));
             dialogView.setBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
         } else {
-            messageTextView.setTextColor(getResources().getColor(android.R.color.black));
             dialogView.setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
         }
 
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-                ((OnPopupDismissListener) getActivity()).onPopupDismissed(isCorrect);
-            }
+        okButton.setOnClickListener(v -> {
+            dismiss();
+            ((OnPopupDismissListener) getActivity()).onPopupDismissed(isCorrect);
         });
 
         builder.setView(dialogView);

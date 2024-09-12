@@ -1,5 +1,4 @@
 package com.example.geoquiz;
-import static com.example.geoquiz.ResourceUtilities.getLandmarkResourceId;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,7 +10,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -32,7 +30,7 @@ public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragm
     private int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
-    private int difficultyId, categoryId = 4;
+    private int difficultyId;
     int score = 0;
 
 
@@ -421,6 +419,7 @@ public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragm
 
             DatabaseHelper helper = new DatabaseHelper(LandmarkQuiz.this, null, null, DatabaseHelper.DB_VERSION);
 
+            int categoryId = 4;
             helper.updateUserProgress(UserLogin.getCurrentUser().getId(), categoryId, difficultyId, score);
 
             Intent intent = new Intent(LandmarkQuiz.this, Results.class);

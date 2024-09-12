@@ -1,9 +1,7 @@
 package com.example.geoquiz;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.SQLException;
@@ -13,9 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -25,11 +21,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final int DB_VERSION = 8;
     private static final String DB_NAME = "GeoQuizDatabase.db";
-    private String DB_PATH = "/data/data/com.example.geoquiz/databases/";
+    private final String DB_PATH = "/data/data/com.example.geoquiz/databases/";
     SQLiteDatabase myDatabase;
     private final Context mContext;
 
-    public DatabaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public DatabaseHelper(@Nullable Context context, @Nullable String ignoredName, @Nullable SQLiteDatabase.CursorFactory factory, int ignoredVersion) {
         super(context, DB_NAME, factory, DB_VERSION);
         this.mContext = context;
     }
@@ -163,14 +159,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private boolean checkDatabase() {
         try {
+            assert mContext != null;
             return mContext.getDatabasePath(DB_NAME).exists();
-            //final String mPath = DB_PATH + DB_NAME;
-            //final File file = new File(mPath);
-            //if (file.exists()) {
-            //  return true;
-            // }
-            //else
-            // return false;
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -179,6 +170,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private void copyDatabase() throws IOException {
         try {
+            assert mContext != null;
             InputStream mInputStream = mContext.getAssets().open(DB_NAME);
             String outFilename = DB_PATH + DB_NAME;
             OutputStream mOutputStream = new FileOutputStream(outFilename);
@@ -206,7 +198,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    // Load Handler method called in application activity. Calls copyDatabase method if a database exists or not to ensure
+    // Load Handler method called in application activity. Calls copyDatabase method if necesarry
     // database is up to date. Puts this into a SQLiteDatabase variable myDatabase
     public void loadHandler() {
         try {
@@ -232,19 +224,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (IOException | SQLException e) {
             Log.e("DatabaseHelper", "Error loading database", e);
         }
-    }
-
-    // No real use for this method other than used for debugging when having issues during development
-    private boolean tableExists(String tableName) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='" + tableName + "'", null);
-        if (cursor.moveToFirst()) {
-            int count = cursor.getInt(0);
-            cursor.close();
-            return count > 0;
-        }
-        cursor.close();
-        return false;
     }
 
     // -- ALL SQL RETRIEVAL METHODS FOR QUIZ QUESTIONS BELOW -- //
@@ -417,24 +396,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public boolean doesUserExist (String username) {
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query("users", new String[]{"username"}, "username = ?", new String[]{username}, null, null, null);
-
-        if (cursor.getCount() > 0)
-        {
-            cursor.close();
-            db.close();
-            return true;
-        }
-
-        cursor.close();
-        db.close();
-        return false;
-    }
-
     @SuppressLint("Range")
     public User getUserByCredentials(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -488,12 +449,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-    public List<UserProgress> getUserProgress(int userId) {
+    public List<UserProgress> getUserProgressByCategory(int userId, int categoryId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        List<UserProgress> userProgressList = new ArrayList<>();
+        List<UserProgress> progressList = new ArrayList<>();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM user_progress WHERE user_id = ?", new String[]{String.valueOf(userId)});
+        Cursor cursor = db.rawQuery("SELECT * FROM user_progress WHERE user_id = ? AND category_id = ?", new String[]{String.valueOf(userId), String.valueOf(categoryId)});
 
+        //TODO MAKE THIS INTO A LIST TO GET EACH DIFFICULTY SCORE!
         if (cursor.moveToFirst()) {
             do {
                 UserProgress progress = new UserProgress();
@@ -501,34 +463,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 progress.setCategoryId(cursor.getInt(cursor.getColumnIndex("category_id")));
                 progress.setDifficultyId(cursor.getInt(cursor.getColumnIndex("difficulty_id")));
                 progress.setBestScore(cursor.getInt(cursor.getColumnIndex("best_score")));
-                userProgressList.add(progress);
+                progressList.add(progress);
             } while (cursor.moveToNext());
         }
-
         cursor.close();
         db.close();
-        return userProgressList;
+        return progressList;
     }
-
-    @SuppressLint("Range")
-    public UserProgress getUserProgressByCategory(int userId, int categoryId) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        UserProgress progress = null;
-
-        Cursor cursor = db.rawQuery("SELECT * FROM user_progress WHERE user_id = ? AND category_id = ?", new String[]{String.valueOf(userId), String.valueOf(categoryId)});
-
-        //TODO MAKE THIS INTO A LIST TO GET EACH DIFFICULTY SCORE!
-        if (cursor.moveToFirst()) {
-            progress = new UserProgress();
-            progress.setUserId(cursor.getInt(cursor.getColumnIndex("user_id")));
-            progress.setCategoryId(cursor.getInt(cursor.getColumnIndex("category_id")));
-            progress.setDifficultyId(cursor.getInt(cursor.getColumnIndex("difficulty_id")));
-            progress.setBestScore(cursor.getInt(cursor.getColumnIndex("best_score")));
-        }
-
-        cursor.close();
-        db.close();
-        return progress;
-    }
-
 }
