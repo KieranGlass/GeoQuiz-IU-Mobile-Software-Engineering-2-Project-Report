@@ -208,7 +208,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 copyDatabase();
                 Log.i("DatabaseHelper", "Database copied successfully.");
             }
-            //copyDatabase();
+            //copyDatabase(); // uncommenting this allows me to quickly reset the devices internal database
             myDatabase = this.getReadableDatabase();
             Log.i("DatabaseHelper", "Database opened successfully.");
 
@@ -320,7 +320,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 foods.add(new Food(
                         cursor.getInt(0), // ID
-                        cursor.getString(1), // team name
+                        cursor.getString(1), // food name
                         cursor.getInt(2),   // county id
                         cursor.getInt(3), // difficulty id
                         cursor.getInt(4), // tilemap row
@@ -422,28 +422,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void updateUserProgress(int userId, int categoryId, int difficultyId, int score) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        // Check if an entry already exists
-        Cursor cursor = db.rawQuery("SELECT * FROM user_progress WHERE user_id = ? AND category_id = ? AND difficulty_id = ?", new String[]{String.valueOf(userId), String.valueOf(categoryId), String.valueOf(difficultyId)});
-
+        SQLiteDatabase db = this.getWritableDatabase(); // Accesses a writeable database
+        // Check if an entry already exists for that user in that category and didfficulty
+        Cursor cursor = db.rawQuery("SELECT * FROM user_progress WHERE user_id = ? AND category_id = ? AND difficulty_id = ?",
+                new String[]{String.valueOf(userId), String.valueOf(categoryId), String.valueOf(difficultyId)});
+        // Assign values to ContentValues
         ContentValues contentValues = new ContentValues();
         contentValues.put("user_id", userId);
         contentValues.put("category_id", categoryId);
         contentValues.put("difficulty_id", difficultyId);
         contentValues.put("best_score", score);
-
+        // null cursor check
         if (cursor != null && cursor.moveToFirst()) {
-            @SuppressLint("Range") int existingScore = cursor.getInt(cursor.getColumnIndex("best_score"));
-            if (score > existingScore) {
-                db.update("user_progress", contentValues, "user_id" + " = ? AND " + "category_id" + " = ? AND " + "difficulty_id" + " = ?", new String[]{String.valueOf(userId), String.valueOf(categoryId), String.valueOf(difficultyId)});
+            @SuppressLint("Range") int existingScore = cursor.getInt(cursor.getColumnIndex("best_score")); // assign current score to 'existing score
+            if (score > existingScore) {  // check if new score in an imporvement, if so updat database entry
+                db.update("user_progress", contentValues, "user_id" + " = ? AND " + "category_id" + " = ? AND " + "difficulty_id" + " = ?",
+                        new String[]{String.valueOf(userId), String.valueOf(categoryId), String.valueOf(difficultyId)});
             }
-        } else {
+        } else { // if null, insert first entry into db
             db.insert("user_progress", null, contentValues);
         }
-
         if (cursor != null) {
-            cursor.close();
+            cursor.close(); // close cursor and db
         }
         db.close();
     }

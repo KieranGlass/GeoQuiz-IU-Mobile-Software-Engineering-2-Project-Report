@@ -25,10 +25,12 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.OnPopupDismissListener {
+    public DatabaseHelper testDatabaseHelper;
+    public Random testRandom;
     private ImageView ivFlagQuestion;
     private TextView tvCounter;
     private List<RadioButton> radioButtons;
-    private final List<QuizQuestion> quizQuestions = new ArrayList<>();
+    final List<QuizQuestion> quizQuestions = new ArrayList<>();
     private int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
@@ -128,7 +130,7 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
 
     }
 
-    private void generateEasyQuiz() {
+    void generateEasyQuiz() {
 
         DatabaseHelper helper = new DatabaseHelper(FlagQuiz.this, null, null, DatabaseHelper.DB_VERSION);
 
