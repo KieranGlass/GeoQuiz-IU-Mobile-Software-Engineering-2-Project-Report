@@ -19,7 +19,5 @@ public class QuizQuestion {
         String correctFoodCountry;
         int correctImageRow;
         int correctImageColumn;
-        static List<String> allAnswers;
-
-
+        List<String> allAnswers;
 }

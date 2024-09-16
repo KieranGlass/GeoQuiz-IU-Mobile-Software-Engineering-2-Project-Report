@@ -29,10 +29,10 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
     public Random testRandom;
     private ImageView ivFlagQuestion;
     private TextView tvCounter;
-    private List<RadioButton> radioButtons;
-    final List<QuizQuestion> quizQuestions = new ArrayList<>();
+    List<RadioButton> radioButtons;
+    List<QuizQuestion> quizQuestions = new ArrayList<>();
     private int currentQuestionIndex = 0;
-    private RadioButton lastCheckedRadioButton = null;
+    RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
     private int difficultyId;
     int score = 0;
