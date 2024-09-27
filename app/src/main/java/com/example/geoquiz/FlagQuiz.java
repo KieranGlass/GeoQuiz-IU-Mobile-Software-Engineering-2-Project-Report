@@ -2,6 +2,7 @@ package com.example.geoquiz;
 
 import static com.example.geoquiz.ResourceUtilities.getFlagResourceId;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,15 +29,20 @@ import java.util.stream.Collectors;
 public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.OnPopupDismissListener {
     public DatabaseHelper testDatabaseHelper;
     public Random testRandom;
-    private ImageView ivFlagQuestion;
-    private TextView tvCounter;
+    ImageView ivFlagQuestion;
+    TextView tvCounter;
     List<RadioButton> radioButtons;
     List<QuizQuestion> quizQuestions = new ArrayList<>();
-    private int currentQuestionIndex = 0;
+
+    QuizQuestion quizQuestion;
+    List<QuizQuestion> generatedQuizQuestions = new ArrayList<>();
+    int currentQuestionIndex = 0;
     RadioButton lastCheckedRadioButton = null;
+    RadioButton rbFlag1, rbFlag2, rbFlag3, rbFlag4, rbFlag5, rbFlag6;
     private String intentDifficulty, intentCategory;
     private int difficultyId;
     int score = 0;
+
 
     // TODO - Fix issue where certain nations (Dominican Republic, Trinidad + Tobago) are too long for radio button
 
@@ -59,9 +66,9 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
         // Everything to do with the Radio Buttons
         {
             // Initializing each individual Radio Button
-            RadioButton rbFlag1 = findViewById(R.id.rb1Flag); RadioButton rbFlag2 = findViewById(R.id.rb2Flag);
-            RadioButton rbFlag3 = findViewById(R.id.rb3Flag); RadioButton rbFlag4 = findViewById(R.id.rb4Flag);
-            RadioButton rbFlag5 = findViewById(R.id.rb5Flag); RadioButton rbFlag6 = findViewById(R.id.rb6Flag);
+            rbFlag1 = findViewById(R.id.rb1Flag); rbFlag2 = findViewById(R.id.rb2Flag);
+            rbFlag3 = findViewById(R.id.rb3Flag); rbFlag4 = findViewById(R.id.rb4Flag);
+            rbFlag5 = findViewById(R.id.rb5Flag); rbFlag6 = findViewById(R.id.rb6Flag);
 
             // Add RadioButtons to the ArrayList
             radioButtons.add(rbFlag1); radioButtons.add(rbFlag2);
@@ -98,7 +105,16 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
         as the only real difference between methods is the value of two variables inside the method
         */
 
-        assert difficulty != null;
+        // Set default values if not provided
+        if (difficulty == null || difficulty.isEmpty()) {
+            difficulty = "Easy";
+            intentDifficulty = "Easy";
+        }
+
+        if (category == null || category.isEmpty()) {
+            category = "";
+            intentCategory = "";
+        }
         switch (difficulty) {
             case "Easy":
                 difficultyId = 1;
@@ -130,7 +146,7 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
 
     }
 
-    void generateEasyQuiz() {
+    public void generateEasyQuiz() {
 
         DatabaseHelper helper = new DatabaseHelper(FlagQuiz.this, null, null, DatabaseHelper.DB_VERSION);
 
@@ -154,7 +170,7 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
                 String correctFlagImage = correctCountry.getFlag_path();
                 int correctRowNumber = correctCountry.getTilemap_row();
                 int correctColumnNumber = correctCountry.getTilemap_column();
-                // Retrieve the correct country name for the correct country
+                // Retrieve the correct country name
 
 
                 QuizQuestion quizQuestion = new QuizQuestion();
@@ -166,10 +182,10 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
 
                 // Generate wrong answers
                 List<Country> wrongCountries = new ArrayList<>(countries);
-                wrongCountries.removeIf(landmark -> usedFlags.contains(landmark)); // Exclude already used country
+                wrongCountries.removeIf(landmark -> usedFlags.contains(landmark)); // Exclude already used countries
                 Collections.shuffle(wrongCountries, random); // Shuffle to randomize order
 
-                // Select the first five wrong countries
+                // Select the first three wrong countries
                 List<Country> selectedWrongCountries = wrongCountries.subList(0, Math.min(5, wrongCountries.size()));
 
                 List<String> wrongCountryNames = new ArrayList<>();
@@ -187,6 +203,7 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
 
                 quizQuestion.allAnswers = allAnswers;
                 quizQuestions.add(quizQuestion);
+                generatedQuizQuestions.add(quizQuestion);
 
             } else {
                 // return to dashboard for now
@@ -194,7 +211,6 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
                 startActivity(intent);
             }
         }
-
     }
 
     private void generateMediumQuiz() {
@@ -465,7 +481,8 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
 
     }
 
-    private void displayCurrentQuestion() {
+
+    void displayCurrentQuestion() {
         QuizQuestion currentQuestion = quizQuestions.get(currentQuestionIndex);
 
         // Get the correct tilemap resource ID based on the difficulty level
@@ -522,11 +539,19 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
         currentQuestionIndex++;
 
         if (currentQuestionIndex >= quizQuestions.size()) {
-            // show results , new activity?
+
             DatabaseHelper helper = new DatabaseHelper(FlagQuiz.this, null, null, DatabaseHelper.DB_VERSION);
 
             int categoryId = 6;
-            helper.updateUserProgress(UserLogin.getCurrentUser().getId(), categoryId, difficultyId, score);
+
+            User currentUser = UserLogin.getCurrentUser();
+
+            if (currentUser != null) {
+                helper.updateUserProgress(currentUser.getId(), categoryId, difficultyId, score);
+            } else {
+                Toast.makeText(this, "No logged-in user found. Cannot update progress.", Toast.LENGTH_SHORT).show();
+
+            }
 
             Intent intent = new Intent(FlagQuiz.this, Results.class);
             intent.putExtra("Difficulty", intentDifficulty);
@@ -549,7 +574,7 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
 
     }
 
-    private void checkAnswer(boolean isCorrect) {
+    void checkAnswer(boolean isCorrect) {
         String message;
         if(isCorrect) {
             message = "Correct! Well Done";
@@ -559,5 +584,15 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
         }
         MessagePopupFragment.newInstance(message, isCorrect).show(getSupportFragmentManager(), "popup");
     }
+ // -- Purely for testing purposes -- //
+    public List<QuizQuestion> getGeneratedQuestions() {
+        return Collections.unmodifiableList(generatedQuizQuestions);
+    }
 
+    public String getFirstQuestionCorrectCountry(){
+
+        List<QuizQuestion> generatedQuizQuestions = getGeneratedQuestions();
+        String correctCountry = generatedQuizQuestions.get(0).correctCountry;
+        return correctCountry;
+    }
 }

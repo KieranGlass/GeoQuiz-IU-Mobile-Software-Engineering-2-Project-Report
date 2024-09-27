@@ -369,29 +369,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void createUser(String username, String password) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.query("users", new String[]{"username"}, "username = ?", new String[]{username}, null, null, null);
 
-        if (cursor.getCount() > 0) {
+            Cursor cursor = db.query("users", new String[]{"username"}, "username = ?", new String[]{username}, null, null, null);
+
+            if (cursor.getCount() > 0) {
+                cursor.close();
+                db.close();
+                Toast.makeText(this.mContext, "Username already exists!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             cursor.close();
-            db.close();
-            Toast.makeText(this.mContext, "Username already exists!", Toast.LENGTH_SHORT).show();
-            return;
-        }
+            ContentValues values = new ContentValues();
+            values.put("username", username);
+            values.put("password", password);
 
-        cursor.close();
-        ContentValues values = new ContentValues();
-        values.put("username", username);
-        values.put("password", password);
+            long newRowId = db.insert("users", null, values);
 
-        long newRowId = db.insert("users", null, values);
-
-        if (newRowId == -1) {
-            Log.e("DatabaseHelper", "Failed to insert new user.");
-            Toast.makeText(mContext, "Error inserting new user", Toast.LENGTH_SHORT).show();
-        } else {
-            Log.d("DatabaseHelper", "New user inserted with ID: " + newRowId);
-            Toast.makeText(mContext, "User created successfully!", Toast.LENGTH_SHORT).show();
-        }
+            if (newRowId == -1) {
+                Log.e("DatabaseHelper", "Failed to insert new user.");
+                Toast.makeText(mContext, "Error inserting new user", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.d("DatabaseHelper", "New user inserted with ID: " + newRowId);
+                Toast.makeText(mContext, "User created successfully!", Toast.LENGTH_SHORT).show();
+            }
 
         db.close();
     }

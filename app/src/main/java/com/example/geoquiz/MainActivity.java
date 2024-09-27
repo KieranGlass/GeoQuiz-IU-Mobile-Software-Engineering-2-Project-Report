@@ -19,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
     EditText loginUsername, loginPassword, signupUsername, signupPassword;
     private RadioButton lastCheckedRadioButton = null;
 
+    static boolean userAccepted;
+    boolean formFilledCorrectly;
+
     DatabaseHelper db;
 
     @Override
@@ -88,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if (user == null) {
                     Toast.makeText(MainActivity.this, "User Not Recognized", Toast.LENGTH_SHORT).show();
+                    userAccepted = false;
+                    formFilledCorrectly= true;
                 }
                 else
                 {
@@ -95,10 +100,13 @@ public class MainActivity extends AppCompatActivity {
                     db.close();
                     Intent intent = new Intent(MainActivity.this, QuizDashboard.class);
                     startActivity(intent);
+                    userAccepted = true;
+                    formFilledCorrectly = true;
                 }
 
             } else {
                 Toast.makeText(MainActivity.this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
+                formFilledCorrectly = false;
             }
         });
 
@@ -116,4 +124,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    static boolean getUserAccepted() {
+        return userAccepted;
+    }
+
 }
