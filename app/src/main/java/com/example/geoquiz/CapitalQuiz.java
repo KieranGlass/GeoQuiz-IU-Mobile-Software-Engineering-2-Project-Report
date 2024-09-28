@@ -21,8 +21,8 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
 
     private TextView tvCapital, tvCounter;
     private List<RadioButton> radioButtons;
-    private final List<QuizQuestion> quizQuestions = new ArrayList<>();
-    private int currentQuestionIndex = 0;
+    final List<QuizQuestion> quizQuestions = new ArrayList<>();
+    int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
     private int difficultyId;
@@ -78,7 +78,14 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
         intentDifficulty = difficulty;
         intentCategory = category;
 
-        assert difficulty != null;
+        if (difficulty == null || difficulty.isEmpty()) {
+            difficulty = "Easy";
+            intentDifficulty = "Easy";
+        }
+        if (category == null || category.isEmpty()) {
+            category = "";
+            intentCategory = "";
+        }
         switch (difficulty) {
             case "Easy":
                 difficultyId = 1;

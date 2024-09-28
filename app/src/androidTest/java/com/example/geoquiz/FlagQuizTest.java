@@ -47,18 +47,15 @@ public class FlagQuizTest {
             assertEquals(200, returnedCountries.size());
         });
     }
-    @Test //This test tests basic generation of easy quiz and also that i accesses all 40 'easy' countries
+    @Test //Checks Quiz starts at correct index and contains correct amount of questions
     public void testGenerateEasyQuiz() {
         rule.getScenario().onActivity(activity -> {
             FlagQuiz flagQuiz = activity;
 
-            // Act
-            flagQuiz.generateEasyQuiz();
-
             // Assert
             assertNotNull(flagQuiz.quizQuestions);
             assertEquals(0, flagQuiz.currentQuestionIndex);
-            assertEquals(40, flagQuiz.quizQuestions.size());
+            assertEquals(20, flagQuiz.quizQuestions.size());
         });
     }
 

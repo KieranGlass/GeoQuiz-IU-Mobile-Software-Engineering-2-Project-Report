@@ -27,8 +27,8 @@ public class SportsQuiz extends AppCompatActivity implements MessagePopupFragmen
     private TextView tvSports, tvCounter;
     private ImageView ivSports;
     private List<RadioButton> radioButtons;
-    private final List<QuizQuestion> quizQuestions = new ArrayList<>();
-    private int currentQuestionIndex = 0;
+    final List<QuizQuestion> quizQuestions = new ArrayList<>();
+    int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
     private int difficultyId, categoryId = 2;
@@ -97,7 +97,15 @@ public class SportsQuiz extends AppCompatActivity implements MessagePopupFragmen
 
 
         //pushes user into appropriate quiz based on difficulty choice
-        assert difficulty != null;
+        if (difficulty == null || difficulty.isEmpty()) {
+            difficulty = "Easy";
+            intentDifficulty = "Easy";
+        }
+
+        if (category == null || category.isEmpty()) {
+            category = "";
+            intentCategory = "";
+        }
         if (difficulty.equals("Easy")) {
             difficultyId = 1;
             generateEasyQuiz();
