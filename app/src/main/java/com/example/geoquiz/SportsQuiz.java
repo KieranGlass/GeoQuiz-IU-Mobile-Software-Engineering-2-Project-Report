@@ -33,6 +33,7 @@ public class SportsQuiz extends AppCompatActivity implements MessagePopupFragmen
     private String intentDifficulty, intentCategory;
     private int difficultyId, categoryId = 2;
     int score = 0;
+    String difficulty;
 
 
     @Override
@@ -89,7 +90,7 @@ public class SportsQuiz extends AppCompatActivity implements MessagePopupFragmen
         //Receive difficulty info from previous activity
         Intent receivedIntent = getIntent();
 
-        String difficulty = receivedIntent.getStringExtra("Difficulty");
+        difficulty = receivedIntent.getStringExtra("Difficulty");
         String category = receivedIntent.getStringExtra("Category");
 
         intentDifficulty = difficulty;

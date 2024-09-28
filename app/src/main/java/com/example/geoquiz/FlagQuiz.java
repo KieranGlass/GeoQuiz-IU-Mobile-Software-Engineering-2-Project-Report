@@ -42,6 +42,7 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
     private String intentDifficulty, intentCategory;
     private int difficultyId;
     int score = 0;
+    String difficulty;
 
 
     // TODO - Fix issue where certain nations (Dominican Republic, Trinidad + Tobago) are too long for radio button
@@ -92,7 +93,7 @@ public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.
         //Receive difficulty info from previous activity
         Intent receivedIntent = getIntent();
 
-        String difficulty = receivedIntent.getStringExtra("Difficulty");
+        difficulty = receivedIntent.getStringExtra("Difficulty");
         String category = receivedIntent.getStringExtra("Category");
 
         intentDifficulty = difficulty;

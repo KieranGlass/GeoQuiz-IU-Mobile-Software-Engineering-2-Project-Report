@@ -4,10 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import android.content.Context;
+import android.content.Intent;
 
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -18,14 +21,13 @@ import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 public class SportsQuizTest {
-    private Context appContext;
     private DatabaseHelper mockHelper;
     @Rule
     public ActivityScenarioRule<SportsQuiz> rule =
             new ActivityScenarioRule<>(SportsQuiz.class);
     @Before
     public void setUp() {
-        appContext = ApplicationProvider.getApplicationContext();
+        Context appContext = ApplicationProvider.getApplicationContext();
         mockHelper = new DatabaseHelper(appContext, null, null, DatabaseHelper.DB_VERSION);
     }
 
@@ -46,12 +48,44 @@ public class SportsQuizTest {
     @Test //Checks Quiz starts at correct index and contains correct amount of questions
     public void testGenerateEasyQuiz() {
         rule.getScenario().onActivity(activity -> {
-            SportsQuiz sportsQuiz = activity;
 
             // Assert
-            assertNotNull(sportsQuiz.quizQuestions);
-            assertEquals(0, sportsQuiz.currentQuestionIndex);
-            assertEquals(20, sportsQuiz.quizQuestions.size());
+            assertNotNull(activity.quizQuestions);
+            assertEquals(0, activity.currentQuestionIndex);
+            assertEquals(20, activity.quizQuestions.size());
+            assertEquals("Easy", activity.difficulty);
+        });
+    }
+
+    @Test //Same as easy check but ensures medium difficulty being used
+    public void testGenerateMediumQuiz() {
+        Intent intent = new Intent(InstrumentationRegistry.getInstrumentation().getTargetContext(), SportsQuiz.class);
+        intent.putExtra("Difficulty", "Medium");
+
+        ActivityScenario<SportsQuiz> scenario = ActivityScenario.launch(intent);
+
+        scenario.onActivity(activity -> {
+
+            assertNotNull(activity.quizQuestions);
+            assertEquals(0, activity.currentQuestionIndex);
+            assertEquals(20, activity.quizQuestions.size());
+            assertEquals("Medium", activity.difficulty);
+        });
+    }
+
+    @Test //Same as easy check but ensures hard difficulty being used
+    public void testGenerateHardQuiz() {
+        Intent intent = new Intent(InstrumentationRegistry.getInstrumentation().getTargetContext(), SportsQuiz.class);
+        intent.putExtra("Difficulty", "Hard");
+
+        ActivityScenario<SportsQuiz> scenario = ActivityScenario.launch(intent);
+
+        scenario.onActivity(activity -> {
+
+            assertNotNull(activity.quizQuestions);
+            assertEquals(0, activity.currentQuestionIndex);
+            assertEquals(20, activity.quizQuestions.size());
+            assertEquals("Hard", activity.difficulty);
         });
     }
 }

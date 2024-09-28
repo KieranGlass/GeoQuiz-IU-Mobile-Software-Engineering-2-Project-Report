@@ -27,6 +27,7 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
     private String intentDifficulty, intentCategory;
     private int difficultyId;
     int score = 0;
+    String difficulty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,7 @@ public class CapitalQuiz extends AppCompatActivity implements MessagePopupFragme
 
         Intent receivedIntent = getIntent();
 
-        String difficulty = receivedIntent.getStringExtra("Difficulty");
+        difficulty = receivedIntent.getStringExtra("Difficulty");
         String category = receivedIntent.getStringExtra("Category");
 
         intentDifficulty = difficulty;

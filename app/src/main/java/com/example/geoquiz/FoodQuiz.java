@@ -32,6 +32,7 @@ public class FoodQuiz extends AppCompatActivity implements MessagePopupFragment.
     private String intentDifficulty, intentCategory;
     private int difficultyId;
     int score = 0;
+    String difficulty;
 
 
     @Override
@@ -88,7 +89,7 @@ public class FoodQuiz extends AppCompatActivity implements MessagePopupFragment.
         //Receive difficulty info from previous activity
         Intent receivedIntent = getIntent();
 
-        String difficulty = receivedIntent.getStringExtra("Difficulty");
+        difficulty = receivedIntent.getStringExtra("Difficulty");
         String category = receivedIntent.getStringExtra("Category");
 
         intentDifficulty = difficulty;
