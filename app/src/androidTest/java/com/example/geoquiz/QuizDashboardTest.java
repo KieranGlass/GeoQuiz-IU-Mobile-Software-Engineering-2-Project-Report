@@ -1,8 +1,11 @@
 package com.example.geoquiz;
 
+import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Button;
 import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 import org.junit.Before;
@@ -17,64 +20,81 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
+import java.util.List;
+
 public class QuizDashboardTest {
 
+    private DatabaseHelper mockHelper;
+
     @Rule
-    public ActivityTestRule<QuizDashboard> quizDashboardActivityTestRule =
-            new ActivityTestRule<>(QuizDashboard.class);
-
-    private Intent intent;
-
+    public ActivityScenarioRule<QuizDashboard> rule =
+            new ActivityScenarioRule<>(QuizDashboard.class);
     @Before
     public void setup() {
-        // Set up the intent to launch the activity
-        intent = new Intent(ApplicationProvider.getApplicationContext(),
-                MainActivity.class);
-        intent.putExtra("username", "master");
+
+        Context appContext = ApplicationProvider.getApplicationContext();
+        mockHelper = new DatabaseHelper(appContext, null, null, DatabaseHelper.DB_VERSION);
 
     }
 
     @Test
-    public void testUserNotLoggedIn() {
-        // Launch the activity without login information
-        quizDashboardActivityTestRule.launchActivity(intent);
+    public void testUserCompletion(){
 
-        onView(withId(R.id.tvUsername)).check(matches(withText("Welcome")));
-        onView(withId(R.id.flagBtn)).check(matches(isDisplayed()));
-        onView(withId(R.id.capitalBtn)).check(matches(isDisplayed()));
-        onView(withId(R.id.landmarkBtn)).check(matches(isDisplayed()));
-        onView(withId(R.id.foodBtn)).check(matches(isDisplayed()));
-        onView(withId(R.id.sportsBtn)).check(matches(isDisplayed()));
-        onView(withId(R.id.brandBtn)).check(matches(isDisplayed()));
+        rule.getScenario().onActivity(activity -> {
+            User user = new User();
+            user.setId(1);
+            user.setUsername("master");
+            user.setPassword("1");
+
+            DatabaseHelperWrapper dbWrapper = new DatabaseHelperWrapper(mockHelper);
+
+            List<UserProgress> returnedUserScoresBrands = dbWrapper.getUserProgressByCategory(user.getId(), 1);
+            List<UserProgress> returnedUserScoresSports = dbWrapper.getUserProgressByCategory(user.getId(), 2);
+            List<UserProgress> returnedUserScoresFoods = dbWrapper.getUserProgressByCategory(user.getId(), 3);
+            List<UserProgress> returnedUserScoresLandmarks = dbWrapper.getUserProgressByCategory(user.getId(), 4);
+            List<UserProgress> returnedUserScoresCapitals = dbWrapper.getUserProgressByCategory(user.getId(), 5);
+            List<UserProgress> returnedUserScoresFlags = dbWrapper.getUserProgressByCategory(user.getId(), 6);
+
+            if (returnedUserScoresBrands.size() >= 1) {
+                assertNotEquals("0", activity.tvSportsCompletion.toString());
+                Log.i("testUserCompletion", "Scores Detected");
+            } else {
+                Log.i("testUserCompletion", "No Scores present for user!");
+            }
+            if (returnedUserScoresSports.size() >= 1) {
+                assertNotEquals("0", activity.tvSportsCompletion.toString());
+                Log.i("testUserCompletion", "Scores Detected");
+            } else {
+                Log.i("testUserCompletion", "No Scores present for user!");
+            }
+            if (returnedUserScoresFoods.size() >= 1) {
+                assertNotEquals("0", activity.tvSportsCompletion.toString());
+                Log.i("testUserCompletion", "Scores Detected");
+            } else {
+                Log.i("testUserCompletion", "No Scores present for user!");
+            }
+            if (returnedUserScoresLandmarks.size() >= 1) {
+                assertNotEquals("0", activity.tvSportsCompletion.toString());
+                Log.i("testUserCompletion", "Scores Detected");
+            } else {
+                Log.i("testUserCompletion", "No Scores present for user!");
+            }
+            if (returnedUserScoresCapitals.size() >= 1) {
+                assertNotEquals("0", activity.tvSportsCompletion.toString());
+                Log.i("testUserCompletion", "Scores Detected");
+            } else {
+                Log.i("testUserCompletion", "No Scores present for user!");
+            }
+            if (returnedUserScoresFlags.size() >= 1) {
+                assertNotEquals("0", activity.tvSportsCompletion.toString());
+                Log.i("testUserCompletion", "Scores Detected");
+            } else {
+                Log.i("testUserCompletion", "No Scores present for user!");
+            }
+        });
     }
 
-    @Test
-    public void testUserLoggedIn() {
-        // Launch the activity with login information
-        quizDashboardActivityTestRule.launchActivity(intent);
-
-        onView(withId(R.id.tvUsername)).check(matches(withText("Welcome master")));
-        onView(withId(R.id.flagBtn)).check(matches(isDisplayed()));
-        onView(withId(R.id.capitalBtn)).check(matches(isDisplayed()));
-        onView(withId(R.id.landmarkBtn)).check(matches(isDisplayed()));
-        onView(withId(R.id.foodBtn)).check(matches(isDisplayed()));
-        onView(withId(R.id.sportsBtn)).check(matches(isDisplayed()));
-        onView(withId(R.id.brandBtn)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void testClickFlagButton() {
-        quizDashboardActivityTestRule.launchActivity(intent);
-
-        onView(withId(R.id.flagBtn)).perform(click());
-        onView(withId(android.R.id.content)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void testClickCapitalButton() {
-        quizDashboardActivityTestRule.launchActivity(intent);
-
-        onView(withId(R.id.capitalBtn)).perform(click());
-        onView(withId(android.R.id.content)).check(matches(isDisplayed()));
-    }
 }

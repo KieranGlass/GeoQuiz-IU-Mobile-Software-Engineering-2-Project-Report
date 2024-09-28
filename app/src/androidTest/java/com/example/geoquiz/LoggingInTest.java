@@ -1,7 +1,7 @@
 package com.example.geoquiz;
 
-import androidx.test.espresso.assertion.ViewAssertions;
-import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.core.app.ActivityScenario;
+import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -15,8 +15,14 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+import static java.util.regex.Pattern.matches;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -24,43 +30,71 @@ public class LoggingInTest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> mainActivityRule = new ActivityScenarioRule<>(MainActivity.class);
+    @Rule
+    public ActivityScenarioRule<QuizDashboard> quizDashboardRule = new ActivityScenarioRule<>(QuizDashboard.class);
     @Before
     public void setUp() {
-        Intents.init();
+
     }
 
     @Test
     public void testSuccessfulLogin() {
 
-        // Perform login action with correct credentials
-        onView(withId(R.id.loginUsername)).perform(typeText("master"));
-        onView(withId(R.id.loginPassword)).perform(typeText("1"));
-        onView(withId(R.id.enterBtn)).perform(click());
-
         try {
-            Thread.sleep(1000); // Wait for 1 second
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+            User admin = new User();
+            admin.setId(1);
+            admin.setUsername("master");
+            admin.setPassword("1");
+
+            // Perform login action with correct credentials
+            onView(withId(R.id.loginUsername)).perform(typeText(admin.getUsername()));
+            onView(withId(R.id.loginPassword)).perform(typeText(admin.getPassword()));
+            onView(withId(R.id.enterBtn)).perform(click());
+
+            // Simulate the login success
+            UserLogin.setCurrentUser(admin);
+
+            // Wait for the activity to load
+
+            ActivityScenario<QuizDashboard> scenario = ActivityScenario.launch(QuizDashboard.class);
+
+            scenario.onActivity(activity -> {
+                // Verify the logged-in user
+
+                String greeting = activity.tvUsername.getText().toString();
+                assertEquals(greeting, "Welcome master");
+
+                // Verify other UI elements
+                assertNotNull(activity.findViewById(R.id.tvFlagCompletion));
+                assertNotNull(activity.findViewById(R.id.tvCapitalCompletion));
+                assertNotNull(activity.findViewById(R.id.tvLandmarkCompletion));
+                assertNotNull(activity.findViewById(R.id.tvFoodCompletion));
+                assertNotNull(activity.findViewById(R.id.tvSportsCompletion));
+                assertNotNull(activity.findViewById(R.id.tvBrandCompletion));
+
+            });
+        } catch (Exception e) {
+            fail("Test failed with exception: " + e.getMessage());
         }
     }
+
 
     @Test
     public void testInvalidLogin() {
-        // Perform login action with incorrect credentials
-        onView(withId(R.id.loginUsername)).perform(typeText("wrongUser"));
-        onView(withId(R.id.loginPassword)).perform(typeText("wrongPass"));
-        onView(withId(R.id.enterBtn)).perform(click());
 
         try {
-            Thread.sleep(1000); // Wait for 1 second
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+            // Perform login action with incorrect credentials
+            onView(withId(R.id.loginUsername)).perform(typeText("wrongUser"));
+            onView(withId(R.id.loginPassword)).perform(typeText("wrongPass"));
+            onView(withId(R.id.enterBtn)).perform(click());
+
+            assertFalse(MainActivity.formFilledCorrectly);
+
+        } catch (Exception e) {
+            fail("Test failed with exception: " + e.getMessage());
         }
 
-    }
-
-    @After
-    public void tearDown() {
-        Intents.release();
     }
 }

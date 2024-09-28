@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -23,7 +24,9 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RunWith(AndroidJUnit4.class)
 public class FlagQuizTest {
@@ -92,49 +95,39 @@ public class FlagQuizTest {
         });
     }
 
-/*
-    @Test
-    public void testDisplayCurrentQuestion() {
-        rule.getScenario().onActivity(activity -> {
-            FlagQuiz flagQuiz = activity;
+    @Test // Checks correct amount of radio buttons and that all answers are unique
+    public void testUniqueAnswers() {
+        ActivityScenario<FlagQuiz> scenario = ActivityScenario.launch(FlagQuiz.class);
 
-            // Arrange
-            QuizQuestion quizQuestion = new QuizQuestion();
-            quizQuestion.correctCountry = "England";
-            quizQuestion.difficultyLevel = "easy";
+        scenario.onActivity(activity -> {
 
-            List<QuizQuestion> quizQuestions = Collections.singletonList(quizQuestion);
-            flagQuiz.quizQuestions = quizQuestions;
+            // Get the RadioGroup containing the answers
+            List<RadioButton> radioButtons = activity.radioButtons;
 
-            // Act
-            flagQuiz.displayCurrentQuestion();
+            // Check if there are exactly 6 radio buttons
+            assertEquals(6, radioButtons.size());
 
-            // Assert
-            View view = activity.findViewById(R.id.ivFlagQuestion);
-            assertNotNull(view);
+            // Store all answer texts in a HashSet to check uniqueness
+            Set<String> answerTexts = new HashSet<>();
 
-            TextView tvCounter = activity.findViewById(R.id.tvCounter);
-            assertEquals("1", tvCounter.getText().toString());
+            for (int i = 0; i < radioButtons.size(); i++) {
+                RadioButton radioButton = radioButtons.get(i);
+                String answerText = radioButton.getText().toString();
 
-            RadioButton rbFlag1 = activity.findViewById(R.id.rb1Flag);
-            assertEquals("England", rbFlag1.getText().toString());
-
-            for (int i = 2; i <= 6; i++) {
-                RadioButton rbFlag = activity.findViewById(getResources().getIdentifier("rbFlag" + i, "id", getPackageName()));
-                assertEquals("", rbFlag.getText().toString());
+                // Check if the answer is unique
+                assertTrue(answerTexts.add(answerText));
             }
         });
-    } */
+    }
 
     @Test // This tests that a correct answer is handled appropriately.
     public void testOnSubmitClickedCorrectAnswer() {
         rule.getScenario().onActivity(activity -> {
-            FlagQuiz flagQuiz = activity;
 
             RadioButton correctButton = null;
-            for (RadioButton button : flagQuiz.radioButtons) {
+            for (RadioButton button : activity.radioButtons) {
                 String currentCheckedCountry = button.getText().toString();
-                String currentCountry = flagQuiz.getFirstQuestionCorrectCountry();
+                String currentCountry = activity.getFirstQuestionCorrectCountry();
                 if (currentCheckedCountry.equals(currentCountry)) {
                     button.setChecked(true);
                     correctButton = button;
@@ -142,21 +135,20 @@ public class FlagQuizTest {
                 }
             }
             // Act
-            flagQuiz.onSubmitClicked(correctButton);
+            activity.onSubmitClicked(correctButton);
             // Assert
-            assertEquals(1, flagQuiz.score);
+            assertEquals(1, activity.score);
         });
     }
 
     @Test
     public void testOnSubmitClickedIncorrectAnswer() {
         rule.getScenario().onActivity(activity -> {
-            FlagQuiz flagQuiz = activity;
 
             RadioButton correctButton = null;
-            for (RadioButton button : flagQuiz.radioButtons) {
+            for (RadioButton button : activity.radioButtons) {
                 String currentCheckedCountry = button.getText().toString();
-                String currentCountry = flagQuiz.getFirstQuestionCorrectCountry();
+                String currentCountry = activity.getFirstQuestionCorrectCountry();
                 if (currentCheckedCountry.equals(currentCountry)) {
                     button.setChecked(false);
                     correctButton = button;
@@ -164,9 +156,9 @@ public class FlagQuizTest {
                 }
             }
             // Act
-            flagQuiz.onSubmitClicked(correctButton);
+            activity.onSubmitClicked(correctButton);
             // Assert
-            assertEquals(0, flagQuiz.score);
+            assertEquals(0, activity.score);
         });
     }
 }

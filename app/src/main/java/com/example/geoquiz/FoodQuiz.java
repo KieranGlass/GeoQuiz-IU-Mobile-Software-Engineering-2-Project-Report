@@ -25,8 +25,9 @@ public class FoodQuiz extends AppCompatActivity implements MessagePopupFragment.
 
     private TextView tvFood, tvCounter;
     private ImageView ivFood;
-    private List<RadioButton> radioButtons;
+    List<RadioButton> radioButtons;
     final List<QuizQuestion> quizQuestions = new ArrayList<>();
+    List<QuizQuestion> generatedQuizQuestions = new ArrayList<>();
     int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
@@ -193,6 +194,7 @@ public class FoodQuiz extends AppCompatActivity implements MessagePopupFragment.
                 quizQuestion.allAnswers = allAnswers;
                 quizQuestion.correctImage = correctFoodImage;
                 quizQuestions.add(quizQuestion);
+                generatedQuizQuestions.add(quizQuestion);
 
             } else {
                 // return to dashboard for now
@@ -458,5 +460,17 @@ public class FoodQuiz extends AppCompatActivity implements MessagePopupFragment.
             message = "Incorrect, Better luck next time!";
         }
         MessagePopupFragment.newInstance(message, isCorrect).show(getSupportFragmentManager(), "popup");
+    }
+
+    // -- Purely for testing purposes -- //
+    public List<QuizQuestion> getGeneratedQuestions() {
+        return Collections.unmodifiableList(generatedQuizQuestions);
+    }
+
+    public String getFirstQuestionCorrectCountry(){
+
+        List<QuizQuestion> generatedQuizQuestions = getGeneratedQuestions();
+        String correctCountry = generatedQuizQuestions.get(0).correctFoodCountry;
+        return correctCountry;
     }
 }

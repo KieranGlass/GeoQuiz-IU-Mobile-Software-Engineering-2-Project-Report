@@ -26,8 +26,9 @@ public class SportsQuiz extends AppCompatActivity implements MessagePopupFragmen
 
     private TextView tvSports, tvCounter;
     private ImageView ivSports;
-    private List<RadioButton> radioButtons;
+    List<RadioButton> radioButtons;
     final List<QuizQuestion> quizQuestions = new ArrayList<>();
+    List<QuizQuestion> generatedQuizQuestions = new ArrayList<>();
     int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
@@ -195,6 +196,7 @@ public class SportsQuiz extends AppCompatActivity implements MessagePopupFragmen
                 quizQuestion.allAnswers = allAnswers;
                 quizQuestion.correctImage = correctBadgeImage;
                 quizQuestions.add(quizQuestion);
+                generatedQuizQuestions.add(quizQuestion);
 
             } else {
                 // return to dashboard for now
@@ -459,6 +461,18 @@ public class SportsQuiz extends AppCompatActivity implements MessagePopupFragmen
             message = "Incorrect, Better luck next time!";
         }
         MessagePopupFragment.newInstance(message, isCorrect).show(getSupportFragmentManager(), "popup");
+    }
+
+    // -- Purely for testing purposes -- //
+    public List<QuizQuestion> getGeneratedQuestions() {
+        return Collections.unmodifiableList(generatedQuizQuestions);
+    }
+
+    public String getFirstQuestionCorrectCountry(){
+
+        List<QuizQuestion> generatedQuizQuestions = getGeneratedQuestions();
+        String correctCountry = generatedQuizQuestions.get(0).correctSportsTeamCountry;
+        return correctCountry;
     }
 
 }

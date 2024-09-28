@@ -27,13 +27,10 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class FlagQuiz extends AppCompatActivity implements MessagePopupFragment.OnPopupDismissListener {
-    public DatabaseHelper testDatabaseHelper;
-    public Random testRandom;
     ImageView ivFlagQuestion;
     TextView tvCounter;
     List<RadioButton> radioButtons;
     List<QuizQuestion> quizQuestions = new ArrayList<>();
-
     QuizQuestion quizQuestion;
     List<QuizQuestion> generatedQuizQuestions = new ArrayList<>();
     int currentQuestionIndex = 0;

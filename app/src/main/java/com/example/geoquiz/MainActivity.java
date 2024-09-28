@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton lastCheckedRadioButton = null;
 
     static boolean userAccepted;
-    boolean formFilledCorrectly;
+    static boolean formFilledCorrectly;
 
     DatabaseHelper db;
 

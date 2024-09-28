@@ -36,6 +36,7 @@ public class QuizDashboard extends AppCompatActivity {
         if(currentUser == null) {
             Intent intent = new Intent(QuizDashboard.this, MainActivity.class);
             startActivity(intent);
+            //username = "master";
         } else {
             username = currentUser.getUsername();
         }
@@ -106,19 +107,21 @@ public class QuizDashboard extends AppCompatActivity {
         DatabaseHelper sportsHelper = new DatabaseHelper(QuizDashboard.this, null, null, DatabaseHelper.DB_VERSION);
         DatabaseHelper brandHelper = new DatabaseHelper(QuizDashboard.this, null, null, DatabaseHelper.DB_VERSION);
 
-        List<UserProgress> flagProgress = flagHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 6);
-        List<UserProgress> capitalProgress = capitalHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 5);
-        List<UserProgress> landmarkProgress = landmarkHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 4);
-        List<UserProgress> foodProgress = foodHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 3);
-        List<UserProgress> sportsProgress = sportsHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 2);
-        List<UserProgress> brandProgress = brandHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 1);
+        if (UserLogin.getCurrentUser() != null) {
+            List<UserProgress> flagProgress = flagHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 6);
+            List<UserProgress> capitalProgress = capitalHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 5);
+            List<UserProgress> landmarkProgress = landmarkHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 4);
+            List<UserProgress> foodProgress = foodHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 3);
+            List<UserProgress> sportsProgress = sportsHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 2);
+            List<UserProgress> brandProgress = brandHelper.getUserProgressByCategory(UserLogin.getCurrentUser().getId(), 1);
 
-        displayCompletion(tvFlagCompletion, flagProgress, 5);
-        displayCompletion(tvCapitalCompletion, capitalProgress, 5);
-        displayCompletion(tvLandmarkCompletion, landmarkProgress, 3);
-        displayCompletion(tvFoodCompletion, foodProgress, 3);
-        displayCompletion(tvSportsCompletion, sportsProgress, 3);
-        displayCompletion(tvBrandCompletion, brandProgress,3);
+            displayCompletion(tvFlagCompletion, flagProgress, 5);
+            displayCompletion(tvCapitalCompletion, capitalProgress, 5);
+            displayCompletion(tvLandmarkCompletion, landmarkProgress, 3);
+            displayCompletion(tvFoodCompletion, foodProgress, 3);
+            displayCompletion(tvSportsCompletion, sportsProgress, 3);
+            displayCompletion(tvBrandCompletion, brandProgress, 3);
+        }
 
     }
     @SuppressLint("SetTextI18n")

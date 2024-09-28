@@ -23,6 +23,8 @@ public class DatabaseHelperWrapper {
     public List<Brand> fetchBrands() {
         return dbHelper.fetchBrands();
     }
+    public List<UserProgress> getUserProgressByCategory(int userId, int categoryId) {return dbHelper.getUserProgressByCategory(userId, categoryId);
+    }
 
 
 }

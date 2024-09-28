@@ -4,6 +4,7 @@ public class UserProgress {
 
     private int userId;
     private int categoryId;
+    private int bestScore;
 
     public int getUserId() {
         return userId;
@@ -38,5 +39,4 @@ public class UserProgress {
     }
 
     private int difficultyId;
-    private int bestScore;
 }

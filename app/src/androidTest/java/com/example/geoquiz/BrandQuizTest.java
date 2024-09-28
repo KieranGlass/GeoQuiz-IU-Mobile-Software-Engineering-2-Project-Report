@@ -2,9 +2,11 @@ package com.example.geoquiz;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.RadioButton;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
@@ -17,7 +19,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RunWith(AndroidJUnit4.class)
 public class BrandQuizTest {
@@ -86,4 +90,51 @@ public class BrandQuizTest {
             assertEquals("Hard", activity.difficulty);
         });
     }
+
+    @Test // This tests that a correct answer is handled appropriately.
+    public void testOnSubmitClickedCorrectAnswer() {
+        rule.getScenario().onActivity(activity -> {
+
+            RadioButton correctButton = null;
+            for (RadioButton button : activity.radioButtons) {
+                String currentCheckedBrand = button.getText().toString();
+                String currentBrand = activity.getFirstQuestionCorrectCountry();
+                if (currentCheckedBrand.equals(currentBrand)) {
+                    button.setChecked(true);
+                    correctButton = button;
+                    break;
+                }
+            }
+            // Act
+            activity.onSubmitClicked(correctButton);
+            // Assert
+            assertEquals(1, activity.score);
+        });
+    }
+
+    @Test // Checks correct amount of radio buttons and that all answers are unique
+    public void testUniqueAnswers() {
+        ActivityScenario<BrandQuiz> scenario = ActivityScenario.launch(BrandQuiz.class);
+
+        scenario.onActivity(activity -> {
+
+            // Get the RadioGroup containing the answers
+            List<RadioButton> radioButtons = activity.radioButtons;
+
+            // Check if there are exactly 6 radio buttons
+            assertEquals(6, radioButtons.size());
+
+            // Store all answer texts in a HashSet to check uniqueness
+            Set<String> answerTexts = new HashSet<>();
+
+            for (int i = 0; i < radioButtons.size(); i++) {
+                RadioButton radioButton = radioButtons.get(i);
+                String answerText = radioButton.getText().toString();
+
+                // Check if the answer is unique
+                assertTrue(answerTexts.add(answerText));
+            }
+        });
+    }
+
 }

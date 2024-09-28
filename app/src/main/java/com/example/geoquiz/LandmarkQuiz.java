@@ -25,8 +25,9 @@ public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragm
 
     private TextView tvLandmark, tvCounter;
     private ImageView ivLandmark;
-    private List<RadioButton> radioButtons;
+    List<RadioButton> radioButtons;
     final List<QuizQuestion> quizQuestions = new ArrayList<>();
+    List<QuizQuestion> generatedQuizQuestions = new ArrayList<>();
     int currentQuestionIndex = 0;
     private RadioButton lastCheckedRadioButton = null;
     private String intentDifficulty, intentCategory;
@@ -197,6 +198,7 @@ public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragm
                 quizQuestion.allAnswers = allAnswers;
                 quizQuestion.correctImage = correctImagePath;
                 quizQuestions.add(quizQuestion);
+                generatedQuizQuestions.add(quizQuestion);
 
             } else {
                 // return to dashboard for now
@@ -459,6 +461,17 @@ public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragm
             message = "Incorrect, Better luck next time!";
         }
         MessagePopupFragment.newInstance(message, isCorrect).show(getSupportFragmentManager(), "popup");
+    }
+    // -- Purely for testing purposes -- //
+    public List<QuizQuestion> getGeneratedQuestions() {
+        return Collections.unmodifiableList(generatedQuizQuestions);
+    }
+
+    public String getFirstQuestionCorrectCountry(){
+
+        List<QuizQuestion> generatedQuizQuestions = getGeneratedQuestions();
+        String correctCountry = generatedQuizQuestions.get(0).correctLandmarkCountry;
+        return correctCountry;
     }
 
 }
