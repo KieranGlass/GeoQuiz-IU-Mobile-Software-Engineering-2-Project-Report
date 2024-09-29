@@ -124,8 +124,6 @@ public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragm
 
     }
 
-    //TODO - duplicate wrong answers, same issues in flag quiz
-
     private void generateEasyQuiz() {
 
         DatabaseHelper helper = new DatabaseHelper(LandmarkQuiz.this, null, null, DatabaseHelper.DB_VERSION);
