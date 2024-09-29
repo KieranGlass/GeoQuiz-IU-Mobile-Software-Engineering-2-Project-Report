@@ -13,8 +13,6 @@ public class Country {
     private int tilemap_row;
     private int tilemap_column;
 
-    //TODO - Write similar classes for capital object and three new quiz categories.
-
 
     public Country(int id, String country_name, String country_capital,
                    String flag_path, int capital_difficulty, int flag_difficulty,

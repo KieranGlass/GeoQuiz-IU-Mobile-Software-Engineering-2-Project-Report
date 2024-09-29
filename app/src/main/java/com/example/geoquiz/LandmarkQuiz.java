@@ -17,8 +17,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragment.OnPopupDismissListener {
@@ -122,8 +124,6 @@ public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragm
 
     }
 
-    //TODO - The three methods as of now work well and with the database
-    //TODO - but they do not completely disallow the possibility for
     //TODO - duplicate wrong answers, same issues in flag quiz
 
     private void generateEasyQuiz() {
@@ -172,14 +172,36 @@ public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragm
 
                 // Generate wrong answers
                 List<Landmark> wrongLandmarks = new ArrayList<>(landmarks);
-                wrongLandmarks.removeIf(landmark -> usedLandmarks.contains(landmark)); // Exclude already used landmarks
-                Collections.shuffle(wrongLandmarks, random); // Shuffle to randomize order
+                Set<Landmark> selectedWrongLandmarks = new HashSet<>();
 
-                // Select the first three wrong landmarks
-                List<Landmark> selectedWrongLandmarks = wrongLandmarks.subList(0, Math.min(5, wrongLandmarks.size()));
+                int maxAttempts = 100; // Prevent infinite loops
+                while (selectedWrongLandmarks.size() < Math.min(5, wrongLandmarks.size()) && maxAttempts > 0) {
+                    Landmark wrongLandmark = wrongLandmarks.get(random.nextInt(wrongLandmarks.size()));
+
+                    boolean isValid = true;
+                    if (wrongLandmark.getCountry_id() == correctLandmark.getCountry_id()) {
+                        Log.d("generateEasyQuiz:", "Wrong Landmark has same country value as correct answer");
+                        isValid = false;
+                    } else if (selectedWrongLandmarks.stream().anyMatch(lm -> lm.getCountry_id() == wrongLandmark.getCountry_id())) {
+                        Log.d("generateEasyQuiz:", "Wrong Landmark shares existing country value with previously selected wrong landmarks");
+                        isValid = false;
+                    }
+
+                    if (isValid) {
+                        selectedWrongLandmarks.add(wrongLandmark);
+                    }
+
+                    maxAttempts--;
+                }
+
+                if (selectedWrongLandmarks.size() < Math.min(5, wrongLandmarks.size())) {
+                    Log.w("generateEasyQuiz:", "Could not find enough unique wrong landmarks");
+                }
+
+                List<Landmark> selectedWrongLandmarksList = new ArrayList<>(selectedWrongLandmarks);
 
                 // Retrieve country names for wrong landmarks
-                List<String> wrongCountryNames = selectedWrongLandmarks.stream()
+                List<String> wrongCountryNames = selectedWrongLandmarksList.stream()
                         .map(landmark -> countries.stream()
                                 .filter(country -> country.getId() == landmark.getCountry_id())
                                 .findFirst()
@@ -254,14 +276,36 @@ public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragm
 
                 // Generate wrong answers
                 List<Landmark> wrongLandmarks = new ArrayList<>(landmarks);
-                wrongLandmarks.removeIf(landmark -> usedLandmarks.contains(landmark)); // Exclude already used landmarks
-                Collections.shuffle(wrongLandmarks, random); // Shuffle to randomize order
+                Set<Landmark> selectedWrongLandmarks = new HashSet<>();
 
-                // Select the first three wrong landmarks
-                List<Landmark> selectedWrongLandmarks = wrongLandmarks.subList(0, Math.min(5, wrongLandmarks.size()));
+                int maxAttempts = 100; // Prevent infinite loops
+                while (selectedWrongLandmarks.size() < Math.min(5, wrongLandmarks.size()) && maxAttempts > 0) {
+                    Landmark wrongLandmark = wrongLandmarks.get(random.nextInt(wrongLandmarks.size()));
+
+                    boolean isValid = true;
+                    if (wrongLandmark.getCountry_id() == correctLandmark.getCountry_id()) {
+                        Log.d("generateEasyQuiz:", "Wrong Landmark has same country value as correct answer");
+                        isValid = false;
+                    } else if (selectedWrongLandmarks.stream().anyMatch(lm -> lm.getCountry_id() == wrongLandmark.getCountry_id())) {
+                        Log.d("generateEasyQuiz:", "Wrong Landmark shares existing country value with previously selected wrong landmarks");
+                        isValid = false;
+                    }
+
+                    if (isValid) {
+                        selectedWrongLandmarks.add(wrongLandmark);
+                    }
+
+                    maxAttempts--;
+                }
+
+                if (selectedWrongLandmarks.size() < Math.min(5, wrongLandmarks.size())) {
+                    Log.w("generateEasyQuiz:", "Could not find enough unique wrong landmarks");
+                }
+
+                List<Landmark> selectedWrongLandmarksList = new ArrayList<>(selectedWrongLandmarks);
 
                 // Retrieve country names for wrong landmarks
-                List<String> wrongCountryNames = selectedWrongLandmarks.stream()
+                List<String> wrongCountryNames = selectedWrongLandmarksList.stream()
                         .map(landmark -> countries.stream()
                                 .filter(country -> country.getId() == landmark.getCountry_id())
                                 .findFirst()
@@ -334,14 +378,36 @@ public class LandmarkQuiz extends AppCompatActivity implements MessagePopupFragm
 
                 // Generate wrong answers
                 List<Landmark> wrongLandmarks = new ArrayList<>(landmarks);
-                wrongLandmarks.removeIf(landmark -> usedLandmarks.contains(landmark)); // Exclude already used landmarks
-                Collections.shuffle(wrongLandmarks, random); // Shuffle to randomize order
+                Set<Landmark> selectedWrongLandmarks = new HashSet<>();
 
-                // Select the first three wrong landmarks
-                List<Landmark> selectedWrongLandmarks = wrongLandmarks.subList(0, Math.min(5, wrongLandmarks.size()));
+                int maxAttempts = 100; // Prevent infinite loops
+                while (selectedWrongLandmarks.size() < Math.min(5, wrongLandmarks.size()) && maxAttempts > 0) {
+                    Landmark wrongLandmark = wrongLandmarks.get(random.nextInt(wrongLandmarks.size()));
+
+                    boolean isValid = true;
+                    if (wrongLandmark.getCountry_id() == correctLandmark.getCountry_id()) {
+                        Log.d("generateEasyQuiz:", "Wrong Landmark has same country value as correct answer");
+                        isValid = false;
+                    } else if (selectedWrongLandmarks.stream().anyMatch(lm -> lm.getCountry_id() == wrongLandmark.getCountry_id())) {
+                        Log.d("generateEasyQuiz:", "Wrong Landmark shares existing country value with previously selected wrong landmarks");
+                        isValid = false;
+                    }
+
+                    if (isValid) {
+                        selectedWrongLandmarks.add(wrongLandmark);
+                    }
+
+                    maxAttempts--;
+                }
+
+                if (selectedWrongLandmarks.size() < Math.min(5, wrongLandmarks.size())) {
+                    Log.w("generateEasyQuiz:", "Could not find enough unique wrong landmarks");
+                }
+
+                List<Landmark> selectedWrongLandmarksList = new ArrayList<>(selectedWrongLandmarks);
 
                 // Retrieve country names for wrong landmarks
-                List<String> wrongCountryNames = selectedWrongLandmarks.stream()
+                List<String> wrongCountryNames = selectedWrongLandmarksList.stream()
                         .map(landmark -> countries.stream()
                                 .filter(country -> country.getId() == landmark.getCountry_id())
                                 .findFirst()

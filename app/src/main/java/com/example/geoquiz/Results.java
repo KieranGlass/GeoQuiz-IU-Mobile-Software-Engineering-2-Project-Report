@@ -23,8 +23,6 @@ public class Results extends AppCompatActivity {
     double score, scorePercentage;
     long finishedScore;
 
-    //TODO - Logic for saving scores into future database.
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,28 +96,28 @@ public class Results extends AppCompatActivity {
             }
             case "Landmark": {
                 Intent intent = new Intent(Results.this, LandmarkQuiz.class);
-                intent.putExtra("Category", "com.example.geoquiz.Landmark");
+                intent.putExtra("Category", "Landmark");
                 intent.putExtra("Difficulty", difficultyReceived);
                 startActivity(intent);
                 break;
             }
             case "Food": {
                 Intent intent = new Intent(Results.this, FoodQuiz.class);
-                intent.putExtra("Category", "com.example.geoquiz.Landmark");
+                intent.putExtra("Category", "Food");
                 intent.putExtra("Difficulty", difficultyReceived);
                 startActivity(intent);
                 break;
             }
             case "Sports": {
                 Intent intent = new Intent(Results.this, SportsQuiz.class);
-                intent.putExtra("Category", "com.example.geoquiz.Landmark");
+                intent.putExtra("Category", "Sports");
                 intent.putExtra("Difficulty", difficultyReceived);
                 startActivity(intent);
                 break;
             }
             case "Brand": {
                 Intent intent = new Intent(Results.this, BrandQuiz.class);
-                intent.putExtra("Category", "com.example.geoquiz.Landmark");
+                intent.putExtra("Category", "Brand");
                 intent.putExtra("Difficulty", difficultyReceived);
                 startActivity(intent);
                 break;

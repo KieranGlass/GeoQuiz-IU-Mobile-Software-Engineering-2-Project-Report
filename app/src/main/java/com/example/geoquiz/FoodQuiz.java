@@ -17,8 +17,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class FoodQuiz extends AppCompatActivity implements MessagePopupFragment.OnPopupDismissListener {
@@ -168,16 +170,38 @@ public class FoodQuiz extends AppCompatActivity implements MessagePopupFragment.
 
                 // Generate wrong answers
                 List<Food> wrongFoods = new ArrayList<>(foods);
-                wrongFoods.removeIf(food -> usedFoods.contains(food)); // Exclude already used Brands
-                Collections.shuffle(wrongFoods, random); // Shuffle to randomize order
+                Set<Food> selectedWrongFoods = new HashSet<>();
 
-                // Select the first three wrong landmarks
-                List<Food> selectedWrongLandmarks = wrongFoods.subList(0, Math.min(5, wrongFoods.size()));
+                int maxAttempts = 100; // Prevent infinite loops
+                while (selectedWrongFoods.size() < Math.min(5, wrongFoods.size()) && maxAttempts > 0) {
+                    Food wrongFood = wrongFoods.get(random.nextInt(wrongFoods.size()));
+
+                    boolean isValid = true;
+                    if (wrongFood.getCountry_id() == correctFood.getCountry_id()) {
+                        Log.d("generateEasyQuiz:", "Wrong Landmark has same country value as correct answer");
+                        isValid = false;
+                    } else if (selectedWrongFoods.stream().anyMatch(lm -> lm.getCountry_id() == wrongFood.getCountry_id())) {
+                        Log.d("generateEasyQuiz:", "Wrong Landmark shares existing country value with previously selected wrong landmarks");
+                        isValid = false;
+                    }
+
+                    if (isValid) {
+                        selectedWrongFoods.add(wrongFood);
+                    }
+
+                    maxAttempts--;
+                }
+
+                if (selectedWrongFoods.size() < Math.min(5, wrongFoods.size())) {
+                    Log.w("generateEasyQuiz:", "Could not find enough unique wrong landmarks");
+                }
+
+                List<Food> selectedWrongFoodsList = new ArrayList<>(selectedWrongFoods);
 
                 // Retrieve country names for wrong landmarks
-                List<String> wrongCountryNames = selectedWrongLandmarks.stream()
-                        .map(food -> countries.stream()
-                                .filter(country -> country.getId() == food.getCountry_id())
+                List<String> wrongCountryNames = selectedWrongFoodsList.stream()
+                        .map(landmark -> countries.stream()
+                                .filter(country -> country.getId() == landmark.getCountry_id())
                                 .findFirst()
                                 .map(Country::getCountry_name)
                                 .orElse(""))
@@ -250,16 +274,38 @@ public class FoodQuiz extends AppCompatActivity implements MessagePopupFragment.
 
                 // Generate wrong answers
                 List<Food> wrongFoods = new ArrayList<>(foods);
-                wrongFoods.removeIf(food -> usedFoods.contains(food)); // Exclude already used Brands
-                Collections.shuffle(wrongFoods, random); // Shuffle to randomize order
+                Set<Food> selectedWrongFoods = new HashSet<>();
 
-                // Select the first three wrong landmarks
-                List<Food> selectedWrongLandmarks = wrongFoods.subList(0, Math.min(5, wrongFoods.size()));
+                int maxAttempts = 100; // Prevent infinite loops
+                while (selectedWrongFoods.size() < Math.min(5, wrongFoods.size()) && maxAttempts > 0) {
+                    Food wrongFood = wrongFoods.get(random.nextInt(wrongFoods.size()));
+
+                    boolean isValid = true;
+                    if (wrongFood.getCountry_id() == correctFood.getCountry_id()) {
+                        Log.d("generateEasyQuiz:", "Wrong Landmark has same country value as correct answer");
+                        isValid = false;
+                    } else if (selectedWrongFoods.stream().anyMatch(lm -> lm.getCountry_id() == wrongFood.getCountry_id())) {
+                        Log.d("generateEasyQuiz:", "Wrong Landmark shares existing country value with previously selected wrong landmarks");
+                        isValid = false;
+                    }
+
+                    if (isValid) {
+                        selectedWrongFoods.add(wrongFood);
+                    }
+
+                    maxAttempts--;
+                }
+
+                if (selectedWrongFoods.size() < Math.min(5, wrongFoods.size())) {
+                    Log.w("generateEasyQuiz:", "Could not find enough unique wrong landmarks");
+                }
+
+                List<Food> selectedWrongFoodsList = new ArrayList<>(selectedWrongFoods);
 
                 // Retrieve country names for wrong landmarks
-                List<String> wrongCountryNames = selectedWrongLandmarks.stream()
-                        .map(food -> countries.stream()
-                                .filter(country -> country.getId() == food.getCountry_id())
+                List<String> wrongCountryNames = selectedWrongFoodsList.stream()
+                        .map(landmark -> countries.stream()
+                                .filter(country -> country.getId() == landmark.getCountry_id())
                                 .findFirst()
                                 .map(Country::getCountry_name)
                                 .orElse(""))
@@ -332,16 +378,38 @@ public class FoodQuiz extends AppCompatActivity implements MessagePopupFragment.
 
                 // Generate wrong answers
                 List<Food> wrongFoods = new ArrayList<>(foods);
-                wrongFoods.removeIf(food -> usedFoods.contains(food)); // Exclude already used Brands
-                Collections.shuffle(wrongFoods, random); // Shuffle to randomize order
+                Set<Food> selectedWrongFoods = new HashSet<>();
 
-                // Select the first three wrong foods
-                List<Food> selectedWrongFoods = wrongFoods.subList(0, Math.min(5, wrongFoods.size()));
+                int maxAttempts = 100; // Prevent infinite loops
+                while (selectedWrongFoods.size() < Math.min(5, wrongFoods.size()) && maxAttempts > 0) {
+                    Food wrongFood = wrongFoods.get(random.nextInt(wrongFoods.size()));
+
+                    boolean isValid = true;
+                    if (wrongFood.getCountry_id() == correctFood.getCountry_id()) {
+                        Log.d("generateEasyQuiz:", "Wrong Landmark has same country value as correct answer");
+                        isValid = false;
+                    } else if (selectedWrongFoods.stream().anyMatch(lm -> lm.getCountry_id() == wrongFood.getCountry_id())) {
+                        Log.d("generateEasyQuiz:", "Wrong Landmark shares existing country value with previously selected wrong landmarks");
+                        isValid = false;
+                    }
+
+                    if (isValid) {
+                        selectedWrongFoods.add(wrongFood);
+                    }
+
+                    maxAttempts--;
+                }
+
+                if (selectedWrongFoods.size() < Math.min(5, wrongFoods.size())) {
+                    Log.w("generateEasyQuiz:", "Could not find enough unique wrong landmarks");
+                }
+
+                List<Food> selectedWrongFoodsList = new ArrayList<>(selectedWrongFoods);
 
                 // Retrieve country names for wrong landmarks
-                List<String> wrongCountryNames = selectedWrongFoods.stream()
-                        .map(food -> countries.stream()
-                                .filter(country -> country.getId() == food.getCountry_id())
+                List<String> wrongCountryNames = selectedWrongFoodsList.stream()
+                        .map(landmark -> countries.stream()
+                                .filter(country -> country.getId() == landmark.getCountry_id())
                                 .findFirst()
                                 .map(Country::getCountry_name)
                                 .orElse(""))

@@ -201,29 +201,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Load Handler method called in application activity. Calls copyDatabase method if necesarry
     // database is up to date. Puts this into a SQLiteDatabase variable myDatabase
     public void loadHandler() {
-        try {
-            boolean mDatabaseExists = checkDatabase();
-            if (!mDatabaseExists) {
-                Log.i("DatabaseHelper", "Copying database...");
-                copyDatabase();
-                Log.i("DatabaseHelper", "Database copied successfully.");
-            }
-            //copyDatabase(); // uncommenting this allows me to quickly reset the devices internal database
-            myDatabase = this.getReadableDatabase();
-            Log.i("DatabaseHelper", "Database opened successfully.");
 
 
-            Cursor cursor = myDatabase.rawQuery("SELECT COUNT(*) FROM users", null);
-            if (cursor.moveToFirst()) {
-                int count = cursor.getInt(0);
-                Log.d("DatabaseHelper", "Query result: " + count);
-            } else {
-                Log.w("DatabaseHelper", "Cursor is empty");
+            try {
+
+                    boolean mDatabaseExists = checkDatabase();
+                    if (!mDatabaseExists) {
+                        Log.i("DatabaseHelper", "Copying database...");
+                        copyDatabase();
+                        Log.i("DatabaseHelper", "Database copied successfully.");
+                    }
+                    //copyDatabase(); // uncommenting this allows me to quickly reset the devices internal database
+
+                myDatabase = this.getReadableDatabase();
+                Log.i("DatabaseHelper", "Database opened successfully.");
+
+
+                Cursor cursor = myDatabase.rawQuery("SELECT COUNT(*) FROM users", null);
+                if (cursor.moveToFirst()) {
+                    int count = cursor.getInt(0);
+                    Log.d("DatabaseHelper", "Query result: " + count);
+                } else {
+                    Log.w("DatabaseHelper", "Cursor is empty");
+                }
+                cursor.close();
+            } catch (IOException | SQLException e) {
+                Log.e("DatabaseHelper", "Error loading database", e);
             }
-            cursor.close();
-        } catch (IOException | SQLException e) {
-            Log.e("DatabaseHelper", "Error loading database", e);
-        }
+
     }
 
     // -- ALL SQL RETRIEVAL METHODS FOR QUIZ QUESTIONS BELOW -- //
@@ -456,7 +461,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery("SELECT * FROM user_progress WHERE user_id = ? AND category_id = ?", new String[]{String.valueOf(userId), String.valueOf(categoryId)});
 
-        //TODO MAKE THIS INTO A LIST TO GET EACH DIFFICULTY SCORE!
         if (cursor.moveToFirst()) {
             do {
                 UserProgress progress = new UserProgress();

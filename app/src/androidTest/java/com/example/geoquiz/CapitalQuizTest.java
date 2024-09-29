@@ -134,7 +134,7 @@ public class CapitalQuizTest {
 
             // Store all answer texts in a HashSet to check uniqueness
             Set<String> answerTexts = new HashSet<>();
-            String answerText = "";
+            String answerText;
             for (int i = 0; i < radioButtons.size(); i++) {
                 RadioButton radioButton = radioButtons.get(i);
                 answerText = radioButton.getText().toString();
